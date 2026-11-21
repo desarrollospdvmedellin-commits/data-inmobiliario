@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingresar datos · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+    <h1>Ingresar datos a la central</h1>
+    <p class="tenue">Aquí la inmobiliaria reporta inquilinos, contratos y pagos. Con esta información la plataforma calcula automáticamente el puntaje y genera los reportes.</p>
+    <div id="msg"></div>
+
+    <div class="tarjeta">
+      <div class="pestanas">
+        <button type="button" class="activa" data-p="pInquilino">1. Inquilino</button>
+        <button type="button" data-p="pContrato">2. Contrato</button>
+        <button type="button" data-p="pPago">3. Pago mensual</button>
+        <button type="button" data-p="pTerminar">4. Terminar contrato</button>
+      </div>
+
+      <!-- 1. INQUILINO -->
+      <form id="pInquilino" class="panel-pestana activa">
+        <h2>Registrar inquilino</h2>
+        <div class="fila">
+          <div><label>Cédula</label><input name="cedula" inputmode="numeric" required pattern="\d{6,10}" title="Entre 6 y 10 dígitos"></div>
+          <div><label>Nombres</label><input name="nombres" required></div>
+          <div><label>Apellidos</label><input name="apellidos" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Fecha de nacimiento</label><input name="nacimiento" type="date" required></div>
+          <div><label>Ciudad</label><input name="ciudad" required></div>
+          <div><label>Ocupación</label><input name="ocupacion"></div>
+        </div>
+        <div class="fila">
+          <div><label>Teléfono</label><input name="telefono"></div>
+          <div><label>Correo</label><input name="email" type="email"></div>
+          <div><label>Fecha de la autorización firmada</label><input name="autorizacion" type="date" required></div>
+        </div>
+        <label class="check"><input type="checkbox" required>
+          <span>Confirmo que el inquilino firmó la <b>autorización de reporte y consulta</b> ante centrales de información y que fue informado de sus derechos (conocer, actualizar, rectificar y suprimir sus datos).</span></label>
+        <button class="boton verde" type="submit">Guardar inquilino</button>
+      </form>
+
+      <!-- 2. CONTRATO -->
+      <form id="pContrato" class="panel-pestana">
+        <h2>Registrar contrato de arrendamiento</h2>
+        <div class="fila">
+          <div><label>Cédula del inquilino</label><input name="cedula" list="listaCedulas" required></div>
+          <div><label>Arrendador</label><input name="arrendador" id="arrendador" required></div>
+          <div><label>Tipo de arrendador</label><select name="tipoArrendador"><option>Inmobiliaria</option><option>Persona natural</option></select></div>
+        </div>
+        <div class="fila">
+          <div><label>Tipo de inmueble</label><select name="tipoInmueble"><option>Apartamento</option><option>Casa</option><option>Apartaestudio</option><option>Habitación</option><option>Local</option></select></div>
+          <div><label>Dirección</label><input name="direccion" required></div>
+          <div><label>Barrio</label><input name="barrio" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Ciudad</label><input name="ciudad" required></div>
+          <div><label>Estrato</label><select name="estrato"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></div>
+          <div><label>Canon mensual (COP)</label><input name="canon" type="number" min="100000" step="1000" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Fecha de inicio</label><input name="fechaInicio" type="date" required></div>
+          <div><label>Fecha de fin <span class="tenue">(vacío si está vigente)</span></label><input name="fechaFin" type="date"></div>
+          <div><label>Aseguradora de arriendo</label><select name="aseguradora" id="selAseg"></select></div>
+        </div>
+        <div class="alerta info">
+          <label class="check" style="margin:0"><input type="checkbox" name="generar" id="chkGenerar">
+            <span><b>Generar historial de pagos simulado</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
+          <div id="zonaPerfil" class="oculto">
+            <label>Perfil de comportamiento del inquilino</label>
+            <select name="perfil"><option value="puntual">Puntual (casi siempre a tiempo)</option><option value="bueno">Bueno (retrasos cortos ocasionales)</option><option value="regular">Regular (moras frecuentes)</option><option value="moroso">Moroso (moras altas, meses sin pagar)</option></select>
+          </div>
+        </div>
+        <button class="boton verde" type="submit">Guardar contrato</button>
+      </form>
+
+      <!-- 3. PAGO -->
+      <form id="pPago" class="panel-pestana">
+        <h2>Registrar pago mensual</h2>
+        <label>Contrato</label>
+        <select name="contratoId" id="selContratoPago" required></select>
+        <div class="fila">
+          <div><label>Periodo (mes que se paga)</label><input name="periodo" type="month" required></div>
+          <div><label>Fecha límite de pago</label><input name="fechaLimite" type="date" required></div>
+          <div><label>Fecha en que pagó <span class="tenue">(vacío = no ha pagado)</span></label><input name="fechaPago" type="date"></div>
+        </div>
+        <div class="fila">
+          <div><label>Valor (COP)</label><input name="valor" type="number" min="0" step="1000" required></div>
+          <div><label>¿Quién pagó?</label><select name="pagadoPor"><option>Inquilino</option><option>Aseguradora</option></select></div>
+          <div><label>Días de mora (calculado)</label><input id="moraCalc" readonly></div>
+        </div>
+        <button class="boton verde" type="submit">Guardar pago</button>
+        <h3>Últimos pagos de este contrato</h3>
+        <div id="ultimosPagos"></div>
+      </form>
+
+      <!-- 4. TERMINAR -->
+      <form id="pTerminar" class="panel-pestana">
+        <h2>Terminar contrato</h2>
+        <label>Contrato vigente</label>
+        <select name="contratoId" id="selContratoFin" required></select>
+        <div class="fila">
+          <div><label>Fecha de terminación</label><input name="fechaFin" type="date" required></div>
+          <div><label>Calificación del inquilino (1 a 5)</label><select name="calificacion"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        </div>
+        <label>Motivo de terminación</label>
+        <select name="motivo"><option>Entrega voluntaria al vencimiento</option><option>Terminación anticipada con preaviso</option><option>Restitución del inmueble por mora</option><option>Abandono del inmueble</option><option>Venta del inmueble</option></select>
+        <label class="check"><input type="checkbox" name="siniestro"><span>Hubo <b>siniestro</b>: la aseguradora pagó cánones al propietario por incumplimiento del inquilino.</span></label>
+        <label>Observación</label>
+        <textarea name="observacion" rows="2"></textarea>
+        <button class="boton peligro" type="submit">Terminar contrato</button>
+      </form>
+    </div>
+    <datalist id="listaCedulas"></datalist>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script src="js/reporte.js"></script>
+<script>
+  var u = Sesion.exigir(["inmobiliaria"]);
+  var datos = function (form) { return Object.fromEntries(new FormData(form).entries()); };
+  function ok(t) { mensaje("msg", "exito", t); scrollTo(0, 0); }
+  function error(t) { mensaje("msg", "error", t); scrollTo(0, 0); }
+
+  // ----- Pestañas -----
+  function abrir(id) {
+    document.querySelectorAll(".pestanas button").forEach(function (b) { b.classList.toggle("activa", b.dataset.p === id); });
+    document.querySelectorAll(".panel-pestana").forEach(function (p) { p.classList.toggle("activa", p.id === id); });
+  }
+  document.querySelectorAll(".pestanas button").forEach(function (b) { b.onclick = function () { abrir(b.dataset.p); }; });
+
+  // ----- Listas desplegables -----
+  function misContratos() { return BD.datos.contratos.filter(function (c) { return c.inmobiliaria === u.nombre; }); }
+  function nombreDe(cc) { var i = BD.inquilino(cc); return i ? i.nombres + " " + i.apellidos : cc; }
+  function refrescarListas() {
+    document.getElementById("listaCedulas").innerHTML = BD.datos.inquilinos.map(function (i) {
+      return '<option value="' + i.cedula + '">' + esc(i.nombres + " " + i.apellidos) + "</option>";
+    }).join("");
+    document.getElementById("selAseg").innerHTML = '<option value="">Sin póliza</option>' + BD.datos.aseguradoras.map(function (a) {
+      return '<option value="' + a.id + '">' + esc(a.nombre) + "</option>";
+    }).join("");
+    var opc = function (c) { return '<option value="' + c.id + '">' + esc(nombreDe(c.cedula)) + " · " + esc(c.direccion) + " (" + (c.fechaFin ? "terminado" : "vigente") + ")</option>"; };
+    var mios = misContratos();
+    document.getElementById("selContratoPago").innerHTML = mios.length ? mios.map(opc).join("") : '<option value="">No tiene contratos registrados</option>';
+    var vig = mios.filter(function (c) { return !c.fechaFin; });
+    document.getElementById("selContratoFin").innerHTML = vig.length ? vig.map(opc).join("") : '<option value="">No tiene contratos vigentes</option>';
+  }
+  refrescarListas();
+  document.getElementById("arrendador").value = u.nombre;
+  document.getElementById("chkGenerar").onchange = function (e) { document.getElementById("zonaPerfil").classList.toggle("oculto", !e.target.checked); };
+
+  // ----- 1. Guardar inquilino -----
+  document.getElementById("pInquilino").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    if (BD.inquilino(d.cedula)) return error("Ya existe un inquilino con la cédula " + esc(d.cedula) + ".");
+    BD.datos.inquilinos.push({ cedula: d.cedula, nombres: d.nombres, apellidos: d.apellidos, nacimiento: d.nacimiento, ciudad: d.ciudad,
+      telefono: d.telefono, email: d.email, ocupacion: d.ocupacion || "No informada", autorizacion: d.autorizacion });
+    BD.guardar(); e.target.reset(); refrescarListas();
+    ok("Inquilino <b>" + esc(d.nombres + " " + d.apellidos) + "</b> registrado. Ahora registre su contrato en la pestaña 2.");
+    abrir("pContrato");
+    document.querySelector("#pContrato [name=cedula]").value = d.cedula;
+  };
+
+  // ----- 2. Guardar contrato -----
+  document.getElementById("pContrato").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    if (!BD.inquilino(d.cedula)) return error("La cédula " + esc(d.cedula) + " no está registrada. Regístrela primero en la pestaña 1.");
+    if (d.fechaFin && d.fechaFin <= d.fechaInicio) return error("La fecha de fin debe ser posterior a la de inicio.");
+    if (d.fechaInicio > aTexto(new Date())) return error("La fecha de inicio no puede ser futura.");
+    var c = { id: BD.nuevoId("C"), cedula: d.cedula, inmobiliaria: u.nombre, arrendador: d.arrendador, tipoArrendador: d.tipoArrendador,
+      direccion: d.direccion, barrio: d.barrio, ciudad: d.ciudad, estrato: +d.estrato, tipoInmueble: d.tipoInmueble,
+      fechaInicio: d.fechaInicio, fechaFin: d.fechaFin || null, canon: +d.canon, aseguradora: d.aseguradora || null,
+      perfil: d.perfil || "", motivoTerminacion: d.fechaFin ? "Entrega al vencimiento" : "", calificacion: 0, observacion: "" };
+    BD.datos.contratos.push(c);
+    var n = 0;
+    if (d.generar) {
+      var nuevos = generarPagos(c, d.perfil, crearAleatorio(Date.now() % 100000));
+      BD.datos.pagos = BD.datos.pagos.concat(nuevos);
+      n = nuevos.length;
+    }
+    BD.guardar(); e.target.reset(); refrescarListas();
+    document.getElementById("arrendador").value = u.nombre;
+    ok("Contrato guardado" + (n ? " con " + n + " pagos simulados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
+    // La inmobiliaria que reporta puede ver el resultado de su propio reporte sin pagar
+    BD.datos.accesos.push({ usuarioId: u.id, cedula: c.cedula, fecha: Date.now() }); BD.guardar();
+    fPago.contratoId.value = c.id; sugerirPago();
+  };
+
+  // ----- 3. Pagos -----
+  var fPago = document.getElementById("pPago");
+  function contratoSel() { return BD.datos.contratos.find(function (c) { return c.id === fPago.contratoId.value; }); }
+  function sugerirPago() {
+    var c = contratoSel(); if (!c) return;
+    var pagos = BD.pagosDe(c.id);
+    var ult = pagos[pagos.length - 1];
+    var sig;
+    if (ult) { var f = aFecha(ult.periodo + "-01"); f.setMonth(f.getMonth() + 1); sig = f; } else { sig = aFecha(c.fechaInicio); }
+    fPago.periodo.value = sig.getFullYear() + "-" + dos(sig.getMonth() + 1);
+    fPago.fechaLimite.value = fPago.periodo.value + "-05";
+    fPago.valor.value = ult ? ult.valor : c.canon;
+    fPago.fechaPago.value = "";
+    calcMora();
+    document.getElementById("ultimosPagos").innerHTML = pagos.length ? tablaPagos({ pagos: pagos.slice(-6) }) : "<p class='tenue'>Sin pagos registrados.</p>";
+  }
+  function calcMora() {
+    if (!fPago.fechaLimite.value) return;
+    var d = diasMora({ fechaLimite: fPago.fechaLimite.value, fechaPago: fPago.fechaPago.value || null });
+    document.getElementById("moraCalc").value = d + (fPago.fechaPago.value ? " días" : " días (a hoy, sin pagar)");
+  }
+  fPago.contratoId.onchange = sugerirPago;
+  fPago.periodo.onchange = function () { fPago.fechaLimite.value = fPago.periodo.value + "-05"; calcMora(); };
+  fPago.fechaLimite.onchange = calcMora;
+  fPago.fechaPago.onchange = calcMora;
+  fPago.onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target), c = contratoSel();
+    if (!c) return error("Seleccione un contrato.");
+    var id = "P" + c.id + "-" + d.periodo;
+    var existente = BD.datos.pagos.find(function (p) { return p.id === id; });
+    var pago = { id: id, contratoId: c.id, periodo: d.periodo, fechaLimite: d.fechaLimite, fechaPago: d.fechaPago || null, valor: +d.valor, pagadoPor: d.fechaPago ? d.pagadoPor : null };
+    if (existente) Object.assign(existente, pago); else BD.datos.pagos.push(pago);
+    BD.guardar();
+    ok("Pago de " + periodoTexto(d.periodo) + (existente ? " actualizado" : " registrado") + " para " + esc(nombreDe(c.cedula)) + ". Días de mora: <b>" + diasMora(pago) + "</b>.");
+    sugerirPago();
+  };
+
+  // ----- 4. Terminar contrato -----
+  document.getElementById("pTerminar").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    var c = BD.datos.contratos.find(function (x) { return x.id === d.contratoId; });
+    if (!c) return error("Seleccione un contrato vigente.");
+    if (d.fechaFin < c.fechaInicio) return error("La fecha de terminación es anterior al inicio del contrato.");
+    c.fechaFin = d.fechaFin; c.motivoTerminacion = d.motivo; c.calificacion = +d.calificacion;
+    c.observacion = d.observacion; c.siniestro = !!d.siniestro;
+    BD.guardar(); e.target.reset(); refrescarListas();
+    ok("Contrato terminado. El reporte de " + esc(nombreDe(c.cedula)) + " ya refleja el cambio.");
+  };
+
+  // Si llega desde el panel con ?contrato=ID, abrir directamente la pestaña de pagos
+  var pre = parametro("contrato");
+  if (pre) { abrir("pPago"); fPago.contratoId.value = pre; }
+  sugerirPago();
+</script>
+</body>
+</html>

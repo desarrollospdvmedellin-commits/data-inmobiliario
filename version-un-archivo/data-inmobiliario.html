@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Inmobiliario · Prototipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+<style>/* =========================================================
+   Data Inmobiliario - Hoja de estilos principal
+   Proyecto académico. Colores y tipografía centralizados
+   en variables para que sea fácil cambiar la identidad.
+   ========================================================= */
+:root {
+  /* Paleta "luxury": azul noche, dorado champaña y marfil */
+  --azul: #0e1f33;          /* azul noche (titulares, encabezado) */
+  --azul-claro: #23466e;    /* azul acero (enlaces, botones secundarios) */
+  --turquesa: #b08d57;      /* dorado champaña (acento principal) */
+  --dorado: #b08d57;
+  --dorado-claro: #d9c29a;
+  --fondo: #f6f3ec;         /* marfil */
+  --blanco: #ffffff;
+  --texto: #1c2430;
+  --gris: #6c7280;
+  --borde: #e4ddcf;
+  --verde: #2e7d55;
+  --verde-suave: #e6f1ea;
+  --amarillo: #b9861c;
+  --amarillo-suave: #f8efd9;
+  --naranja: #c0662a;
+  --naranja-suave: #f8e6d9;
+  --rojo: #a8323a;
+  --rojo-suave: #f6e1e2;
+  --radio: 4px;
+  --sombra: 0 10px 30px rgba(14, 31, 51, 0.07);
+  --serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  letter-spacing: .005em;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: var(--azul-claro); }
+h1, h2, h3 { color: var(--azul); line-height: 1.2; font-family: var(--serif); font-weight: 600; letter-spacing: .01em; }
+h2 { position: relative; }
+h1 { font-size: 2.3rem; margin: 0 0 .4rem; }
+h2 { font-size: 1.7rem; margin: 1.6rem 0 .6rem; }
+h3 { font-size: 1.3rem; margin: 1rem 0 .4rem; }
+small, .tenue { color: var(--gris); }
+
+/* ---------- Banda de aviso académico ---------- */
+.aviso-academico {
+  background: #fff3cd;
+  color: #6b4e00;
+  text-align: center;
+  font-size: .82rem;
+  padding: .35rem 1rem;
+  border-bottom: 1px solid #f0dc9a;
+}
+
+/* ---------- Encabezado y navegación ---------- */
+.encabezado {
+  background: var(--azul);
+  color: var(--blanco);
+}
+.encabezado .contenedor {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; padding-top: .7rem; padding-bottom: .7rem;
+}
+.marca {
+  display: flex; align-items: center; gap: .55rem;
+  color: var(--blanco); text-decoration: none; font-weight: 700; font-size: 1.2rem;
+}
+.marca .logo {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--turquesa);
+  display: grid; place-items: center; font-weight: 800; font-size: .95rem;
+}
+.marca span.sub { font-weight: 400; opacity: .8; font-size: .8rem; display: block; }
+.menu { display: flex; gap: .2rem; flex-wrap: wrap; align-items: center; }
+.menu a {
+  color: #dbe6f3; text-decoration: none; padding: .4rem .7rem; border-radius: 6px; font-size: .93rem;
+}
+.menu a:hover, .menu a.activo { background: rgba(255,255,255,.12); color: var(--blanco); }
+.menu .usuario { font-size: .85rem; opacity: .85; padding: 0 .5rem; }
+
+/* ---------- Estructura ---------- */
+.contenedor { max-width: 1100px; margin: 0 auto; padding: 0 1.2rem; }
+main { flex: 1; padding: 1.8rem 0 3rem; }
+.pie {
+  background: #0d2742; color: #a9b9cc; font-size: .85rem; padding: 1.2rem 0; text-align: center;
+}
+.pie a { color: #cfe0f3; }
+
+.tarjeta {
+  background: var(--blanco); border-radius: var(--radio); box-shadow: var(--sombra);
+  padding: 1.3rem 1.4rem; margin-bottom: 1.2rem; border: 1px solid var(--borde);
+}
+.tarjeta > h2:first-child, .tarjeta > h3:first-child { margin-top: 0; }
+
+.grid { display: grid; gap: 1.1rem; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+/* ---------- Portada ---------- */
+.portada {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 60%, var(--turquesa) 100%);
+  color: var(--blanco); border-radius: 14px; padding: 2.4rem 2rem; margin-bottom: 1.6rem;
+}
+.portada h1 { color: var(--blanco); font-size: 2.1rem; }
+.portada p { max-width: 640px; font-size: 1.05rem; opacity: .95; }
+.paso { text-align: center; }
+.paso .num {
+  width: 42px; height: 42px; border-radius: 50%; background: var(--turquesa); color: #fff;
+  display: grid; place-items: center; font-weight: 700; margin: 0 auto .5rem;
+}
+.plan { text-align: center; }
+.plan .precio { font-size: 1.7rem; font-weight: 700; color: var(--azul); }
+.plan.destacado { border: 2px solid var(--turquesa); }
+
+/* ---------- Formularios ---------- */
+label { display: block; font-weight: 600; font-size: .9rem; margin: .7rem 0 .25rem; }
+input, select, textarea {
+  width: 100%; padding: .55rem .7rem; border: 1px solid var(--borde); border-radius: 7px;
+  font: inherit; background: #fff;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--azul-claro); border-color: transparent; }
+.check { display: flex; gap: .55rem; align-items: flex-start; font-weight: 400; }
+.check input { width: auto; margin-top: .3rem; }
+.fila { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.ayuda { font-size: .8rem; color: var(--gris); margin-top: .2rem; }
+
+.boton {
+  display: inline-block; background: var(--azul-claro); color: #fff; border: 0; border-radius: 7px;
+  padding: .6rem 1.1rem; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none;
+  margin-top: .9rem;
+}
+.boton:hover { filter: brightness(1.08); }
+.boton.secundario { background: #e8eef5; color: var(--azul); }
+.boton.verde { background: var(--turquesa); }
+.boton.peligro { background: var(--rojo); }
+.boton.pequeno { padding: .35rem .7rem; font-size: .85rem; margin-top: 0; }
+.boton[disabled] { opacity: .55; cursor: not-allowed; }
+
+.selector-tipo { display: flex; gap: .6rem; margin: .4rem 0 .6rem; }
+.selector-tipo label {
+  flex: 1; border: 2px solid var(--borde); border-radius: 8px; padding: .7rem; text-align: center;
+  cursor: pointer; margin: 0;
+}
+.selector-tipo input { display: none; }
+.selector-tipo input:checked + span { color: var(--azul-claro); }
+.selector-tipo label:has(input:checked) { border-color: var(--azul-claro); background: #eef5fc; }
+
+/* ---------- Mensajes ---------- */
+.alerta { padding: .75rem 1rem; border-radius: 8px; margin: .8rem 0; font-size: .93rem; }
+.alerta.info { background: #e7f1fb; color: #18466f; }
+.alerta.exito { background: var(--verde-suave); color: #135c36; }
+.alerta.error { background: var(--rojo-suave); color: #7c1d23; }
+.alerta.aviso { background: var(--amarillo-suave); color: #6b4e00; }
+
+/* ---------- Tablas ---------- */
+.tabla-envoltura { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { padding: .5rem .6rem; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
+th { background: #f0f4f8; color: var(--azul); font-weight: 600; white-space: nowrap; }
+tr:hover td { background: #fafcfe; }
+
+/* ---------- Etiquetas de estado ---------- */
+.chip {
+  display: inline-block; padding: .12rem .55rem; border-radius: 999px; font-size: .78rem; font-weight: 600;
+  white-space: nowrap;
+}
+.chip.verde { background: var(--verde-suave); color: var(--verde); }
+.chip.amarillo { background: var(--amarillo-suave); color: #8a6400; }
+.chip.naranja { background: var(--naranja-suave); color: var(--naranja); }
+.chip.rojo { background: var(--rojo-suave); color: var(--rojo); }
+.chip.gris { background: #eceff3; color: var(--gris); }
+.chip.azul { background: #e3eefa; color: var(--azul-claro); }
+
+/* ---------- Reporte ---------- */
+.reporte-cabecera { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+.reporte-cabecera .datos { flex: 1; min-width: 260px; }
+.medidor { width: 230px; text-align: center; }
+.medidor svg { width: 100%; height: auto; }
+.medidor .puntaje { font-size: 2.2rem; font-weight: 800; margin-top: -2.4rem; }
+.medidor .categoria { font-weight: 700; font-size: 1.05rem; }
+.kpi { text-align: center; }
+.kpi .valor { font-size: 1.6rem; font-weight: 700; color: var(--azul); }
+.kpi .etiqueta { font-size: .82rem; color: var(--gris); }
+
+/* Vector de comportamiento (cuadros por mes, al estilo de las centrales de riesgo) */
+.vector { display: flex; flex-wrap: wrap; gap: 3px; margin: .4rem 0; }
+.vector .mes {
+  width: 30px; height: 30px; border-radius: 4px; display: grid; place-items: center;
+  font-size: .68rem; font-weight: 700; color: #fff; cursor: default;
+}
+.mes.n { background: var(--verde); }
+.mes.m1 { background: var(--amarillo); }
+.mes.m30 { background: var(--naranja); }
+.mes.m60 { background: #b8452a; }
+.mes.m90 { background: var(--rojo); }
+.mes.np { background: #6d1a20; }
+.mes.vacio { background: #e3e8ee; color: var(--gris); }
+.leyenda { display: flex; flex-wrap: wrap; gap: .8rem; font-size: .78rem; color: var(--gris); }
+.leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 4px; }
+
+/* Línea de tiempo de viviendas */
+.linea-tiempo { border-left: 3px solid var(--borde); margin-left: .6rem; padding-left: 1.3rem; }
+.vivienda { position: relative; margin-bottom: 1.4rem; }
+.vivienda::before {
+  content: ""; position: absolute; left: -1.85rem; top: .35rem; width: 15px; height: 15px; border-radius: 50%;
+  background: var(--azul-claro); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--azul-claro);
+}
+.vivienda.mala::before { background: var(--rojo); box-shadow: 0 0 0 2px var(--rojo); }
+.vivienda.regular::before { background: var(--amarillo); box-shadow: 0 0 0 2px var(--amarillo); }
+.vivienda.buena::before { background: var(--verde); box-shadow: 0 0 0 2px var(--verde); }
+details summary { cursor: pointer; color: var(--azul-claro); font-weight: 600; font-size: .9rem; margin-top: .4rem; }
+
+/* Pestañas (módulo de ingreso) */
+.pestanas { display: flex; gap: .3rem; flex-wrap: wrap; border-bottom: 2px solid var(--borde); margin-bottom: 1rem; }
+.pestanas button {
+  background: none; border: 0; padding: .6rem 1rem; font: inherit; cursor: pointer; color: var(--gris);
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+}
+.pestanas button.activa { color: var(--azul); border-bottom-color: var(--turquesa); font-weight: 600; }
+.panel-pestana { display: none; }
+.panel-pestana.activa { display: block; }
+
+/* Tarjeta de pago simulado */
+.tarjeta-credito {
+  background: linear-gradient(135deg, #2b3e57, #12355b); color: #fff; border-radius: 12px; padding: 1.2rem;
+  max-width: 340px; font-family: monospace; font-size: 1.05rem; margin-bottom: 1rem;
+}
+.tarjeta-credito .num { letter-spacing: 2px; margin: 1.2rem 0 .8rem; font-size: 1.2rem; }
+
+/* Diagrama de flujo de aseguradoras */
+.flujo { display: flex; flex-wrap: wrap; gap: .5rem; align-items: stretch; }
+.flujo .etapa {
+  flex: 1 1 150px; background: #eef5fc; border: 1px solid #cfe0f3; border-radius: 8px; padding: .8rem;
+  font-size: .88rem; position: relative;
+}
+.flujo .etapa b { display: block; color: var(--azul); margin-bottom: .2rem; }
+
+.oculto { display: none !important; }
+
+@media print {
+  .encabezado, .pie, .no-imprimir, .aviso-academico { display: none !important; }
+  body { background: #fff; }
+  .tarjeta { box-shadow: none; break-inside: avoid; }
+}
+
+/* =========================================================
+   CAPA "LUXURY" - sobrescribe estilos anteriores
+   Estética sobria: azul noche + dorado, tipografía serif,
+   esquinas casi rectas, líneas finas y mucho espacio.
+   ========================================================= */
+.aviso-academico { background: #0a1726; color: var(--dorado-claro); border-bottom: 1px solid rgba(176,141,87,.35); letter-spacing: .06em; font-size: .75rem; text-transform: uppercase; }
+.encabezado { background: var(--azul); border-bottom: 1px solid rgba(176,141,87,.45); }
+.encabezado .contenedor { padding-top: 1rem; padding-bottom: 1rem; }
+.marca { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; letter-spacing: .04em; }
+.marca .logo { background: transparent; border: 1px solid var(--dorado); color: var(--dorado); width: 42px; height: 42px; border-radius: 2px; padding: 4px; }
+.marca .logo svg { width: 100%; height: 100%; }
+.marca span.sub { font-family: var(--sans); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dorado-claro); opacity: 1; }
+.menu a { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: #c9d1dc; border-radius: 0; border-bottom: 1px solid transparent; }
+.menu a:hover, .menu a.activo { background: transparent; color: #fff; border-bottom-color: var(--dorado); }
+.menu .usuario { color: var(--dorado-claro); font-size: .8rem; }
+
+.tarjeta { border-radius: var(--radio); border: 1px solid var(--borde); box-shadow: var(--sombra); padding: 1.6rem 1.7rem; }
+.tarjeta > h2:first-child::after, .seccion-titulo::after {
+  content: ""; display: block; width: 46px; height: 2px; background: var(--dorado); margin-top: .45rem;
+}
+.seccion-titulo { text-align: center; margin-top: 3rem; }
+.seccion-titulo::after { margin: .6rem auto 0; }
+.seccion-sub { text-align: center; color: var(--gris); max-width: 620px; margin: 0 auto 1.6rem; }
+.etiqueta-oro { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--dorado); font-weight: 600; }
+
+.boton { background: var(--azul); border-radius: 2px; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; padding: .85rem 1.5rem; border: 1px solid var(--azul); }
+.boton:hover { filter: none; background: #182f4c; }
+.boton.verde { background: var(--dorado); border-color: var(--dorado); color: #fff; }
+.boton.verde:hover { background: #9a7946; }
+.boton.secundario { background: transparent; color: var(--azul); border: 1px solid var(--azul); }
+.boton.secundario:hover { background: var(--azul); color: #fff; }
+.boton.peligro { background: var(--rojo); border-color: var(--rojo); }
+.boton.pequeno { padding: .45rem .8rem; font-size: .7rem; }
+
+input, select, textarea { border-radius: 2px; border-color: #d8d0c0; background: #fffdf9; }
+input:focus, select:focus, textarea:focus { outline: 1px solid var(--dorado); border-color: var(--dorado); }
+label { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: #3a4556; }
+.check { text-transform: none; letter-spacing: 0; font-size: .9rem; color: var(--texto); }
+.selector-tipo label { border-radius: 2px; text-transform: none; letter-spacing: 0; font-size: .95rem; }
+.selector-tipo label:has(input:checked) { border-color: var(--dorado); background: #fbf6ec; }
+.selector-tipo input:checked + span { color: var(--azul); font-weight: 600; }
+
+th { background: #f3efe6; color: var(--azul); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+.alerta { border-radius: 2px; border-left: 3px solid currentColor; }
+.chip { border-radius: 2px; letter-spacing: .03em; }
+.chip.azul { background: #e6ecf3; color: var(--azul-claro); }
+.kpi .valor { font-family: var(--serif); font-size: 2rem; font-weight: 600; }
+.kpi .etiqueta { letter-spacing: .05em; }
+.medidor .puntaje { font-family: var(--serif); font-size: 2.8rem; }
+.pestanas button.activa { border-bottom-color: var(--dorado); }
+.flujo .etapa { background: #fbf8f2; border-color: var(--borde); border-top: 2px solid var(--dorado); border-radius: 2px; }
+.flujo .etapa b { font-family: var(--serif); font-size: 1.1rem; }
+.tarjeta-credito { background: linear-gradient(135deg, #1b2f48, #0a1726); border: 1px solid var(--dorado); border-radius: 8px; }
+.tarjeta-credito > div:first-child { color: var(--dorado-claro); letter-spacing: .2em; font-size: .8rem; }
+.plan .precio { font-family: var(--serif); font-size: 2.4rem; }
+.plan.destacado { border: 1px solid var(--dorado); box-shadow: 0 14px 40px rgba(176,141,87,.18); position: relative; }
+.plan.destacado::before { content: "RECOMENDADO"; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--dorado); color: #fff; font-size: .65rem; letter-spacing: .2em; padding: .2rem .7rem; }
+.paso .num { background: transparent; border: 1px solid var(--dorado); color: var(--dorado); font-family: var(--serif); font-size: 1.3rem; border-radius: 0; transform: rotate(45deg); }
+.paso .num span { transform: rotate(-45deg); }
+.vivienda::before { border-radius: 0; transform: rotate(45deg); }
+
+/* ---------- Portada con edificio ---------- */
+.portada {
+  background: radial-gradient(ellipse at 80% 20%, #1d3757 0%, #0e1f33 55%, #08131f 100%);
+  border-radius: 0; padding: 0; overflow: hidden; display: grid; grid-template-columns: 1.15fr .85fr;
+  border: 1px solid rgba(176,141,87,.4); min-height: 460px; margin-bottom: 2rem;
+}
+.portada .texto { padding: 3.2rem 2.8rem; align-self: center; }
+.portada h1 { font-size: 3rem; font-weight: 500; line-height: 1.08; margin: .6rem 0 1rem; }
+.portada h1 em { color: var(--dorado-claro); font-style: italic; }
+.portada p { color: #c9d1dc; font-size: 1.02rem; }
+.portada .boton.secundario { color: #fff; border-color: rgba(255,255,255,.5); }
+.portada .boton.secundario:hover { background: #fff; color: var(--azul); }
+.portada .ilustracion { position: relative; display: flex; align-items: flex-end; justify-content: center; }
+.portada .ilustracion svg { width: 100%; height: 100%; max-height: 520px; display: block; }
+.franja-confianza { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border: 1px solid var(--borde); background: #fff; margin-bottom: 1rem; }
+.franja-confianza div { padding: 1.1rem 1.2rem; border-right: 1px solid var(--borde); font-size: .85rem; color: var(--gris); }
+.franja-confianza div:last-child { border-right: 0; }
+.franja-confianza b { display: block; font-family: var(--serif); font-size: 1.15rem; color: var(--azul); font-weight: 600; }
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--borde); border: 1px solid var(--borde); margin: 1rem 0 2rem; }
+.cifras div { background: var(--azul); color: #c9d1dc; text-align: center; padding: 1.4rem .8rem; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+.cifras b { display: block; font-family: var(--serif); font-size: 2.2rem; color: var(--dorado-claro); font-weight: 500; letter-spacing: 0; text-transform: none; }
+.icono-lujo { width: 40px; height: 40px; color: var(--dorado); margin-bottom: .4rem; }
+
+/* ---------- Pantallas de ingreso con edificio ---------- */
+.acceso { display: grid; grid-template-columns: 1fr 1fr; max-width: 980px; margin: 0 auto; border: 1px solid var(--borde); box-shadow: var(--sombra); background: #fff; }
+.acceso .lado-imagen { background: radial-gradient(ellipse at 70% 10%, #1d3757, #0b1828); color: #c9d1dc; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 520px; }
+.acceso .lado-imagen h2 { color: #fff; font-weight: 500; font-size: 2rem; margin: .4rem 0; }
+.acceso .lado-imagen svg { width: 100%; max-height: 300px; }
+.acceso .lado-form { padding: 2.4rem; }
+.acceso .lado-form .tarjeta { box-shadow: none; border: 0; padding: 0; margin: 0; }
+
+.pie { background: var(--azul); color: #8f9bab; border-top: 1px solid rgba(176,141,87,.45); padding: 0 0 1.4rem; font-size: .8rem; letter-spacing: .03em; }
+.pie .skyline { display: block; width: 100%; height: 70px; margin-bottom: 1rem; }
+.pie a { color: var(--dorado-claro); }
+
+@media (max-width: 820px) {
+  .portada, .acceso { grid-template-columns: 1fr; }
+  .portada .ilustracion { max-height: 300px; }
+  .portada h1 { font-size: 2.2rem; }
+  .portada .texto { padding: 2rem 1.4rem; }
+  .acceso .lado-imagen { min-height: 0; }
+  .acceso .lado-imagen svg { display: none; }
+}
+
+/* Ajustes finos */
+.cifras b, .kpi .valor, .plan .precio, .medidor .puntaje, .portada h1 { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+.grid-3-fijo { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 820px) { .grid-3-fijo { grid-template-columns: 1fr; } }
+.linea-tiempo { padding-left: 1.9rem; border-left-color: var(--dorado-claro); }
+.vivienda::before { left: -2.45rem; width: 13px; height: 13px; }
+.menu a { padding: .4rem .55rem; letter-spacing: .08em; }
+@media (min-width: 1000px) { .encabezado .contenedor { flex-wrap: nowrap; } }
+h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+
+/* Pie corporativo y datos de contacto */
+.pie-columnas { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2rem; padding-top: 1.2rem; padding-bottom: 1.5rem; text-align: left; line-height: 1.7; }
+.pie-columnas h4 { color: var(--dorado-claro); font-family: var(--sans); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 .5rem; font-weight: 600; }
+.pie-columnas p { margin: 0 0 1rem; }
+.pie-marca { font-family: var(--serif); font-size: 1.4rem; color: #fff; display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.pie-marca .logo { width: 34px; height: 34px; border: 1px solid var(--dorado); padding: 3px; display: inline-block; }
+.pie-marca .logo svg { width: 100%; height: 100%; display: block; }
+.redes { display: flex; flex-direction: column; gap: .15rem; font-size: .78rem; color: var(--dorado-claro); }
+.pie-legal { border-top: 1px solid rgba(176,141,87,.25); padding-top: 1rem; text-align: center; font-size: .75rem; }
+.dato-contacto { display: flex; gap: .9rem; align-items: flex-start; padding: .55rem 0; border-bottom: 1px solid var(--borde); }
+.dato-contacto:last-child { border-bottom: 0; }
+.dato-contacto .icono-lujo { width: 30px; height: 30px; margin: 0; flex-shrink: 0; }
+.dato-contacto b { display: block; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dorado); }
+.dato-contacto span { font-size: .93rem; }
+@media (max-width: 820px) { .pie-columnas { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<main id="vista"></main>
+<template id="v-index">
+  <div class="contenedor">
+
+    <section class="portada">
+      <div class="texto">
+        <div class="etiqueta-oro">Central de información de arrendatarios</div>
+        <h1>Arriende con <em>certeza</em>.<br>Decida con información.</h1>
+        <p>Data Inmobiliario reúne el historial de arrendamiento de las personas para que inmobiliarias y propietarios sepan,
+           con autorización del titular, si un aspirante ha sido buen o mal pagador: dónde ha vivido, cómo pagó y cómo terminó cada contrato.</p>
+        <a class="boton verde" href="registro.html">Crear cuenta</a>
+        <a class="boton secundario" href="login.html">Ingresar</a>
+      </div>
+      <div class="ilustracion" data-ilustracion="edificio"></div>
+    </section>
+
+    <div class="franja-confianza">
+      <div><b>Habeas data</b>Operación alineada con la Ley 1266 de 2008 y la Ley 1581 de 2012.</div>
+      <div><b>Autorización previa</b>Solo se consulta a quien autoriza de forma expresa.</div>
+      <div><b>Fuentes verificadas</b>Información reportada por inmobiliarias y arrendadores.</div>
+      <div><b>Derecho del titular</b>Consulta gratuita del propio historial y reclamos.</div>
+    </div>
+
+    <div class="cifras" id="cifras"></div>
+
+    <h2 class="seccion-titulo">Cómo funciona</h2>
+    <p class="seccion-sub">Cuatro pasos para tomar una decisión de arriendo informada.</p>
+    <div class="grid grid-4">
+      <div class="tarjeta paso"><div class="num"><span>1</span></div><h3>Regístrese</h3><p class="tenue">Como inmobiliaria, propietario o persona que quiere ver su propio historial.</p></div>
+      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta o PSE (en este prototipo el pago es simulado).</p></div>
+      <div class="tarjeta paso"><div class="num"><span>3</span></div><h3>Busque por cédula</h3><p class="tenue">Con la autorización firmada por el aspirante a arrendatario.</p></div>
+      <div class="tarjeta paso"><div class="num"><span>4</span></div><h3>Analice el reporte</h3><p class="tenue">Puntaje, calificación, viviendas, pagos, días de mora y último canon.</p></div>
+    </div>
+
+    <h2 class="seccion-titulo">El reporte</h2>
+    <p class="seccion-sub">Una visión completa y objetiva del comportamiento del arrendatario.</p>
+    <div class="grid grid-3 grid-3-fijo">
+      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación: excelente, buen, regular o mal pagador.</p></div>
+      <div class="tarjeta"><span data-icono="casa"></span><h3>Historial de viviendas</h3><p>Direcciones, ciudades y fechas de inicio y fin de cada contrato, y con quién arrendó.</p></div>
+      <div class="tarjeta"><span data-icono="tarjeta"></span><h3>Comportamiento de pago</h3><p>Pago mes a mes, días de mora, deudas abiertas y siniestros con aseguradoras.</p></div>
+      <div class="tarjeta"><span data-icono="documento"></span><h3>Último canon</h3><p>Valor del último arriendo pagado y arrendador del contrato más reciente.</p></div>
+      <div class="tarjeta"><span data-icono="escudo"></span><h3>Aseguradoras</h3><p>Si el contrato tuvo póliza y si la aseguradora tuvo que pagar por el inquilino.</p></div>
+      <div class="tarjeta"><span data-icono="balanza"></span><h3>Derechos del titular</h3><p>La persona puede ver gratis su historial, saber quién la consultó y pedir correcciones.</p></div>
+    </div>
+
+    <h2 class="seccion-titulo">Planes</h2>
+    <p class="seccion-sub">Valores simulados con fines académicos.</p>
+    <div class="grid grid-3">
+      <div class="tarjeta plan"><h3>Consulta individual</h3><div class="precio">$15.000</div><p class="tenue">1 reporte completo</p></div>
+      <div class="tarjeta plan destacado"><h3>Paquete inmobiliaria</h3><div class="precio">$120.000</div><p class="tenue">10 reportes · ahorra 20 %</p></div>
+      <div class="tarjeta plan"><h3>Paquete empresarial</h3><div class="precio">$500.000</div><p class="tenue">50 reportes · ahorra 33 %</p></div>
+    </div>
+    <div class="alerta info">La persona titular <b>siempre puede consultar gratis</b> su propio historial (derecho de acceso del habeas data).</div>
+
+    <h2 class="seccion-titulo" id="contacto">Quiénes somos</h2>
+    <p class="seccion-sub">Somos una central de información especializada en arrendamiento de vivienda, con sede en Sabaneta, Antioquia.
+      Nuestra misión es que propietarios e inmobiliarias arrienden con seguridad y que los buenos inquilinos sean reconocidos por su cumplimiento.</p>
+
+    <div class="grid grid-2">
+      <div class="tarjeta">
+        <h2>Nuestra sede</h2>
+        <div class="dato-contacto"><span data-icono="ubicacion"></span><div><b>Dirección</b><span id="eDireccion"></span></div></div>
+        <div class="dato-contacto"><span data-icono="telefono"></span><div><b>Teléfonos</b><span id="eTelefonos"></span></div></div>
+        <div class="dato-contacto"><span data-icono="correo"></span><div><b>Correo</b><span id="eCorreo"></span></div></div>
+        <div class="dato-contacto"><span data-icono="reloj"></span><div><b>Horario</b><span id="eHorario"></span></div></div>
+        <div class="dato-contacto"><span data-icono="edificio"></span><div><b>Razón social</b><span id="eRazon"></span></div></div>
+      </div>
+      <div class="tarjeta">
+        <h2>PQRS · Escríbanos</h2>
+        <div id="msgPqrs"></div>
+        <form id="formPqrs">
+          <div class="fila">
+            <div><label>Nombre</label><input name="nombre" required></div>
+            <div><label>Correo</label><input name="correo" type="email" required></div>
+          </div>
+          <label>Tipo</label>
+          <select name="tipo"><option>Petición</option><option>Queja</option><option>Reclamo</option><option>Sugerencia</option><option>Quiero afiliar mi inmobiliaria</option></select>
+          <label>Mensaje</label>
+          <textarea name="mensaje" rows="3" required></textarea>
+          <label class="check"><input type="checkbox" required><span>Autorizo el tratamiento de mis datos para responder esta solicitud.</span></label>
+          <button class="boton verde" type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<template id="v-login">
+  <div class="contenedor">
+    <div class="acceso">
+      <div class="lado-imagen">
+        <div><div class="etiqueta-oro">Data Inmobiliario</div><h2>Bienvenido de nuevo</h2><p>Acceda a la central de información de arrendatarios.</p></div>
+        <div data-ilustracion="edificio"></div>
+      </div>
+      <div class="lado-form">
+    <div class="tarjeta">
+      <h1>Ingresar</h1>
+      <p class="tenue">Inmobiliarias, propietarios y personas.</p>
+      <div id="msg"></div>
+      <form id="formLogin">
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" required placeholder="correo@empresa.com">
+        <label for="clave">Contraseña</label>
+        <input id="clave" type="password" required placeholder="••••••••">
+        <button class="boton" type="submit">Ingresar</button>
+      </form>
+      <p style="margin-top:1rem">¿No tiene cuenta? <a href="registro.html">Regístrese aquí</a></p>
+    </div>
+      </div>
+    </div>
+  </div>
+</template>
+<template id="v-registro">
+  <div class="contenedor">
+    <div class="acceso">
+      <div class="lado-imagen">
+        <div><div class="etiqueta-oro">Data Inmobiliario</div><h2>Únase a la central</h2><p>Inmobiliarias, propietarios y personas en un mismo lugar de confianza.</p></div>
+        <div data-ilustracion="edificio"></div>
+      </div>
+      <div class="lado-form">
+    <div class="tarjeta">
+      <h1>Crear cuenta</h1>
+      <div id="msg"></div>
+      <form id="formRegistro">
+        <label>Tipo de cuenta</label>
+        <div class="selector-tipo">
+          <label><input type="radio" name="tipo" value="inmobiliaria" checked><span>Inmobiliaria</span></label>
+          <label><input type="radio" name="tipo" value="persona"><span>Persona / propietario</span></label>
+        </div>
+        <label for="nombre" id="lblNombre">Razón social</label>
+        <input id="nombre" required>
+        <div class="fila">
+          <div><label for="documento" id="lblDoc">NIT</label><input id="documento" required></div>
+          <div><label for="ciudad">Ciudad</label><input id="ciudad" required value="Medellín"></div>
+        </div>
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" required>
+        <div class="fila">
+          <div><label for="clave">Contraseña</label><input id="clave" type="password" minlength="6" required></div>
+          <div><label for="clave2">Repetir contraseña</label><input id="clave2" type="password" minlength="6" required></div>
+        </div>
+        <label class="check"><input type="checkbox" id="terminos" required>
+          <span>Acepto los términos de uso y la <a href="legal.html" target="_blank">política de tratamiento de datos personales</a>, y me comprometo a consultar solo personas que me hayan dado autorización previa, expresa e informada.</span></label>
+        <button class="boton verde" type="submit">Crear cuenta</button>
+      </form>
+      <p class="ayuda">Prototipo: la contraseña se guarda en el navegador sin cifrar. En un sistema real se guardaría con hash (bcrypt/argon2) en un servidor.</p>
+    </div>
+      </div>
+    </div>
+  </div>
+</template>
+<template id="v-panel">
+  <div class="contenedor" id="contenido"></div>
+</template>
+<template id="v-consulta">
+  <div class="contenedor" style="max-width:640px">
+    <div class="tarjeta">
+      <h1>Consultar historial de arrendatario</h1>
+      <p class="tenue">Cada consulta descuenta 1 crédito y le da acceso al reporte durante 24 horas.</p>
+      <div id="saldo" class="alerta info"></div>
+      <div id="msg"></div>
+      <form id="formConsulta">
+        <label for="cc">Cédula de ciudadanía del aspirante</label>
+        <input id="cc" inputmode="numeric" required placeholder="Ej: 9990000103">
+        <label for="motivo">Motivo de la consulta</label>
+        <select id="motivo">
+          <option>Estudio para nuevo contrato de arrendamiento</option>
+          <option>Renovación de contrato vigente</option>
+          <option>Verificación de codeudor</option>
+          <option>Solicitud del propio titular</option>
+        </select>
+        <label class="check"><input type="checkbox" id="autoriza" required>
+          <span>Declaro que cuento con la <b>autorización previa, expresa e informada</b> del titular para consultar su información (Ley 1266 de 2008 y Ley 1581 de 2012).</span></label>
+        <button class="boton" type="submit">Consultar</button>
+      </form>
+    </div>
+  </div>
+</template>
+<template id="v-comprar">
+  <div class="contenedor">
+    <h1>Comprar consultas</h1>
+    <div class="alerta aviso"><b>Pasarela de pago SIMULADA.</b> No se realiza ningún cobro ni se envían datos a ningún banco. No escriba datos de una tarjeta real.</div>
+
+    <div class="grid grid-2" id="zonaCompra">
+      <div class="tarjeta">
+        <h2>1. Elija un plan</h2>
+        <div id="planes"></div>
+        <h2>2. Medio de pago</h2>
+        <div class="pestanas">
+          <button type="button" class="activa" data-medio="tarjeta">Tarjeta</button>
+          <button type="button" data-medio="pse">PSE</button>
+        </div>
+        <div id="msg"></div>
+        <form id="formTarjeta">
+          <div class="tarjeta-credito"><div>DATA INMOBILIARIO PAY</div><div class="num" id="vistaNum">•••• •••• •••• ••••</div><div id="vistaNombre">NOMBRE DEL TITULAR</div></div>
+          <label for="numTarjeta">Número de tarjeta</label>
+          <input id="numTarjeta" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+          <label for="nomTarjeta">Nombre como aparece en la tarjeta</label>
+          <input id="nomTarjeta" required>
+          <div class="fila">
+            <div><label for="venc">Vencimiento (MM/AA)</label><input id="venc" placeholder="12/29" maxlength="5" required></div>
+            <div><label for="cvv">CVV</label><input id="cvv" inputmode="numeric" maxlength="4" placeholder="123" required></div>
+            <div><label for="cuotas">Cuotas</label><select id="cuotas"><option>1</option><option>3</option><option>6</option><option>12</option></select></div>
+          </div>
+          <button class="boton verde" type="submit" id="btnPagar">Pagar</button>
+          <p class="ayuda">Tarjetas de prueba: <b>4111 1111 1111 1111</b> (aprobada) · <b>4000 0000 0000 0002</b> (rechazada por fondos insuficientes).</p>
+        </form>
+        <form id="formPse" class="oculto">
+          <label for="banco">Banco</label>
+          <select id="banco"><option>Banco Ficticio de Colombia</option><option>Banco Demo Popular</option><option>Cooperativa Simulada</option></select>
+          <label for="tipoPersona">Tipo de persona</label>
+          <select id="tipoPersona"><option>Natural</option><option>Jurídica</option></select>
+          <button class="boton verde" type="submit">Continuar al banco (simulado)</button>
+        </form>
+      </div>
+      <div class="tarjeta">
+        <h2>Resumen</h2>
+        <table id="resumen"></table>
+        <p class="ayuda">Valores simulados con IVA incluido. En un sistema real se integraría una pasarela certificada (por ejemplo Wompi, PayU o Mercado Pago) y nunca se guardarían los datos de la tarjeta en el propio servidor.</p>
+      </div>
+    </div>
+
+    <div id="comprobante" class="tarjeta oculto"></div>
+  </div>
+</template>
+<template id="v-reporte">
+  <div class="contenedor" id="contenido"></div>
+</template>
+<template id="v-mi-historial">
+  <div class="contenedor">
+    <h1>Mi historial de arriendo</h1>
+    <div class="alerta info">Como titular de la información usted puede consultar su reporte <b>gratis</b>, conocer quién lo ha consultado y pedir que se corrija un dato que considere inexacto.</div>
+    <div id="reporte"></div>
+
+    <div class="tarjeta" id="zonaReclamo">
+      <h2>Presentar un reclamo o solicitud de corrección</h2>
+      <div id="msg"></div>
+      <form id="formReclamo">
+        <div class="fila">
+          <div><label>Tipo de solicitud</label>
+            <select name="tipo"><option>Rectificación de un pago mal reportado</option><option>Actualización (ya pagué la deuda)</option><option>No reconozco este contrato</option><option>Supresión del dato (cumplió su tiempo de permanencia)</option><option>Revocar autorización</option></select></div>
+          <div><label>Contrato relacionado</label><select name="contrato" id="selContrato"></select></div>
+        </div>
+        <label>Describa su solicitud</label>
+        <textarea name="detalle" rows="3" required></textarea>
+        <button class="boton" type="submit">Enviar reclamo</button>
+        <p class="ayuda">Plazo legal de respuesta para reclamos: 15 días hábiles (Ley 1266 de 2008, art. 16). Mientras se resuelve, el reporte muestra la leyenda "reclamo en trámite".</p>
+      </form>
+      <h3>Mis reclamos</h3>
+      <div id="listaReclamos"></div>
+    </div>
+  </div>
+</template>
+<template id="v-ingreso-datos">
+  <div class="contenedor">
+    <h1>Ingresar datos a la central</h1>
+    <p class="tenue">Aquí la inmobiliaria reporta inquilinos, contratos y pagos. Con esta información la plataforma calcula automáticamente el puntaje y genera los reportes.</p>
+    <div id="msg"></div>
+
+    <div class="tarjeta">
+      <div class="pestanas">
+        <button type="button" class="activa" data-p="pInquilino">1. Inquilino</button>
+        <button type="button" data-p="pContrato">2. Contrato</button>
+        <button type="button" data-p="pPago">3. Pago mensual</button>
+        <button type="button" data-p="pTerminar">4. Terminar contrato</button>
+      </div>
+
+      <!-- 1. INQUILINO -->
+      <form id="pInquilino" class="panel-pestana activa">
+        <h2>Registrar inquilino</h2>
+        <div class="fila">
+          <div><label>Cédula</label><input name="cedula" inputmode="numeric" required pattern="\d{6,10}" title="Entre 6 y 10 dígitos"></div>
+          <div><label>Nombres</label><input name="nombres" required></div>
+          <div><label>Apellidos</label><input name="apellidos" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Fecha de nacimiento</label><input name="nacimiento" type="date" required></div>
+          <div><label>Ciudad</label><input name="ciudad" required></div>
+          <div><label>Ocupación</label><input name="ocupacion"></div>
+        </div>
+        <div class="fila">
+          <div><label>Teléfono</label><input name="telefono"></div>
+          <div><label>Correo</label><input name="email" type="email"></div>
+          <div><label>Fecha de la autorización firmada</label><input name="autorizacion" type="date" required></div>
+        </div>
+        <label class="check"><input type="checkbox" required>
+          <span>Confirmo que el inquilino firmó la <b>autorización de reporte y consulta</b> ante centrales de información y que fue informado de sus derechos (conocer, actualizar, rectificar y suprimir sus datos).</span></label>
+        <button class="boton verde" type="submit">Guardar inquilino</button>
+      </form>
+
+      <!-- 2. CONTRATO -->
+      <form id="pContrato" class="panel-pestana">
+        <h2>Registrar contrato de arrendamiento</h2>
+        <div class="fila">
+          <div><label>Cédula del inquilino</label><input name="cedula" list="listaCedulas" required></div>
+          <div><label>Arrendador</label><input name="arrendador" id="arrendador" required></div>
+          <div><label>Tipo de arrendador</label><select name="tipoArrendador"><option>Inmobiliaria</option><option>Persona natural</option></select></div>
+        </div>
+        <div class="fila">
+          <div><label>Tipo de inmueble</label><select name="tipoInmueble"><option>Apartamento</option><option>Casa</option><option>Apartaestudio</option><option>Habitación</option><option>Local</option></select></div>
+          <div><label>Dirección</label><input name="direccion" required></div>
+          <div><label>Barrio</label><input name="barrio" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Ciudad</label><input name="ciudad" required></div>
+          <div><label>Estrato</label><select name="estrato"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></div>
+          <div><label>Canon mensual (COP)</label><input name="canon" type="number" min="100000" step="1000" required></div>
+        </div>
+        <div class="fila">
+          <div><label>Fecha de inicio</label><input name="fechaInicio" type="date" required></div>
+          <div><label>Fecha de fin <span class="tenue">(vacío si está vigente)</span></label><input name="fechaFin" type="date"></div>
+          <div><label>Aseguradora de arriendo</label><select name="aseguradora" id="selAseg"></select></div>
+        </div>
+        <div class="alerta info">
+          <label class="check" style="margin:0"><input type="checkbox" name="generar" id="chkGenerar">
+            <span><b>Generar historial de pagos simulado</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
+          <div id="zonaPerfil" class="oculto">
+            <label>Perfil de comportamiento del inquilino</label>
+            <select name="perfil"><option value="puntual">Puntual (casi siempre a tiempo)</option><option value="bueno">Bueno (retrasos cortos ocasionales)</option><option value="regular">Regular (moras frecuentes)</option><option value="moroso">Moroso (moras altas, meses sin pagar)</option></select>
+          </div>
+        </div>
+        <button class="boton verde" type="submit">Guardar contrato</button>
+      </form>
+
+      <!-- 3. PAGO -->
+      <form id="pPago" class="panel-pestana">
+        <h2>Registrar pago mensual</h2>
+        <label>Contrato</label>
+        <select name="contratoId" id="selContratoPago" required></select>
+        <div class="fila">
+          <div><label>Periodo (mes que se paga)</label><input name="periodo" type="month" required></div>
+          <div><label>Fecha límite de pago</label><input name="fechaLimite" type="date" required></div>
+          <div><label>Fecha en que pagó <span class="tenue">(vacío = no ha pagado)</span></label><input name="fechaPago" type="date"></div>
+        </div>
+        <div class="fila">
+          <div><label>Valor (COP)</label><input name="valor" type="number" min="0" step="1000" required></div>
+          <div><label>¿Quién pagó?</label><select name="pagadoPor"><option>Inquilino</option><option>Aseguradora</option></select></div>
+          <div><label>Días de mora (calculado)</label><input id="moraCalc" readonly></div>
+        </div>
+        <button class="boton verde" type="submit">Guardar pago</button>
+        <h3>Últimos pagos de este contrato</h3>
+        <div id="ultimosPagos"></div>
+      </form>
+
+      <!-- 4. TERMINAR -->
+      <form id="pTerminar" class="panel-pestana">
+        <h2>Terminar contrato</h2>
+        <label>Contrato vigente</label>
+        <select name="contratoId" id="selContratoFin" required></select>
+        <div class="fila">
+          <div><label>Fecha de terminación</label><input name="fechaFin" type="date" required></div>
+          <div><label>Calificación del inquilino (1 a 5)</label><select name="calificacion"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        </div>
+        <label>Motivo de terminación</label>
+        <select name="motivo"><option>Entrega voluntaria al vencimiento</option><option>Terminación anticipada con preaviso</option><option>Restitución del inmueble por mora</option><option>Abandono del inmueble</option><option>Venta del inmueble</option></select>
+        <label class="check"><input type="checkbox" name="siniestro"><span>Hubo <b>siniestro</b>: la aseguradora pagó cánones al propietario por incumplimiento del inquilino.</span></label>
+        <label>Observación</label>
+        <textarea name="observacion" rows="2"></textarea>
+        <button class="boton peligro" type="submit">Terminar contrato</button>
+      </form>
+    </div>
+    <datalist id="listaCedulas"></datalist>
+  </div>
+</template>
+<template id="v-aseguradoras">
+  <div class="contenedor">
+    <h1>¿Cómo funcionan y cómo se pagan las aseguradoras de arriendo?</h1>
+    <p class="tenue">Guía didáctica. Los porcentajes y plazos son <b>valores de referencia</b> para el prototipo; cada póliza real define los suyos.</p>
+
+    <div class="tarjeta">
+      <h2>¿Qué es un seguro de arrendamiento?</h2>
+      <p>Es una póliza que protege al <b>propietario</b> si el <b>inquilino</b> deja de pagar el canon. Cuando hay incumplimiento,
+        la aseguradora le paga al propietario los cánones adeudados y después le cobra al inquilino y a sus codeudores.
+        Por eso muchas inmobiliarias, en lugar de pedir codeudores con finca raíz, piden que el inquilino sea aprobado por una aseguradora.</p>
+      <div class="grid grid-4">
+        <div><span data-icono="casa"></span><br><b>Propietario</b><br><span class="tenue">Asegurado y beneficiario: recibe el pago si el inquilino incumple.</span></div>
+        <div><span data-icono="edificio"></span><br><b>Inmobiliaria</b><br><span class="tenue">Tomadora de la póliza: la contrata, paga la prima y reporta los siniestros.</span></div>
+        <div><span data-icono="documento"></span><br><b>Inquilino</b><br><span class="tenue">Afianzado: su comportamiento de pago es lo que se asegura.</span></div>
+        <div><span data-icono="escudo"></span><br><b>Aseguradora</b><br><span class="tenue">Estudia el riesgo, cobra la prima, paga el siniestro y hace el recobro.</span></div>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>El proceso paso a paso</h2>
+      <div class="flujo">
+        <div class="etapa"><b>1. Estudio</b>El aspirante entrega documentos (cédula, ingresos, extractos). La aseguradora consulta centrales de información como Data Inmobiliario.</div>
+        <div class="etapa"><b>2. Aprobación</b>Aprueba, aprueba con codeudor o niega según ingresos (el canon no suele superar ~1/3 de los ingresos) e historial.</div>
+        <div class="etapa"><b>3. Contrato y póliza</b>Se firma el contrato y el inmueble queda incluido en la póliza colectiva de la inmobiliaria.</div>
+        <div class="etapa"><b>4. Prima mensual</b>Cada mes la inmobiliaria paga un porcentaje del canon (y de la administración) a la aseguradora.</div>
+        <div class="etapa"><b>5. Mora</b>Si el inquilino no paga, la inmobiliaria hace gestión de cobro y, pasado el plazo de la póliza, avisa el siniestro.</div>
+        <div class="etapa"><b>6. Indemnización</b>La aseguradora le paga al propietario los cánones adeudados, mes a mes, hasta la restitución del inmueble o el límite de la póliza.</div>
+        <div class="etapa"><b>7. Recobro</b>La aseguradora queda con el derecho de cobrar (subrogación) al inquilino y codeudores, incluso por vía judicial.</div>
+        <div class="etapa"><b>8. Reporte</b>El incumplimiento queda registrado en centrales de información, previa notificación al titular.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="tarjeta">
+        <h2>¿Qué cubre?</h2>
+        <table>
+          <tr><th>Amparo</th><th>Qué paga</th></tr>
+          <tr><td>Básico</td><td>Cánones de arrendamiento no pagados.</td></tr>
+          <tr><td>Administración</td><td>Cuotas de administración de propiedad horizontal.</td></tr>
+          <tr><td>Servicios públicos</td><td>Facturas de agua, luz y gas que deje el inquilino (según póliza).</td></tr>
+          <tr><td>Integral / daños</td><td>Daños al inmueble y faltantes de inventario al entregarlo.</td></tr>
+          <tr><td>Jurídico</td><td>Honorarios del abogado para el proceso de restitución.</td></tr>
+        </table>
+      </div>
+      <div class="tarjeta">
+        <h2>¿Quién paga y cuánto?</h2>
+        <ul>
+          <li><b>La prima</b> normalmente la paga el <b>propietario</b>: la inmobiliaria la descuenta del canon antes de girarle el dinero.</li>
+          <li>Tarifa de referencia: entre <b>1,8 % y 3 % mensual</b> del canon + administración, más IVA (19 %) sobre la prima.</li>
+          <li>El <b>inquilino</b> suele pagar solo el <b>estudio</b> de su solicitud (pago único).</li>
+          <li>Si hay siniestro, el inquilino termina debiendo a la aseguradora el canon, intereses de mora y gastos de cobro.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Calculadora de prima (simulada)</h2>
+      <div class="fila">
+        <div><label for="canon">Canon mensual</label><input id="canon" type="number" value="1500000" step="10000"></div>
+        <div><label for="admin">Administración mensual</label><input id="admin" type="number" value="250000" step="10000"></div>
+        <div><label for="aseg">Aseguradora (ficticia)</label><select id="aseg"></select></div>
+        <div><label for="integral">Amparo integral (+0,5 %)</label><select id="integral"><option value="0">No</option><option value="0.005">Sí</option></select></div>
+      </div>
+      <div id="resultado" class="grid grid-4" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Aseguradoras registradas en el prototipo</h2>
+      <p class="tenue">Nombres inventados. En Colombia existen aseguradoras reales que ofrecen este producto; para el documento de grado puede citarlas como referencia de mercado, pero no se usan aquí.</p>
+      <div class="tabla-envoltura"><table id="tablaAseg"></table></div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Ejemplo de siniestro en Data Inmobiliario</h2>
+      <p>En los datos de demostración, el inquilino ficticio con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
+        y el reporte muestra esos meses con el código <b style="color:#6d1a20">S</b> y la alerta “siniestro pagado por la aseguradora”, lo que baja fuertemente su puntaje.</p>
+      <h3>Consejos para el inquilino</h3>
+      <ul>
+        <li>Si va a atrasarse, avise a la inmobiliaria antes de la fecha límite y acuerde una fecha de pago.</li>
+        <li>Guarde los comprobantes de pago: le sirven para pedir correcciones.</li>
+        <li>Al terminar el contrato, entregue el inmueble con paz y salvo de servicios y administración.</li>
+      </ul>
+    </div>
+  </div>
+</template>
+<template id="v-legal">
+  <div class="contenedor">
+    <h1>Marco legal y tratamiento de datos personales</h1>
+    <div class="alerta aviso">Resumen didáctico para un proyecto académico. Antes de citarlo en el documento de grado, verifique el texto vigente de cada norma en fuentes oficiales (Secretaría del Senado, SUIN-Juriscol, Superintendencia de Industria y Comercio).</div>
+
+    <div class="tarjeta">
+      <h2>Normas que aplican a una central de información de arrendatarios</h2>
+      <div class="tabla-envoltura"><table>
+        <tr><th>Norma</th><th>De qué trata</th><th>Cómo se refleja en el prototipo</th></tr>
+        <tr><td>Constitución Política, art. 15</td><td>Derecho a la intimidad y al <b>habeas data</b>: conocer, actualizar y rectificar la información que se tenga de uno.</td><td>Sección “Mi historial” para el titular.</td></tr>
+        <tr><td><b>Ley 1266 de 2008</b></td><td>Habeas data financiero, crediticio, comercial y de servicios. Define fuente, operador, usuario y titular; consulta gratuita; plazos para peticiones y reclamos.</td><td>Consulta gratuita del titular, huella de consultas, reclamos con plazo de 15 días hábiles.</td></tr>
+        <tr><td><b>Ley 2157 de 2021</b> (“Borrón y cuenta nueva”)</td><td>Modifica la Ley 1266: aviso previo al titular antes de un reporte negativo (20 días calendario) y límites de permanencia del dato negativo (en general, el doble del tiempo de mora, máximo 4 años después del pago).</td><td>Se propone como mejora: notificación previa y borrado automático del dato negativo.</td></tr>
+        <tr><td><b>Ley 1581 de 2012</b> y Decreto 1377 de 2013 (hoy en el Decreto 1074 de 2015)</td><td>Régimen general de protección de datos personales: autorización previa, expresa e informada; política de tratamiento; principios de finalidad, veracidad, seguridad y circulación restringida.</td><td>Casilla de autorización en el registro del inquilino y en cada consulta; política de tratamiento abajo.</td></tr>
+        <tr><td>Ley 820 de 2003</td><td>Régimen de arrendamiento de vivienda urbana: canon, reajustes anuales (tope ligado al IPC), garantías, terminación y restitución.</td><td>Incremento anual del canon en los datos simulados; motivos de terminación.</td></tr>
+        <tr><td>Superintendencia de Industria y Comercio (SIC)</td><td>Autoridad de vigilancia de protección de datos y de los operadores de información comercial.</td><td>Mencionar en el documento el Registro Nacional de Bases de Datos (RNBD).</td></tr>
+      </table></div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Roles según la Ley 1266</h2>
+      <div class="grid grid-4">
+        <div><b>Titular</b><br><span class="tenue">El inquilino a quien se refieren los datos.</span></div>
+        <div><b>Fuente</b><br><span class="tenue">La inmobiliaria o propietario que reporta contratos y pagos (módulo “Ingresar datos”).</span></div>
+        <div><b>Operador</b><br><span class="tenue">Data Inmobiliario: recibe, organiza y entrega la información.</span></div>
+        <div><b>Usuario</b><br><span class="tenue">Quien consulta el reporte para decidir si arrienda (con autorización del titular).</span></div>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Política de tratamiento de datos (modelo para el prototipo)</h2>
+      <ol>
+        <li><b>Responsable:</b> Data Inmobiliario (proyecto académico, sin operación real).</li>
+        <li><b>Finalidad:</b> evaluar el riesgo de incumplimiento en contratos de arrendamiento de inmuebles.</li>
+        <li><b>Datos tratados:</b> identificación, contacto, contratos de arrendamiento, pagos, días de mora y siniestros con aseguradoras. No se tratan datos sensibles.</li>
+        <li><b>Autorización:</b> el titular la otorga por escrito a la inmobiliaria antes del reporte y antes de cada consulta.</li>
+        <li><b>Derechos del titular:</b> conocer, actualizar, rectificar, solicitar prueba de la autorización, ser informado del uso, presentar quejas ante la SIC, revocar la autorización y pedir la supresión cuando proceda.</li>
+        <li><b>Consultas:</b> se responden en máximo 10 días hábiles. <b>Reclamos:</b> en máximo 15 días hábiles.</li>
+        <li><b>Seguridad:</b> en un sistema real: cifrado, control de acceso por roles, bitácora de consultas y respaldo de la información.</li>
+      </ol>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Aviso sobre este prototipo</h2>
+      <p>Todos los nombres, cédulas, direcciones, inmobiliarias y aseguradoras son ficticios. Los pagos son simulados: no se procesa dinero real ni se transmiten datos a entidades financieras.
+        La información se guarda únicamente en el navegador del equipo donde se abre el prototipo.</p>
+    </div>
+  </div>
+</template>
+<script>/* =========================================================
+   DATOS SEMILLA (100 % FICTICIOS)
+   ---------------------------------------------------------
+   Todos los nombres, cédulas, direcciones, inmobiliarias y
+   aseguradoras de este archivo son INVENTADOS para fines
+   académicos. Las cédulas usan el prefijo 99900 para que no
+   coincidan con documentos reales (las cédulas colombianas de
+   10 dígitos empiezan por 1).
+
+   Los PAGOS mensuales no se escriben a mano: se generan
+   automáticamente en almacen.js a partir del "perfil" de cada
+   contrato (puntual, bueno, regular, moroso). Así hay años de
+   historial sin escribir miles de líneas.
+   ========================================================= */
+
+var SEMILLA = {
+
+  // Usuarios de demostración para iniciar sesión
+  usuarios: [
+    {
+      id: "u1", tipo: "inmobiliaria", nombre: "Inmobiliaria Horizonte S.A.S.",
+      documento: "900000001-1", email: "inmobiliaria@demo.co", clave: "demo123",
+      ciudad: "Medellín", creditos: 5
+    },
+    {
+      id: "u2", tipo: "persona", nombre: "Laura Marcela Restrepo Quintero",
+      documento: "9990000101", email: "persona@demo.co", clave: "demo123",
+      ciudad: "Medellín", creditos: 0
+    },
+    {
+      id: "u3", tipo: "persona", nombre: "Propietario Demo (arrendador particular)",
+      documento: "9990000900", email: "propietario@demo.co", clave: "demo123",
+      ciudad: "Envigado", creditos: 2
+    }
+  ],
+
+  // Aseguradoras de arrendamiento ficticias
+  aseguradoras: [
+    { id: "A1", nombre: "Amparo Arriendo Seguros S.A.", tarifa: 0.022, diasSiniestro: 30 },
+    { id: "A2", nombre: "Garantía Hogar Aseguradora", tarifa: 0.025, diasSiniestro: 30 },
+    { id: "A3", nombre: "Protección Canon Seguros", tarifa: 0.020, diasSiniestro: 45 }
+  ],
+
+  // Personas (inquilinos) registradas en la central
+  inquilinos: [
+    { cedula: "9990000101", nombres: "Laura Marcela", apellidos: "Restrepo Quintero", nacimiento: "1990-03-14", ciudad: "Medellín", telefono: "300 000 0101", email: "laura.r@correo-ficticio.co", ocupacion: "Contadora", autorizacion: "2018-01-20" },
+    { cedula: "9990000102", nombres: "Andrés Felipe", apellidos: "Gómez Arango", nacimiento: "1987-07-02", ciudad: "Medellín", telefono: "300 000 0102", email: "andres.g@correo-ficticio.co", ocupacion: "Ingeniero de sistemas", autorizacion: "2017-05-03" },
+    { cedula: "9990000103", nombres: "Carolina Andrea", apellidos: "Mejía Salazar", nacimiento: "1994-11-23", ciudad: "Bello", telefono: "300 000 0103", email: "carolina.m@correo-ficticio.co", ocupacion: "Diseñadora", autorizacion: "2019-02-11" },
+    { cedula: "9990000104", nombres: "Jhon Fredy", apellidos: "Ospina Cárdenas", nacimiento: "1983-01-30", ciudad: "Bogotá", telefono: "300 000 0104", email: "jhon.o@correo-ficticio.co", ocupacion: "Comerciante", autorizacion: "2018-08-15" },
+    { cedula: "9990000105", nombres: "Diana Patricia", apellidos: "Vélez Montoya", nacimiento: "1979-05-09", ciudad: "Envigado", telefono: "300 000 0105", email: "diana.v@correo-ficticio.co", ocupacion: "Docente", autorizacion: "2016-09-01" },
+    { cedula: "9990000106", nombres: "Juan Camilo", apellidos: "Rendón Higuita", nacimiento: "1992-12-17", ciudad: "Cali", telefono: "300 000 0106", email: "juan.r@correo-ficticio.co", ocupacion: "Vendedor", autorizacion: "2019-06-20" },
+    { cedula: "9990000107", nombres: "Natalia Isabel", apellidos: "Cardona Ruiz", nacimiento: "1996-04-05", ciudad: "Medellín", telefono: "300 000 0107", email: "natalia.c@correo-ficticio.co", ocupacion: "Enfermera", autorizacion: "2020-01-10" },
+    { cedula: "9990000108", nombres: "Sebastián Alejandro", apellidos: "Muñoz Betancur", nacimiento: "1991-08-28", ciudad: "Pereira", telefono: "300 000 0108", email: "sebastian.m@correo-ficticio.co", ocupacion: "Chef", autorizacion: "2018-03-12" },
+    { cedula: "9990000109", nombres: "Paula Andrea", apellidos: "Zapata Henao", nacimiento: "1999-10-11", ciudad: "Medellín", telefono: "300 000 0109", email: "paula.z@correo-ficticio.co", ocupacion: "Analista de datos", autorizacion: "2024-02-01" },
+    { cedula: "9990000110", nombres: "Carlos Mario", apellidos: "Londoño Giraldo", nacimiento: "1985-06-21", ciudad: "Barranquilla", telefono: "300 000 0110", email: "carlos.l@correo-ficticio.co", ocupacion: "Independiente", autorizacion: "2017-11-30" },
+    { cedula: "9990000111", nombres: "Valentina", apellidos: "Ríos Echeverri", nacimiento: "1997-02-14", ciudad: "Bucaramanga", telefono: "300 000 0111", email: "valentina.r@correo-ficticio.co", ocupacion: "Abogada", autorizacion: "2021-07-19" },
+    { cedula: "9990000112", nombres: "Miguel Ángel", apellidos: "Torres Patiño", nacimiento: "1988-09-03", ciudad: "Bogotá", telefono: "300 000 0112", email: "miguel.t@correo-ficticio.co", ocupacion: "Conductor", autorizacion: "2018-12-04" },
+    { cedula: "9990000113", nombres: "Luisa Fernanda", apellidos: "Arias Correa", nacimiento: "1993-03-27", ciudad: "Sabaneta", telefono: "300 000 0113", email: "luisa.a@correo-ficticio.co", ocupacion: "Odontóloga", autorizacion: "2019-09-09" },
+    { cedula: "9990000114", nombres: "Esteban David", apellidos: "Herrera Mazo", nacimiento: "2002-01-15", ciudad: "Itagüí", telefono: "300 000 0114", email: "esteban.h@correo-ficticio.co", ocupacion: "Estudiante", autorizacion: "2026-10-01" }
+  ],
+
+  /* Contratos de arrendamiento.
+     fechaFin = null  -> contrato vigente (se generan pagos hasta hoy)
+     perfil           -> controla cómo se generan los pagos
+     siniestro = true -> el inquilino dejó de pagar y la aseguradora
+                         pagó al propietario los últimos meses        */
+  contratos: [
+    // Laura: excelente pagadora
+    { id: "C001", cedula: "9990000101", inmobiliaria: "Arrendamientos La Ceiba", arrendador: "Arrendamientos La Ceiba", tipoArrendador: "Inmobiliaria", direccion: "Calle 10 # 40-21 Apto 302", barrio: "El Poblado", ciudad: "Medellín", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2018-02-01", fechaFin: "2021-01-31", canon: 1150000, aseguradora: "A1", perfil: "puntual", motivoTerminacion: "Entrega voluntaria al terminar el contrato", calificacion: 5, observacion: "Entregó el inmueble en perfecto estado." },
+    { id: "C002", cedula: "9990000101", inmobiliaria: "Inmobiliaria Horizonte S.A.S.", arrendador: "Inmobiliaria Horizonte S.A.S.", tipoArrendador: "Inmobiliaria", direccion: "Carrera 43A # 18 Sur-55 Apto 1104", barrio: "Castropol", ciudad: "Medellín", estrato: 5, tipoInmueble: "Apartamento", fechaInicio: "2021-02-01", fechaFin: null, canon: 1650000, aseguradora: "A2", perfil: "puntual", motivoTerminacion: "", calificacion: 5, observacion: "Contrato vigente sin novedades." },
+
+    // Andrés: buen pagador con retrasos pequeños
+    { id: "C003", cedula: "9990000102", inmobiliaria: "", arrendador: "Gloria Inés Pérez (particular)", tipoArrendador: "Persona natural", direccion: "Calle 50 # 70-12", barrio: "Laureles", ciudad: "Medellín", estrato: 4, tipoInmueble: "Casa", fechaInicio: "2017-06-01", fechaFin: "2019-12-31", canon: 950000, aseguradora: null, perfil: "bueno", motivoTerminacion: "Venta del inmueble por parte del propietario", calificacion: 4, observacion: "Algunos pagos con pocos días de retraso." },
+    { id: "C004", cedula: "9990000102", inmobiliaria: "Propiedades del Valle Ltda.", arrendador: "Propiedades del Valle Ltda.", tipoArrendador: "Inmobiliaria", direccion: "Carrera 70 # 44-90 Apto 501", barrio: "Estadio", ciudad: "Medellín", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2020-01-15", fechaFin: null, canon: 1300000, aseguradora: "A3", perfil: "bueno", motivoTerminacion: "", calificacion: 4, observacion: "" },
+
+    // Carolina: pagadora regular
+    { id: "C005", cedula: "9990000103", inmobiliaria: "Vivienda Segura Inmobiliaria", arrendador: "Vivienda Segura Inmobiliaria", tipoArrendador: "Inmobiliaria", direccion: "Diagonal 55 # 34-10 Apto 203", barrio: "Niquía", ciudad: "Bello", estrato: 3, tipoInmueble: "Apartamento", fechaInicio: "2019-03-01", fechaFin: "2022-02-28", canon: 780000, aseguradora: "A1", perfil: "regular", motivoTerminacion: "Terminación anticipada por la arrendataria con preaviso", calificacion: 3, observacion: "Pagos frecuentemente atrasados, sin llegar a cobro jurídico." },
+    { id: "C006", cedula: "9990000103", inmobiliaria: "", arrendador: "Hernán Darío Ochoa (particular)", tipoArrendador: "Persona natural", direccion: "Calle 47 # 50-33 Int 201", barrio: "Centro", ciudad: "Bello", estrato: 3, tipoInmueble: "Apartaestudio", fechaInicio: "2022-03-10", fechaFin: null, canon: 850000, aseguradora: null, perfil: "regular", motivoTerminacion: "", calificacion: 3, observacion: "" },
+
+    // Jhon Fredy: mal pagador, contrato vigente con meses sin pagar
+    { id: "C007", cedula: "9990000104", inmobiliaria: "Bogotá Hogares Inmobiliaria", arrendador: "Bogotá Hogares Inmobiliaria", tipoArrendador: "Inmobiliaria", direccion: "Avenida Calle 80 # 69-40 Apto 702", barrio: "Las Ferias", ciudad: "Bogotá", estrato: 3, tipoInmueble: "Apartamento", fechaInicio: "2018-09-01", fechaFin: "2021-06-30", canon: 1050000, aseguradora: "A2", perfil: "moroso", siniestro: true, motivoTerminacion: "Restitución del inmueble por mora; la aseguradora indemnizó al propietario", calificacion: 1, observacion: "Proceso de restitución. Saldo recobrado por la aseguradora." },
+    { id: "C008", cedula: "9990000104", inmobiliaria: "", arrendador: "Martha Lucía Rojas (particular)", tipoArrendador: "Persona natural", direccion: "Carrera 15 # 140-22", barrio: "Cedritos", ciudad: "Bogotá", estrato: 4, tipoInmueble: "Casa", fechaInicio: "2023-04-01", fechaFin: null, canon: 1600000, aseguradora: null, perfil: "moroso", motivoTerminacion: "", calificacion: 1, observacion: "Adeuda cánones recientes." },
+
+    // Diana: excelente pagadora, historial largo
+    { id: "C009", cedula: "9990000105", inmobiliaria: "Arrendamientos La Ceiba", arrendador: "Arrendamientos La Ceiba", tipoArrendador: "Inmobiliaria", direccion: "Transversal 32 Sur # 31-08", barrio: "Zúñiga", ciudad: "Envigado", estrato: 5, tipoInmueble: "Casa", fechaInicio: "2016-10-01", fechaFin: "2020-09-30", canon: 1800000, aseguradora: "A1", perfil: "puntual", motivoTerminacion: "Compra de vivienda propia", calificacion: 5, observacion: "Arrendataria ejemplar." },
+    { id: "C010", cedula: "9990000105", inmobiliaria: "Inmobiliaria Horizonte S.A.S.", arrendador: "Inmobiliaria Horizonte S.A.S.", tipoArrendador: "Inmobiliaria", direccion: "Calle 37 Sur # 27-60 Apto 1501", barrio: "El Esmeraldal", ciudad: "Envigado", estrato: 5, tipoInmueble: "Apartamento", fechaInicio: "2023-01-01", fechaFin: null, canon: 2400000, aseguradora: "A2", perfil: "puntual", motivoTerminacion: "", calificacion: 5, observacion: "" },
+
+    // Juan Camilo: siniestro con aseguradora
+    { id: "C011", cedula: "9990000106", inmobiliaria: "Propiedades del Valle Ltda.", arrendador: "Propiedades del Valle Ltda.", tipoArrendador: "Inmobiliaria", direccion: "Calle 5 # 66-14 Apto 404", barrio: "El Ingenio", ciudad: "Cali", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2019-07-01", fechaFin: "2023-03-31", canon: 1100000, aseguradora: "A3", perfil: "regular", siniestro: true, motivoTerminacion: "Abandono del inmueble con cánones en mora; siniestro pagado por la aseguradora", calificacion: 1, observacion: "La aseguradora pagó 3 cánones al propietario y adelanta cobro al inquilino y codeudor." },
+    { id: "C012", cedula: "9990000106", inmobiliaria: "", arrendador: "Jairo Alberto Muñoz (particular)", tipoArrendador: "Persona natural", direccion: "Carrera 1 # 70-30", barrio: "Alfonso López", ciudad: "Cali", estrato: 2, tipoInmueble: "Habitación", fechaInicio: "2023-06-01", fechaFin: null, canon: 450000, aseguradora: null, perfil: "bueno", motivoTerminacion: "", calificacion: 4, observacion: "" },
+
+    // Natalia: buena pagadora
+    { id: "C013", cedula: "9990000107", inmobiliaria: "Inmobiliaria Horizonte S.A.S.", arrendador: "Inmobiliaria Horizonte S.A.S.", tipoArrendador: "Inmobiliaria", direccion: "Calle 65 # 45-21 Apto 302", barrio: "Prado Centro", ciudad: "Medellín", estrato: 3, tipoInmueble: "Apartamento", fechaInicio: "2020-02-01", fechaFin: null, canon: 900000, aseguradora: "A1", perfil: "bueno", motivoTerminacion: "", calificacion: 4, observacion: "" },
+
+    // Sebastián: empezó regular y mejoró
+    { id: "C014", cedula: "9990000108", inmobiliaria: "Eje Cafetero Arriendos", arrendador: "Eje Cafetero Arriendos", tipoArrendador: "Inmobiliaria", direccion: "Carrera 8 # 22-15 Apto 201", barrio: "Centro", ciudad: "Pereira", estrato: 3, tipoInmueble: "Apartamento", fechaInicio: "2018-04-01", fechaFin: "2021-03-31", canon: 700000, aseguradora: "A3", perfil: "regular", motivoTerminacion: "Entrega voluntaria", calificacion: 3, observacion: "Retrasos frecuentes durante 2020." },
+    { id: "C015", cedula: "9990000108", inmobiliaria: "Eje Cafetero Arriendos", arrendador: "Eje Cafetero Arriendos", tipoArrendador: "Inmobiliaria", direccion: "Avenida 30 de Agosto # 40-11 Apto 803", barrio: "Álamos", ciudad: "Pereira", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2021-04-01", fechaFin: null, canon: 1000000, aseguradora: "A3", perfil: "puntual", motivoTerminacion: "", calificacion: 5, observacion: "Mejoró notablemente su hábito de pago." },
+
+    // Paula: historial corto y bueno
+    { id: "C016", cedula: "9990000109", inmobiliaria: "Inmobiliaria Horizonte S.A.S.", arrendador: "Inmobiliaria Horizonte S.A.S.", tipoArrendador: "Inmobiliaria", direccion: "Calle 44 # 79-50 Apto 1203", barrio: "Belén", ciudad: "Medellín", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2024-03-01", fechaFin: null, canon: 1350000, aseguradora: "A2", perfil: "puntual", motivoTerminacion: "", calificacion: 5, observacion: "" },
+
+    // Carlos Mario: moroso reincidente
+    { id: "C017", cedula: "9990000110", inmobiliaria: "Costa Inmobiliaria del Caribe", arrendador: "Costa Inmobiliaria del Caribe", tipoArrendador: "Inmobiliaria", direccion: "Carrera 53 # 79-120 Apto 6B", barrio: "El Prado", ciudad: "Barranquilla", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2017-12-01", fechaFin: "2020-05-31", canon: 1200000, aseguradora: "A1", perfil: "moroso", siniestro: true, motivoTerminacion: "Restitución judicial por mora", calificacion: 1, observacion: "Siniestro pagado por la aseguradora." },
+    { id: "C018", cedula: "9990000110", inmobiliaria: "", arrendador: "Rosa Elena Vargas (particular)", tipoArrendador: "Persona natural", direccion: "Calle 84 # 42F-18", barrio: "Riomar", ciudad: "Barranquilla", estrato: 5, tipoInmueble: "Casa", fechaInicio: "2020-09-01", fechaFin: "2022-08-31", canon: 1700000, aseguradora: null, perfil: "moroso", motivoTerminacion: "Terminación por incumplimiento en pagos", calificacion: 1, observacion: "Dejó saldo pendiente de servicios públicos." },
+    { id: "C019", cedula: "9990000110", inmobiliaria: "Costa Inmobiliaria del Caribe", arrendador: "Costa Inmobiliaria del Caribe", tipoArrendador: "Inmobiliaria", direccion: "Carrera 46 # 90-15 Apto 302", barrio: "Altos de Riomar", ciudad: "Barranquilla", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2024-01-01", fechaFin: null, canon: 1500000, aseguradora: "A2", perfil: "regular", motivoTerminacion: "", calificacion: 2, observacion: "" },
+
+    // Valentina: buena
+    { id: "C020", cedula: "9990000111", inmobiliaria: "Santander Propiedades", arrendador: "Santander Propiedades", tipoArrendador: "Inmobiliaria", direccion: "Carrera 27 # 48-30 Apto 904", barrio: "Cabecera del Llano", ciudad: "Bucaramanga", estrato: 5, tipoInmueble: "Apartamento", fechaInicio: "2021-08-01", fechaFin: null, canon: 1450000, aseguradora: "A1", perfil: "bueno", motivoTerminacion: "", calificacion: 4, observacion: "" },
+
+    // Miguel Ángel: regular
+    { id: "C021", cedula: "9990000112", inmobiliaria: "Bogotá Hogares Inmobiliaria", arrendador: "Bogotá Hogares Inmobiliaria", tipoArrendador: "Inmobiliaria", direccion: "Calle 1 Sur # 30-45", barrio: "Santa Isabel", ciudad: "Bogotá", estrato: 3, tipoInmueble: "Casa", fechaInicio: "2019-01-01", fechaFin: "2023-12-31", canon: 1000000, aseguradora: "A2", perfil: "regular", motivoTerminacion: "Entrega voluntaria al vencimiento", calificacion: 3, observacion: "" },
+    { id: "C022", cedula: "9990000112", inmobiliaria: "", arrendador: "Pedro Pablo Castro (particular)", tipoArrendador: "Persona natural", direccion: "Carrera 68 # 12-40 Apto 101", barrio: "Marsella", ciudad: "Bogotá", estrato: 3, tipoInmueble: "Apartamento", fechaInicio: "2024-02-01", fechaFin: null, canon: 1250000, aseguradora: null, perfil: "regular", motivoTerminacion: "", calificacion: 3, observacion: "" },
+
+    // Luisa: excelente
+    { id: "C023", cedula: "9990000113", inmobiliaria: "Vivienda Segura Inmobiliaria", arrendador: "Vivienda Segura Inmobiliaria", tipoArrendador: "Inmobiliaria", direccion: "Calle 75 Sur # 43A-80 Apto 1802", barrio: "Aves María", ciudad: "Sabaneta", estrato: 4, tipoInmueble: "Apartamento", fechaInicio: "2019-10-01", fechaFin: null, canon: 1250000, aseguradora: "A3", perfil: "puntual", motivoTerminacion: "", calificacion: 5, observacion: "" }
+
+    // Esteban (9990000114) no tiene contratos: sirve para mostrar
+    // el caso "persona sin historial de arrendamiento".
+  ]
+};
+</script>
+<script>/* =========================================================
+   ALMACÉN DE DATOS (la "base de datos" del prototipo)
+   ---------------------------------------------------------
+   En un sistema real, estos datos vivirían en un servidor
+   con base de datos (por ejemplo PostgreSQL o MySQL). En este
+   prototipo se guardan en el localStorage del navegador, así
+   el sitio funciona sin instalar nada.
+
+   Tablas (colecciones):
+     usuarios, aseguradoras, inquilinos, contratos, pagos,
+     compras (pagos simulados), consultas (bitácora de quién
+     consultó a quién), accesos (consultas ya pagadas) y
+     reclamos (solicitudes de corrección del titular).
+   ========================================================= */
+
+var CLAVE_BD = "dataInmobiliario_bd_v1";
+
+/* Si el navegador bloquea localStorage, se usa memoria temporal (los datos
+   se pierden al recargar, pero el prototipo sigue funcionando). */
+var Almacen = (function () {
+  try {
+    localStorage.setItem("_prueba", "1"); localStorage.removeItem("_prueba");
+    return localStorage;
+  } catch (e) {
+    var m = {};
+    return {
+      getItem: function (k) { return k in m ? m[k] : null; },
+      setItem: function (k, v) { m[k] = String(v); },
+      removeItem: function (k) { delete m[k]; }
+    };
+  }
+})();
+
+var BD = {
+  datos: null,
+
+  /* Carga la base de datos; si no existe, la crea con la semilla */
+  cargar: function () {
+    var texto = Almacen.getItem(CLAVE_BD);
+    if (texto) {
+      try { this.datos = JSON.parse(texto); return; } catch (e) { /* se regenera */ }
+    }
+    this.restablecer();
+  },
+
+  guardar: function () {
+    Almacen.setItem(CLAVE_BD, JSON.stringify(this.datos));
+  },
+
+  /* Borra todo y vuelve a crear los datos ficticios de demostración */
+  restablecer: function () {
+    var copia = JSON.parse(JSON.stringify(SEMILLA));
+    var rng = crearAleatorio(20261121); // semilla fija: siempre los mismos datos
+    var pagos = [];
+    copia.contratos.forEach(function (c) {
+      pagos = pagos.concat(generarPagos(c, c.perfil, rng));
+    });
+    this.datos = {
+      usuarios: copia.usuarios,
+      aseguradoras: copia.aseguradoras,
+      inquilinos: copia.inquilinos,
+      contratos: copia.contratos,
+      pagos: pagos,
+      compras: [],
+      consultas: [],
+      accesos: [],
+      reclamos: []
+    };
+    this.guardar();
+  },
+
+  nuevoId: function (prefijo) {
+    return prefijo + Date.now().toString(36) + Math.floor(Math.random() * 1000);
+  },
+
+  /* ---------- Consultas de lectura ---------- */
+  inquilino: function (cedula) {
+    return this.datos.inquilinos.find(function (i) { return i.cedula === cedula; });
+  },
+  contratosDe: function (cedula) {
+    return this.datos.contratos
+      .filter(function (c) { return c.cedula === cedula; })
+      .sort(function (a, b) { return a.fechaInicio < b.fechaInicio ? -1 : 1; });
+  },
+  pagosDe: function (contratoId) {
+    return this.datos.pagos
+      .filter(function (p) { return p.contratoId === contratoId; })
+      .sort(function (a, b) { return a.periodo < b.periodo ? -1 : 1; });
+  },
+  aseguradora: function (id) {
+    return this.datos.aseguradoras.find(function (a) { return a.id === id; });
+  },
+  usuarioPorEmail: function (email) {
+    email = (email || "").trim().toLowerCase();
+    return this.datos.usuarios.find(function (u) { return u.email.toLowerCase() === email; });
+  },
+  usuarioPorId: function (id) {
+    return this.datos.usuarios.find(function (u) { return u.id === id; });
+  }
+};
+
+/* =========================================================
+   GENERADOR DE PAGOS SIMULADOS
+   ========================================================= */
+
+/* Generador pseudoaleatorio con semilla (algoritmo mulberry32).
+   Con la misma semilla produce siempre la misma secuencia, por eso
+   los datos de demostración son idénticos en todos los equipos. */
+function crearAleatorio(semilla) {
+  var a = semilla >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function entero(rng, min, max) { return min + Math.floor(rng() * (max - min + 1)); }
+
+/* Días de mora según el perfil de comportamiento */
+function moraSegunPerfil(perfil, rng) {
+  var r = rng();
+  switch (perfil) {
+    case "puntual": return r < 0.93 ? 0 : entero(rng, 1, 3);
+    case "bueno":   return r < 0.80 ? 0 : (r < 0.97 ? entero(rng, 1, 8) : entero(rng, 9, 20));
+    case "regular": return r < 0.50 ? 0 : (r < 0.82 ? entero(rng, 1, 15) : (r < 0.95 ? entero(rng, 16, 35) : entero(rng, 36, 60)));
+    case "moroso":  return r < 0.25 ? 0 : (r < 0.55 ? entero(rng, 5, 25) : (r < 0.85 ? entero(rng, 26, 60) : entero(rng, 61, 95)));
+    default: return 0;
+  }
+}
+
+/* Crea los pagos mes a mes de un contrato.
+   - Fecha límite de pago: día 5 de cada mes (supuesto).
+   - El canon sube cada año en el aniversario del contrato (≈ IPC).
+   - Si el contrato tuvo siniestro, los últimos 3 meses los paga la aseguradora.
+   - Si es moroso y está vigente, los 2 últimos meses quedan sin pagar. */
+function generarPagos(contrato, perfil, rng, desdePeriodo) {
+  var hoy = new Date();
+  var inicio = aFecha(contrato.fechaInicio);
+  var fin = contrato.fechaFin ? aFecha(contrato.fechaFin) : hoy;
+  var pagos = [];
+  var anio = inicio.getFullYear(), mes = inicio.getMonth();
+  var canon = contrato.canon;
+  var mesesTranscurridos = 0;
+
+  while (true) {
+    var limite = new Date(anio, mes, 5);
+    if (limite > fin) break;
+    if (mesesTranscurridos > 0 && mesesTranscurridos % 12 === 0) {
+      canon = Math.round(canon * 1.06 / 1000) * 1000; // incremento anual ~6 %
+    }
+    var periodo = anio + "-" + dos(mes + 1);
+    if (!desdePeriodo || periodo >= desdePeriodo) {
+      var mora = moraSegunPerfil(perfil, rng);
+      var fechaPago = new Date(limite.getTime() + mora * 86400000);
+      pagos.push({
+        id: "P" + contrato.id + "-" + periodo,
+        contratoId: contrato.id,
+        periodo: periodo,
+        fechaLimite: aTexto(limite),
+        fechaPago: fechaPago <= hoy ? aTexto(fechaPago) : null,
+        valor: canon,
+        pagadoPor: fechaPago <= hoy ? "Inquilino" : null
+      });
+    }
+    mesesTranscurridos++;
+    mes++; if (mes > 11) { mes = 0; anio++; }
+  }
+
+  var n = pagos.length;
+  if (contrato.siniestro && n >= 3) {
+    for (var i = n - 3; i < n; i++) {
+      var lim = aFecha(pagos[i].fechaLimite);
+      pagos[i].fechaPago = aTexto(new Date(lim.getTime() + entero(rng, 40, 75) * 86400000));
+      pagos[i].pagadoPor = "Aseguradora";
+    }
+  } else if (perfil === "moroso" && !contrato.fechaFin && n >= 2) {
+    pagos[n - 1].fechaPago = null; pagos[n - 1].pagadoPor = null;
+    pagos[n - 2].fechaPago = null; pagos[n - 2].pagadoPor = null;
+  }
+  return pagos;
+}
+
+/* =========================================================
+   CÁLCULOS DEL REPORTE (lógica de negocio)
+   ========================================================= */
+
+/* Días de mora de un pago. Si no se ha pagado, cuenta hasta hoy. */
+function diasMora(pago) {
+  var limite = aFecha(pago.fechaLimite);
+  var hasta = pago.fechaPago ? aFecha(pago.fechaPago) : new Date();
+  var d = Math.floor((hasta - limite) / 86400000);
+  return d > 0 ? d : 0;
+}
+
+/* Clasifica un pago en la categoría del "vector de comportamiento" */
+function codigoMora(pago) {
+  if (pago.pagadoPor === "Aseguradora") return { clase: "np", texto: "S", nombre: "Siniestro: pagó la aseguradora" };
+  var d = diasMora(pago);
+  var pendiente = !pago.fechaPago;
+  if (pendiente && d === 0) return { clase: "vacio", texto: "·", nombre: "Pendiente, aún dentro del plazo" };
+  if (d === 0) return { clase: "n", texto: "N", nombre: "Al día" };
+  if (d <= 29) return { clase: "m1", texto: d, nombre: d + " días de mora" + (pendiente ? " (sin pagar)" : "") };
+  if (d <= 59) return { clase: "m30", texto: "30", nombre: d + " días de mora" + (pendiente ? " (sin pagar)" : "") };
+  if (d <= 89) return { clase: "m60", texto: "60", nombre: d + " días de mora" + (pendiente ? " (sin pagar)" : "") };
+  return { clase: "m90", texto: "90", nombre: d + " días de mora" + (pendiente ? " (sin pagar)" : "") };
+}
+
+/* PUNTAJE (0 a 1000) - modelo SIMPLIFICADO y ACADÉMICO.
+   1) Cada mes recibe una nota según los días de mora:
+        al día = 1000 · 1-5 días = 700 · 6-15 = 450 · 16-30 = 300
+        31-60 = 150 · más de 60 o siniestro = 0
+   2) Se promedian las notas; los últimos 24 meses pesan el doble
+      (lo reciente dice más del hábito actual que lo antiguo).
+   3) Se restan castigos: 150 por cada siniestro con aseguradora y
+      80 por cada mes vencido que siga sin pagar (máximo 300).      */
+function notaMes(pago) {
+  if (pago.pagadoPor === "Aseguradora") return 0;
+  var d = diasMora(pago);
+  if (!pago.fechaPago && d === 0) return null; // aún en plazo: no cuenta
+  if (d === 0) return 1000;
+  if (d <= 5) return 700;
+  if (d <= 15) return 450;
+  if (d <= 30) return 300;
+  if (d <= 60) return 150;
+  return 0;
+}
+
+function calcularPuntaje(cedula) {
+  var contratos = BD.contratosDe(cedula);
+  if (contratos.length === 0) return null;
+  var hace24 = new Date(); hace24.setMonth(hace24.getMonth() - 24);
+  var suma = 0, pesos = 0, castigo = 0, deudaMeses = 0;
+
+  contratos.forEach(function (c) {
+    BD.pagosDe(c.id).forEach(function (p) {
+      var nota = notaMes(p);
+      if (nota === null) return;
+      var peso = aFecha(p.fechaLimite) >= hace24 ? 2 : 1;
+      suma += nota * peso; pesos += peso;
+      if (!p.fechaPago && diasMora(p) > 0) deudaMeses++;
+    });
+    if (c.siniestro) castigo += 150;
+  });
+  if (pesos === 0) return null;
+  castigo += Math.min(300, deudaMeses * 80);
+  var puntaje = suma / pesos - castigo;
+  return Math.max(0, Math.min(1000, Math.round(puntaje)));
+}
+
+function categoriaPuntaje(puntaje) {
+  if (puntaje === null) return { nombre: "Sin historial", color: "gris", hex: "#6b7785", texto: "No hay información de arrendamientos para esta persona." };
+  if (puntaje >= 940) return { nombre: "Excelente pagador", color: "verde", hex: "#1e9e5a", texto: "Paga sus cánones a tiempo de forma consistente." };
+  if (puntaje >= 800) return { nombre: "Buen pagador", color: "verde", hex: "#5aa83a", texto: "Mayormente cumplido, con retrasos ocasionales y cortos." };
+  if (puntaje >= 600) return { nombre: "Pagador regular", color: "amarillo", hex: "#d89b00", texto: "Presenta moras frecuentes. Se recomienda pedir garantías adicionales." };
+  return { nombre: "Mal pagador", color: "rojo", hex: "#c8313a", texto: "Tiene moras altas, deudas abiertas o siniestros con aseguradoras." };
+}
+
+/* Resumen de un contrato: cuántos meses, puntualidad, mora... */
+function resumenContrato(contrato) {
+  var pagos = BD.pagosDe(contrato.id);
+  var aTiempo = 0, sumaMora = 0, maxMora = 0, pendientes = 0, deuda = 0, conMora = 0;
+  pagos.forEach(function (p) {
+    var d = diasMora(p);
+    if (d === 0 && p.fechaPago) aTiempo++;
+    if (d > 0) { conMora++; sumaMora += d; }
+    if (d > maxMora) maxMora = d;
+    if (!p.fechaPago) { pendientes++; if (d > 0) deuda += p.valor; }
+  });
+  var pct = pagos.length ? Math.round(aTiempo * 100 / pagos.length) : 0;
+  var ultimo = pagos.length ? pagos[pagos.length - 1] : null;
+  var resultado;
+  if (contrato.siniestro || maxMora > 90 || deuda > 0 && maxMora > 30) resultado = { texto: "Le fue mal", clase: "mala", chip: "rojo" };
+  else if (pct >= 85 && maxMora <= 10) resultado = { texto: "Le fue bien", clase: "buena", chip: "verde" };
+  else resultado = { texto: "Cumplimiento regular", clase: "regular", chip: "amarillo" };
+  return {
+    pagos: pagos, total: pagos.length, aTiempo: aTiempo, porcentaje: pct,
+    promedioMora: conMora ? Math.round(sumaMora / conMora) : 0, maxMora: maxMora,
+    pendientes: pendientes, deuda: deuda, ultimoCanon: ultimo ? ultimo.valor : contrato.canon,
+    resultado: resultado
+  };
+}
+
+/* ---------- Utilidades de fechas ---------- */
+function dos(n) { return (n < 10 ? "0" : "") + n; }
+function aFecha(texto) { var p = texto.split("-"); return new Date(+p[0], +p[1] - 1, +(p[2] || 1)); }
+function aTexto(f) { return f.getFullYear() + "-" + dos(f.getMonth() + 1) + "-" + dos(f.getDate()); }
+
+BD.cargar();
+</script>
+<script>/* =========================================================
+   ILUSTRACIONES.JS - Dibujos vectoriales (SVG) del sitio
+   ---------------------------------------------------------
+   El edificio, el logo, el horizonte del pie de página y los
+   íconos se dibujan con código SVG. Ventajas: no dependen de
+   imágenes externas, se ven nítidos en cualquier pantalla y no
+   tienen problemas de derechos de autor.
+
+   Uso en el HTML:  <div data-ilustracion="edificio"></div>
+                    <span data-icono="escudo"></span>
+   ========================================================= */
+
+var ORO = "#b08d57", ORO_CLARO = "#d9c29a";
+
+/* Número pseudoaleatorio fijo a partir de dos enteros (para que
+   las ventanas encendidas siempre sean las mismas) */
+function ruido(a, b) {
+  var x = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+function ventanas(x0, y0, cols, filas, ancho, alto, sepX, sepY, densidad, semilla) {
+  var s = "";
+  for (var f = 0; f < filas; f++) {
+    for (var c = 0; c < cols; c++) {
+      var r = ruido(c + semilla, f + semilla * 3);
+      var color = r < densidad ? ORO_CLARO : "#1c3555";
+      var op = r < densidad ? (0.55 + r) : 0.9;
+      s += '<rect x="' + (x0 + c * sepX) + '" y="' + (y0 + f * sepY) + '" width="' + ancho + '" height="' + alto +
+        '" fill="' + color + '" opacity="' + Math.min(op, 1).toFixed(2) + '"/>';
+    }
+  }
+  return s;
+}
+
+/* Torre corporativa principal (portada) */
+function svgEdificio() {
+  var estrellas = "";
+  for (var i = 0; i < 40; i++) {
+    estrellas += '<circle cx="' + (ruido(i, 1) * 400).toFixed(0) + '" cy="' + (ruido(i, 2) * 220).toFixed(0) +
+      '" r="' + (ruido(i, 3) * 1.1 + 0.3).toFixed(1) + '" fill="#fff" opacity="' + (ruido(i, 4) * 0.6 + 0.2).toFixed(2) + '"/>';
+  }
+  return '<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Ilustración de un edificio corporativo">' +
+    '<defs>' +
+    '<linearGradient id="gTorre" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#162c47"/><stop offset=".55" stop-color="#10223a"/><stop offset="1" stop-color="#0a1828"/></linearGradient>' +
+    '<linearGradient id="gOro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + ORO_CLARO + '"/><stop offset="1" stop-color="' + ORO + '"/></linearGradient>' +
+    '<radialGradient id="gLuna" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f4e9d3" stop-opacity=".9"/><stop offset="1" stop-color="#f4e9d3" stop-opacity="0"/></radialGradient>' +
+    '</defs>' +
+    estrellas +
+    '<circle cx="330" cy="70" r="46" fill="url(#gLuna)"/><circle cx="330" cy="70" r="14" fill="#efe3c8" opacity=".85"/>' +
+    // Edificios de fondo
+    '<rect x="10" y="250" width="85" height="250" fill="#0f1f33"/>' + ventanas(20, 265, 4, 14, 9, 6, 18, 16, 0.18, 5) +
+    '<rect x="95" y="190" width="55" height="310" fill="#0c1a2c"/>' + ventanas(103, 205, 3, 18, 8, 6, 15, 16, 0.12, 9) +
+    '<rect x="300" y="290" width="90" height="210" fill="#0f1f33"/>' + ventanas(310, 305, 4, 12, 10, 6, 20, 16, 0.2, 13) +
+    '<rect x="282" y="220" width="30" height="280" fill="#0b1828"/>' +
+    // Torre principal
+    '<line x1="220" y1="8" x2="220" y2="58" stroke="url(#gOro)" stroke-width="2"/>' +
+    '<circle cx="220" cy="8" r="2.5" fill="' + ORO_CLARO + '"/>' +
+    '<polygon points="180,95 220,55 260,95" fill="#132840" stroke="' + ORO + '" stroke-width="1"/>' +
+    '<rect x="175" y="95" width="90" height="55" fill="url(#gTorre)" stroke="' + ORO + '" stroke-width=".8"/>' +
+    ventanas(185, 105, 5, 3, 10, 9, 15, 14, 0.5, 21) +
+    '<rect x="155" y="150" width="130" height="350" fill="url(#gTorre)"/>' +
+    '<line x1="155" y1="150" x2="155" y2="500" stroke="' + ORO + '" stroke-width="1.2"/>' +
+    '<line x1="285" y1="150" x2="285" y2="500" stroke="' + ORO + '" stroke-width="1.2"/>' +
+    '<line x1="150" y1="150" x2="290" y2="150" stroke="url(#gOro)" stroke-width="2.5"/>' +
+    '<line x1="220" y1="150" x2="220" y2="440" stroke="' + ORO + '" stroke-width=".5" opacity=".6"/>' +
+    ventanas(166, 162, 7, 18, 11, 9, 16, 15, 0.38, 31) +
+    // Franjas horizontales doradas (pisos técnicos)
+    '<line x1="155" y1="300" x2="285" y2="300" stroke="' + ORO + '" stroke-width=".8" opacity=".7"/>' +
+    '<line x1="155" y1="436" x2="285" y2="436" stroke="' + ORO + '" stroke-width="1.5"/>' +
+    // Lobby / entrada
+    '<rect x="165" y="446" width="110" height="54" fill="#0a1626"/>' +
+    '<rect x="200" y="458" width="40" height="42" fill="' + ORO_CLARO + '" opacity=".35"/>' +
+    '<line x1="220" y1="458" x2="220" y2="500" stroke="' + ORO + '" stroke-width="1"/>' +
+    '<rect x="190" y="446" width="60" height="5" fill="url(#gOro)"/>' +
+    '<rect x="172" y="462" width="20" height="30" fill="#d9c29a" opacity=".18"/><rect x="248" y="462" width="20" height="30" fill="#d9c29a" opacity=".18"/>' +
+    // Suelo
+    '<rect x="0" y="498" width="400" height="2" fill="url(#gOro)"/>' +
+    '</svg>';
+}
+
+/* Horizonte de ciudad para el pie de página */
+function svgSkyline() {
+  var s = "", x = 0, i = 0;
+  while (x < 1200) {
+    var ancho = 30 + Math.floor(ruido(i, 7) * 60);
+    var alto = 18 + Math.floor(ruido(i, 8) * 50);
+    s += '<rect x="' + x + '" y="' + (70 - alto) + '" width="' + (ancho - 3) + '" height="' + alto + '" fill="#0a1726"/>';
+    for (var v = 0; v < 3; v++) {
+      if (ruido(i, v + 20) < 0.5) s += '<rect x="' + (x + 6 + v * 8) + '" y="' + (76 - alto + ruido(i, v) * 20).toFixed(0) + '" width="3" height="3" fill="' + ORO_CLARO + '" opacity=".6"/>';
+    }
+    x += ancho; i++;
+  }
+  return '<svg class="skyline" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">' + s +
+    '<rect x="0" y="69" width="1200" height="1" fill="' + ORO + '"/></svg>';
+}
+
+/* Logo: tres torres doradas */
+function svgLogo() {
+  return '<svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="' + ORO + '" stroke-width="1.4">' +
+    '<rect x="4" y="14" width="7" height="15"/><rect x="12.5" y="4" width="7" height="25"/><rect x="21" y="10" width="7" height="19"/>' +
+    '<line x1="16" y1="1" x2="16" y2="4"/><line x1="2" y1="29.5" x2="30" y2="29.5"/></svg>';
+}
+
+/* Íconos de línea fina */
+var ICONOS = {
+  estrella: '<path d="M20 4l4.7 10.2 11.1 1.2-8.3 7.5 2.4 11L20 28.3 10.1 33.9l2.4-11-8.3-7.5 11.1-1.2z"/>',
+  casa: '<path d="M5 19L20 6l15 13"/><path d="M9 16v18h22V16"/><path d="M17 34v-9h6v9"/>',
+  tarjeta: '<rect x="4" y="10" width="32" height="21" rx="2"/><line x1="4" y1="16" x2="36" y2="16"/><line x1="9" y1="25" x2="18" y2="25"/>',
+  documento: '<path d="M10 4h14l7 7v25H10z"/><path d="M24 4v7h7"/><line x1="14" y1="19" x2="27" y2="19"/><line x1="14" y1="24" x2="27" y2="24"/><line x1="14" y1="29" x2="22" y2="29"/>',
+  escudo: '<path d="M20 4l13 5v9c0 8-5.5 14-13 18C12.5 32 7 26 7 18V9z"/><path d="M14 19l4 4 8-8"/>',
+  balanza: '<line x1="20" y1="5" x2="20" y2="35"/><line x1="8" y1="10" x2="32" y2="10"/><path d="M8 10l-5 11h10z"/><path d="M32 10l-5 11h10z"/><line x1="13" y1="35" x2="27" y2="35"/>',
+  edificio: '<rect x="11" y="5" width="18" height="31"/><line x1="5" y1="36" x2="35" y2="36"/><path d="M16 11h2M22 11h2M16 17h2M22 17h2M16 23h2M22 23h2"/><path d="M18 36v-6h4v6"/>',
+  candado: '<rect x="9" y="17" width="22" height="17" rx="2"/><path d="M14 17v-5a6 6 0 0 1 12 0v5"/><line x1="20" y1="24" x2="20" y2="28"/>',
+  ubicacion: '<path d="M20 36s11-10.5 11-19a11 11 0 0 0-22 0c0 8.5 11 19 11 19z"/><circle cx="20" cy="17" r="4"/>',
+  telefono: '<path d="M10 5h6l3 8-4 3a20 20 0 0 0 9 9l3-4 8 3v6a3 3 0 0 1-3 3C17 33 7 23 7 8a3 3 0 0 1 3-3z"/>',
+  correo: '<rect x="5" y="9" width="30" height="22" rx="2"/><path d="M5 11l15 11 15-11"/>',
+  reloj: '<circle cx="20" cy="20" r="15"/><path d="M20 11v9l6 4"/>',
+  lupa: '<circle cx="17" cy="17" r="10"/><line x1="24.5" y1="24.5" x2="35" y2="35"/>'
+};
+function svgIcono(nombre) {
+  return '<svg class="icono-lujo" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + (ICONOS[nombre] || "") + "</svg>";
+}
+
+/* Reemplaza los marcadores data-ilustracion y data-icono por los dibujos */
+function pintarIlustraciones() {
+  document.querySelectorAll("[data-ilustracion]").forEach(function (el) {
+    var tipo = el.getAttribute("data-ilustracion");
+    el.innerHTML = tipo === "edificio" ? svgEdificio() : tipo === "skyline" ? svgSkyline() : "";
+  });
+  document.querySelectorAll("[data-icono]").forEach(function (el) { el.innerHTML = svgIcono(el.getAttribute("data-icono")); });
+}
+</script>
+<script>/* =========================================================
+   APP.JS - Funciones compartidas por todas las páginas
+   ---------------------------------------------------------
+   - Dibuja el encabezado (menú) y el pie de página.
+   - Maneja la sesión (quién inició sesión).
+   - Funciones para dar formato a dinero y fechas.
+   ========================================================= */
+
+var CLAVE_SESION = "dataInmobiliario_sesion";
+var PRECIO_CONSULTA = 15000; // pesos colombianos (valor simulado)
+
+/* Datos de la empresa (TODOS FICTICIOS, solo para el prototipo) */
+var EMPRESA = {
+  nombre: "Data Inmobiliario",
+  razonSocial: "Data Inmobiliario S.A.S.",
+  nit: "901.000.123-4",
+  direccion: "Carrera 43A # 61 Sur-152, Oficina 1205",
+  edificio: "Torre Empresarial Aves María (ficticia)",
+  ciudad: "Sabaneta, Antioquia, Colombia",
+  pbx: "(604) 000 12 34",
+  whatsapp: "+57 300 000 1234",
+  correo: "contacto@datainmobiliario.co",
+  correoJudicial: "notificaciones@datainmobiliario.co",
+  horario: ["Lunes a viernes: 8:00 a.m. a 5:30 p.m.", "Sábados: 9:00 a.m. a 12:00 m.", "Domingos y festivos: cerrado"],
+  redes: [["Facebook", "/DataInmobiliarioCo"], ["Instagram", "@datainmobiliario"], ["LinkedIn", "Data Inmobiliario S.A.S."]]
+};
+
+var Sesion = {
+  usuario: function () {
+    var id = Almacen.getItem(CLAVE_SESION);
+    return id ? BD.usuarioPorId(id) : null;
+  },
+  iniciar: function (email, clave) {
+    var u = BD.usuarioPorEmail(email);
+    if (!u || u.clave !== clave) return null;
+    Almacen.setItem(CLAVE_SESION, u.id);
+    return u;
+  },
+  cerrar: function () {
+    Almacen.removeItem(CLAVE_SESION);
+    ir("index.html");
+  },
+  /* Si la página exige sesión y no hay, envía al login.
+     tipos: lista opcional de tipos permitidos ("inmobiliaria", "persona") */
+  exigir: function (tipos) {
+    var u = this.usuario();
+    if (!u) {
+      ir("login.html?volver=" + encodeURIComponent(paginaActual() + busquedaActual()));
+      throw new Error("Sin sesión");
+    }
+    if (tipos && tipos.indexOf(u.tipo) === -1) {
+      document.querySelector("main .contenedor").innerHTML =
+        '<div class="tarjeta"><h2>Acceso restringido</h2><p>Esta sección es solo para usuarios de tipo: <b>' +
+        tipos.join(", ") + '</b>.</p><a class="boton" href="panel.html">Volver a mi panel</a></div>';
+      throw new Error("Tipo no permitido");
+    }
+    return u;
+  }
+};
+
+/* ---------- Encabezado y pie comunes ---------- */
+function dibujarPlantilla() {
+  var u = Sesion.usuario();
+  var actual = paginaActual();
+  ["plantillaCab", "plantillaPie"].forEach(function (id) { var v = document.getElementById(id); if (v) v.remove(); });
+
+  var enlaces = [["index.html", "Inicio"], ["aseguradoras.html", "Aseguradoras"], ["legal.html", "Marco legal"]];
+  if (u) {
+    enlaces = [["panel.html", "Mi panel"], ["consulta.html", "Consultar cédula"]];
+    if (u.tipo === "inmobiliaria") enlaces.push(["ingreso-datos.html", "Ingresar datos"]);
+    if (u.tipo === "persona") enlaces.push(["mi-historial.html", "Mi historial"]);
+    enlaces.push(["comprar.html", "Comprar consultas"], ["aseguradoras.html", "Aseguradoras"], ["legal.html", "Marco legal"]);
+  }
+  var menu = enlaces.map(function (e) {
+    return '<a href="' + e[0] + '"' + (actual === e[0] ? ' class="activo"' : "") + ">" + e[1] + "</a>";
+  }).join("");
+  menu += u
+    ? '<span class="usuario">' + esc(u.nombre.split(" ").slice(0, 2).join(" ")) + "</span>" +
+      '<a href="#" id="btnSalir">Salir</a>'
+    : '<a href="login.html"' + (actual === "login.html" ? ' class="activo"' : "") + '>Ingresar</a>' +
+      '<a href="registro.html"' + (actual === "registro.html" ? ' class="activo"' : "") + '>Registrarse</a>';
+
+  var cab = document.createElement("div");
+  cab.id = "plantillaCab";
+  cab.innerHTML =
+    '<div class="aviso-academico">Prototipo académico · Datos ficticios · Pagos simulados</div>' +
+    '<header class="encabezado"><div class="contenedor">' +
+    '<a class="marca" href="index.html"><span class="logo">' + svgLogo() + '</span><span>Data Inmobiliario<span class="sub">Central de información de arrendatarios</span></span></a>' +
+    '<nav class="menu">' + menu + "</nav></div></header>";
+  document.body.insertBefore(cab, document.body.firstChild);
+
+  var pie = document.createElement("footer");
+  pie.className = "pie";
+  pie.id = "plantillaPie";
+  var E = EMPRESA;
+  pie.innerHTML = svgSkyline() +
+    '<div class="contenedor pie-columnas">' +
+      '<div><div class="pie-marca"><span class="logo">' + svgLogo() + '</span> ' + E.nombre + '</div>' +
+        '<p>' + E.razonSocial + '<br>NIT ' + E.nit + '</p>' +
+        '<p>Central de información de arrendatarios. Ayudamos a inmobiliarias y propietarios a arrendar con confianza.</p>' +
+        '<div class="redes">' + E.redes.map(function (r) { return '<span title="' + r[0] + ' (cuenta ficticia)">' + r[0] + ' ' + r[1] + '</span>'; }).join("") + '</div></div>' +
+      '<div><h4>Sede principal</h4><p>' + E.direccion + '<br>' + E.edificio + '<br>' + E.ciudad + '</p>' +
+        '<h4>Horario de atención</h4><p>' + E.horario.join("<br>") + '</p></div>' +
+      '<div><h4>Contáctenos</h4><p>PBX ' + E.pbx + '<br>WhatsApp ' + E.whatsapp + '<br>' + E.correo + '<br>Notificaciones judiciales:<br>' + E.correoJudicial + '</p></div>' +
+      '<div><h4>Enlaces</h4><p><a href="index.html#contacto">Quiénes somos</a><br><a href="index.html#contacto">PQRS</a><br>' +
+        '<a href="legal.html">Política de tratamiento de datos</a><br><a href="legal.html">Términos y condiciones</a><br><a href="aseguradoras.html">Aseguradoras de arriendo</a></p></div>' +
+    '</div>' +
+    '<div class="contenedor pie-legal">© ' + new Date().getFullYear() + ' ' + E.razonSocial + ' · Empresa, NIT, direcciones y teléfonos ficticios: proyecto académico sin fines comerciales' +
+    ' · <a href="#" id="btnReset">Restablecer datos de demostración</a></div>';
+  document.body.appendChild(pie);
+
+  var salir = document.getElementById("btnSalir");
+  if (salir) salir.onclick = function (e) { e.preventDefault(); Sesion.cerrar(); };
+  document.getElementById("btnReset").onclick = function (e) {
+    e.preventDefault();
+    // Doble clic de confirmación (algunos visores bloquean confirm())
+    var a = e.target;
+    if (!a.dataset.seguro) { a.dataset.seguro = "1"; a.textContent = "¿Seguro? Haga clic otra vez para borrar todo"; return; }
+    BD.restablecer();
+    Almacen.removeItem(CLAVE_SESION);
+    ir("index.html");
+  };
+  pintarIlustraciones();
+}
+
+/* ---------- Formatos ---------- */
+function pesos(valor) {
+  return "$" + Math.round(valor).toLocaleString("es-CO");
+}
+var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+function fechaCorta(texto) {
+  if (!texto) return "—";
+  var f = aFecha(texto);
+  return dos(f.getDate()) + " " + MESES[f.getMonth()] + " " + f.getFullYear();
+}
+function periodoTexto(periodo) {
+  var p = periodo.split("-");
+  return MESES[+p[1] - 1] + " " + p[0];
+}
+function duracion(inicio, fin) {
+  var a = aFecha(inicio), b = fin ? aFecha(fin) : new Date();
+  var meses = (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth()) + 1;
+  var anios = Math.floor(meses / 12), m = meses % 12;
+  var partes = [];
+  if (anios) partes.push(anios + (anios === 1 ? " año" : " años"));
+  if (m) partes.push(m + (m === 1 ? " mes" : " meses"));
+  return partes.join(" y ") || "menos de 1 mes";
+}
+function parametro(nombre) {
+  return new URLSearchParams(busquedaActual()).get(nombre);
+}
+/* Navegación. En la versión de varias páginas cambia de archivo;
+   la versión de un solo archivo (para Claude) redefine estas funciones. */
+function ir(url) { location.href = url; }
+function paginaActual() { return location.pathname.split("/").pop() || "index.html"; }
+function busquedaActual() { return location.search; }
+/* Escapa texto antes de insertarlo como HTML (evita inyección de código) */
+function esc(t) {
+  return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function mensaje(contenedorId, tipo, html) {
+  var el = document.getElementById(contenedorId);
+  el.innerHTML = '<div class="alerta ' + tipo + '">' + html + "</div>";
+}
+
+/* ---------- Accesos pagados ---------- */
+/* Una consulta pagada da acceso al reporte de esa cédula por 24 horas */
+function tieneAcceso(usuario, cedula) {
+  if (usuario.tipo === "persona" && usuario.documento === cedula) return true; // el titular siempre ve lo suyo
+  var limite = Date.now() - 24 * 3600 * 1000;
+  return BD.datos.accesos.some(function (a) {
+    return a.usuarioId === usuario.id && a.cedula === cedula && a.fecha > limite;
+  });
+}
+
+</script>
+<script>/* =========================================================
+   REPORTE.JS - Construye el reporte del arrendatario.
+   Se separa en su propio archivo porque lo usan dos páginas:
+   reporte.html (quien consulta) y mi-historial.html (titular).
+   ========================================================= */
+
+/* Medidor semicircular (SVG) para el puntaje de 0 a 1000 */
+function medidorSVG(puntaje, color) {
+  var f = puntaje === null ? 0 : puntaje / 1000;
+  var ang = Math.PI * (1 - f);
+  var x = 100 + 80 * Math.cos(ang), y = 100 - 80 * Math.sin(ang);
+  var arco = f > 0 ? '<path d="M20 100 A80 80 0 0 1 ' + x.toFixed(1) + " " + y.toFixed(1) + '" fill="none" stroke="' + color + '" stroke-width="18" stroke-linecap="round"/>' : "";
+  return '<svg viewBox="0 0 200 115" role="img" aria-label="Puntaje ' + puntaje + ' de 1000">' +
+    '<path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#e3e8ee" stroke-width="18" stroke-linecap="round"/>' + arco +
+    '<text x="20" y="114" font-size="9" fill="#6b7785" text-anchor="middle">0</text><text x="180" y="114" font-size="9" fill="#6b7785" text-anchor="middle">1000</text></svg>';
+}
+
+/* Vector de comportamiento: últimos 24 meses, sumando todos los contratos */
+function vectorComportamiento(contratos) {
+  var porPeriodo = {};
+  contratos.forEach(function (c) {
+    BD.pagosDe(c.id).forEach(function (p) { porPeriodo[p.periodo] = p; });
+  });
+  var html = '<div class="vector">';
+  var f = new Date(); f.setDate(1); f.setMonth(f.getMonth() - 23);
+  for (var i = 0; i < 24; i++) {
+    var per = f.getFullYear() + "-" + dos(f.getMonth() + 1);
+    var p = porPeriodo[per];
+    if (p) {
+      var cod = codigoMora(p);
+      html += '<div class="mes ' + cod.clase + '" title="' + periodoTexto(per) + ": " + cod.nombre + '">' + cod.texto + "</div>";
+    } else {
+      html += '<div class="mes vacio" title="' + periodoTexto(per) + ': sin contrato reportado">–</div>';
+    }
+    f.setMonth(f.getMonth() + 1);
+  }
+  html += "</div>";
+  html += '<div class="leyenda"><span><i style="background:var(--verde)"></i>N: al día</span><span><i style="background:var(--amarillo)"></i>1-29 días</span>' +
+    '<span><i style="background:var(--naranja)"></i>30-59</span><span><i style="background:#b8452a"></i>60-89</span><span><i style="background:var(--rojo)"></i>90+</span>' +
+    '<span><i style="background:#6d1a20"></i>S: siniestro (pagó la aseguradora)</span><span><i style="background:#e3e8ee"></i>sin contrato / en plazo</span></div>' +
+    '<p class="ayuda">Del mes más antiguo (izquierda) al más reciente (derecha). Pase el mouse sobre cada cuadro para ver el detalle.</p>';
+  return html;
+}
+
+function tablaPagos(resumen) {
+  var html = '<div class="tabla-envoltura"><table><tr><th>Periodo</th><th>Fecha límite</th><th>Fecha de pago</th><th>Valor</th><th>Días de mora</th><th>Pagó</th></tr>';
+  resumen.pagos.slice().reverse().forEach(function (p) {
+    var d = diasMora(p), cod = codigoMora(p);
+    var chip = cod.clase === "n" ? "verde" : cod.clase === "m1" ? "amarillo" : cod.clase === "vacio" ? "gris" : cod.clase === "m30" ? "naranja" : "rojo";
+    html += "<tr><td>" + periodoTexto(p.periodo) + "</td><td>" + fechaCorta(p.fechaLimite) + "</td><td>" +
+      (p.fechaPago ? fechaCorta(p.fechaPago) : '<span class="chip rojo">Sin pagar</span>') + "</td><td>" + pesos(p.valor) +
+      '</td><td><span class="chip ' + chip + '">' + d + "</span></td><td>" + (p.pagadoPor || "—") + "</td></tr>";
+  });
+  return html + "</table></div>";
+}
+
+function construirReporte(cc, usuario) {
+  var persona = BD.inquilino(cc);
+  if (!persona) return '<div class="tarjeta"><h2>Sin información</h2><p>La cédula ' + esc(cc) + " no está registrada en la central.</p></div>";
+
+  var contratos = BD.contratosDe(cc);
+  var puntaje = calcularPuntaje(cc);
+  var cat = categoriaPuntaje(puntaje);
+  var resumenes = contratos.map(resumenContrato);
+
+  var totalPagos = 0, aTiempo = 0, maxMora = 0, deuda = 0, siniestros = 0, sumaMora = 0, conMora = 0;
+  resumenes.forEach(function (r, i) {
+    totalPagos += r.total; aTiempo += r.aTiempo; deuda += r.deuda;
+    if (r.maxMora > maxMora) maxMora = r.maxMora;
+    if (contratos[i].siniestro) siniestros++;
+    r.pagos.forEach(function (p) { var d = diasMora(p); if (d > 0) { sumaMora += d; conMora++; } });
+  });
+  var pct = totalPagos ? Math.round(aTiempo * 100 / totalPagos) : 0;
+  var ultimo = contratos[contratos.length - 1];
+  var rUltimo = resumenes[resumenes.length - 1];
+  var edad = Math.floor((Date.now() - aFecha(persona.nacimiento)) / (365.25 * 86400000));
+
+  var html = '<div class="tarjeta"><div class="reporte-cabecera"><div class="datos">' +
+    '<p class="tenue" style="margin:0">REPORTE DE HISTORIAL DE ARRENDAMIENTO</p>' +
+    "<h1>" + esc(persona.nombres + " " + persona.apellidos) + "</h1>" +
+    "<p style='margin:.2rem 0'>C.C. <b>" + cc + "</b> · " + edad + " años · " + esc(persona.ocupacion) + " · " + esc(persona.ciudad) + "</p>" +
+    "<p class='tenue' style='margin:.2rem 0'>Consultado por " + esc(usuario.nombre) + " el " + new Date().toLocaleString("es-CO") + "</p>" +
+    "<p class='tenue' style='margin:.2rem 0'>Autorización de tratamiento de datos registrada el " + fechaCorta(persona.autorizacion) + "</p>" +
+    '<p><span class="chip ' + cat.color + '" style="font-size:.95rem">' + cat.nombre + "</span></p><p>" + cat.texto + "</p></div>" +
+    '<div class="medidor">' + medidorSVG(puntaje, cat.hex) + '<div class="puntaje" style="color:' + cat.hex + '">' + (puntaje === null ? "—" : puntaje) +
+    '</div><div class="categoria" style="color:' + cat.hex + '">' + cat.nombre + "</div><div class='ayuda'>Puntaje de 0 a 1000</div></div></div></div>";
+
+  if (!contratos.length) {
+    return html + '<div class="alerta info">Esta persona está registrada pero <b>no tiene contratos de arrendamiento reportados</b>. No tener historial no es algo negativo: se recomienda pedir otras referencias o un codeudor.</div>';
+  }
+
+  // Alertas
+  if (deuda > 0) html += '<div class="alerta error">⚠️ Tiene <b>' + pesos(deuda) + "</b> en cánones vencidos sin pagar actualmente.</div>";
+  if (siniestros) html += '<div class="alerta error">⚠️ Registra <b>' + siniestros + "</b> siniestro(s): una aseguradora tuvo que pagarle al propietario por incumplimiento del inquilino.</div>";
+  if (!deuda && !siniestros && pct >= 85) html += '<div class="alerta exito">✅ No registra deudas abiertas ni siniestros con aseguradoras.</div>';
+
+  // Indicadores
+  html += '<div class="grid grid-4">' +
+    kpi(contratos.length, "Viviendas arrendadas") +
+    kpi(duracion(contratos[0].fechaInicio, ultimo.fechaFin), "Tiempo con historial") +
+    kpi(pct + "%", "Pagos a tiempo (" + aTiempo + " de " + totalPagos + ")") +
+    kpi(conMora ? Math.round(sumaMora / conMora) + " días" : "0 días", "Promedio de mora cuando se atrasa") +
+    kpi(maxMora + " días", "Mayor mora registrada") +
+    kpi(pesos(deuda), "Deuda vencida actual") +
+    kpi(pesos(rUltimo.ultimoCanon), "Último canon") +
+    kpi(ultimo.fechaFin ? "Terminado" : "Vigente", "Contrato más reciente") + "</div>";
+
+  // Último arrendamiento
+  html += '<div class="tarjeta"><h2>Último arrendamiento</h2><div class="grid grid-3">' +
+    "<div><b>Arrendador</b><br>" + esc(ultimo.arrendador) + "<br><span class='tenue'>" + ultimo.tipoArrendador + "</span></div>" +
+    "<div><b>Inmueble</b><br>" + esc(ultimo.tipoInmueble + " · " + ultimo.direccion) + "<br><span class='tenue'>" + esc(ultimo.barrio + ", " + ultimo.ciudad) + " · Estrato " + ultimo.estrato + "</span></div>" +
+    "<div><b>Último canon</b><br>" + pesos(rUltimo.ultimoCanon) + "<br><span class='tenue'>Desde " + fechaCorta(ultimo.fechaInicio) + (ultimo.fechaFin ? " hasta " + fechaCorta(ultimo.fechaFin) : " (vigente)") + "</span></div>" +
+    '</div><p><span class="chip ' + rUltimo.resultado.chip + '">' + rUltimo.resultado.texto + "</span> " + estrellas(ultimo.calificacion) + " " + esc(ultimo.observacion || "") + "</p></div>";
+
+  // Vector
+  html += '<div class="tarjeta"><h2>Comportamiento de pago · últimos 24 meses</h2>' + vectorComportamiento(contratos) + "</div>";
+
+  // Línea de tiempo
+  html += '<div class="tarjeta"><h2>Historial de viviendas</h2><p class="tenue">Del contrato más reciente al más antiguo.</p><div class="linea-tiempo">';
+  for (var i = contratos.length - 1; i >= 0; i--) {
+    var c = contratos[i], r = resumenes[i], aseg = c.aseguradora ? BD.aseguradora(c.aseguradora) : null;
+    html += '<div class="vivienda ' + r.resultado.clase + '">' +
+      "<h3 style='margin:0'>" + esc(c.tipoInmueble + " · " + c.direccion) + "</h3>" +
+      "<div class='tenue'>" + esc(c.barrio + ", " + c.ciudad) + " · Estrato " + c.estrato + "</div>" +
+      "<p style='margin:.4rem 0'><b>" + fechaCorta(c.fechaInicio) + "</b> → <b>" + (c.fechaFin ? fechaCorta(c.fechaFin) : "Vigente") + "</b> (" + duracion(c.fechaInicio, c.fechaFin) + ")<br>" +
+      "Arrendador: " + esc(c.arrendador) + " <span class='tenue'>(" + c.tipoArrendador + ")</span><br>" +
+      "Canon inicial " + pesos(c.canon) + " · último canon " + pesos(r.ultimoCanon) + "<br>" +
+      "Póliza de arrendamiento: " + (aseg ? esc(aseg.nombre) : "<span class='tenue'>Sin póliza</span>") +
+      (c.siniestro ? ' <span class="chip rojo">Siniestro pagado por la aseguradora</span>' : "") + "<br>" +
+      "Pagos a tiempo: <b>" + r.porcentaje + "%</b> · Mora promedio: " + r.promedioMora + " días · Mayor mora: " + r.maxMora + " días" +
+      (r.deuda ? " · <b style='color:var(--rojo)'>Debe " + pesos(r.deuda) + "</b>" : "") + "</p>" +
+      '<p style="margin:.2rem 0"><span class="chip ' + r.resultado.chip + '">' + r.resultado.texto + "</span> " + estrellas(c.calificacion) +
+      (c.motivoTerminacion ? " <span class='tenue'>Terminación: " + esc(c.motivoTerminacion) + "</span>" : "") + "</p>" +
+      (c.observacion ? "<p class='tenue' style='margin:.2rem 0'>Observación del arrendador: “" + esc(c.observacion) + "”</p>" : "") +
+      "<details><summary>Ver los " + r.total + " pagos mes a mes</summary>" + tablaPagos(r) + "</details></div>";
+  }
+  html += "</div></div>";
+
+  // Huella de consultas
+  var huella = BD.datos.consultas.filter(function (q) { return q.cedula === cc; }).reverse().slice(0, 10);
+  html += '<div class="tarjeta"><h2>Huella de consultas</h2><p class="tenue">Quién ha consultado este historial (la ley exige informarlo al titular).</p>';
+  html += huella.length ? '<div class="tabla-envoltura"><table><tr><th>Fecha</th><th>Entidad</th><th>Motivo</th></tr>' + huella.map(function (q) {
+    return "<tr><td>" + new Date(q.fecha).toLocaleString("es-CO") + "</td><td>" + esc(q.usuarioNombre) + "</td><td>" + esc(q.motivo) + "</td></tr>";
+  }).join("") + "</table></div>" : "<p class='tenue'>Sin consultas registradas.</p>";
+  html += "</div>";
+
+  html += '<p class="ayuda">Este reporte es informativo y no constituye por sí solo una decisión de aprobar o negar un arriendo. El titular puede solicitar la corrección de datos inexactos en la sección "Mi historial". ' +
+    'Modelo de puntaje académico simplificado. Datos 100 % ficticios.</p>';
+  return html;
+}
+
+function kpi(valor, etiqueta) {
+  return '<div class="tarjeta kpi"><div class="valor">' + valor + '</div><div class="etiqueta">' + etiqueta + "</div></div>";
+}
+function estrellas(n) {
+  if (!n) return "";
+  return '<span title="Calificación del arrendador: ' + n + ' de 5" style="color:#e0a800">' + "★★★★★".slice(0, n) + '<span style="color:#ccd3db">' + "★★★★★".slice(0, 5 - n) + "</span></span>";
+}
+</script>
+<script>
+/* ===== Enrutador de la versión de un solo archivo ===== */
+var ACTUAL = "index.html", PARAMS = "";
+var VISTAS = {"index.html": function () {
+  // Cifras de la central, calculadas a partir de los datos
+  var d = BD.datos;
+  var fuentes = {};
+  d.contratos.forEach(function (c) { fuentes[c.arrendador] = 1; });
+  document.getElementById("cifras").innerHTML =
+    "<div><b>" + d.inquilinos.length + "</b>Personas registradas</div>" +
+    "<div><b>" + d.contratos.length + "</b>Contratos reportados</div>" +
+    "<div><b>" + d.pagos.length.toLocaleString("es-CO") + "</b>Pagos mensuales</div>" +
+    "<div><b>" + Object.keys(fuentes).length + "</b>Fuentes de información</div>";
+
+  // Datos de contacto de la empresa (ficticios, definidos en app.js)
+  document.getElementById("eDireccion").innerHTML = EMPRESA.direccion + "<br>" + EMPRESA.edificio + "<br>" + EMPRESA.ciudad;
+  document.getElementById("eTelefonos").innerHTML = "PBX " + EMPRESA.pbx + "<br>WhatsApp " + EMPRESA.whatsapp;
+  document.getElementById("eCorreo").innerHTML = EMPRESA.correo;
+  document.getElementById("eHorario").innerHTML = EMPRESA.horario.join("<br>");
+  document.getElementById("eRazon").innerHTML = EMPRESA.razonSocial + " · NIT " + EMPRESA.nit;
+
+  // Formulario PQRS (simulado: se guarda en el navegador)
+  document.getElementById("formPqrs").onsubmit = function (e) {
+    e.preventDefault();
+    var datos = Object.fromEntries(new FormData(e.target).entries());
+    var radicado = "PQRS-" + Date.now().toString().slice(-6);
+    BD.datos.mensajes = BD.datos.mensajes || [];
+    BD.datos.mensajes.push({ id: radicado, nombre: datos.nombre, correo: datos.correo, tipo: datos.tipo, mensaje: datos.mensaje, fecha: Date.now() });
+    BD.guardar(); e.target.reset();
+    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles (simulado).");
+  };
+},
+"login.html": function () {
+  function entrar(email, clave) {
+    var u = Sesion.iniciar(email, clave);
+    if (!u) { mensaje("msg", "error", "Correo o contraseña incorrectos."); return; }
+    ir(parametro("volver") || "panel.html");
+  }
+  document.getElementById("formLogin").onsubmit = function (e) {
+    e.preventDefault();
+    entrar(document.getElementById("email").value, document.getElementById("clave").value);
+  };
+},
+"registro.html": function () {
+  var radios = document.querySelectorAll("input[name=tipo]");
+  radios.forEach(function (r) {
+    r.onchange = function () {
+      var inmo = r.value === "inmobiliaria";
+      document.getElementById("lblNombre").textContent = inmo ? "Razón social" : "Nombre completo";
+      document.getElementById("lblDoc").textContent = inmo ? "NIT" : "Cédula";
+    };
+  });
+
+  document.getElementById("formRegistro").onsubmit = function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+    var tipo = document.querySelector("input[name=tipo]:checked").value;
+    if (v("clave") !== v("clave2")) return mensaje("msg", "error", "Las contraseñas no coinciden.");
+    if (BD.usuarioPorEmail(v("email"))) return mensaje("msg", "error", "Ya existe una cuenta con ese correo.");
+    if (tipo === "persona" && !/^\d{6,10}$/.test(v("documento"))) return mensaje("msg", "error", "La cédula debe tener entre 6 y 10 dígitos, sin puntos.");
+
+    var u = {
+      id: BD.nuevoId("u"), tipo: tipo, nombre: v("nombre"), documento: v("documento"),
+      email: v("email").toLowerCase(), clave: v("clave"), ciudad: v("ciudad"),
+      creditos: 1 // regalo de bienvenida: 1 consulta
+    };
+    BD.datos.usuarios.push(u);
+    BD.guardar();
+    Sesion.iniciar(u.email, u.clave);
+    ir("panel.html?nuevo=1");
+  };
+},
+"panel.html": function () {
+  var u = Sesion.exigir();
+  var html = "";
+  if (parametro("nuevo")) html += '<div class="alerta exito">¡Cuenta creada! Le regalamos 1 consulta para que pruebe la plataforma.</div>';
+
+  html += '<h1>Hola, ' + esc(u.nombre) + '</h1><p class="tenue">' +
+    (u.tipo === "inmobiliaria" ? "Cuenta de inmobiliaria · NIT " : "Cuenta de persona · Cédula ") + esc(u.documento) + "</p>";
+
+  var misConsultas = BD.datos.consultas.filter(function (c) { return c.usuarioId === u.id; }).reverse();
+  html += '<div class="grid grid-4">' +
+    '<div class="tarjeta kpi"><div class="valor">' + u.creditos + '</div><div class="etiqueta">Consultas disponibles</div><a class="boton pequeno" style="margin-top:.6rem" href="comprar.html">Comprar más</a></div>' +
+    '<div class="tarjeta kpi"><div class="valor">' + misConsultas.length + '</div><div class="etiqueta">Consultas realizadas</div></div>';
+
+  if (u.tipo === "inmobiliaria") {
+    var misContratos = BD.datos.contratos.filter(function (c) { return c.inmobiliaria === u.nombre; });
+    var vigentes = misContratos.filter(function (c) { return !c.fechaFin; });
+    html += '<div class="tarjeta kpi"><div class="valor">' + vigentes.length + '</div><div class="etiqueta">Contratos vigentes reportados</div></div>' +
+      '<div class="tarjeta kpi"><div class="valor">' + misContratos.length + '</div><div class="etiqueta">Contratos totales reportados</div></div>';
+  } else {
+    var p = calcularPuntaje(u.documento);
+    var cat = categoriaPuntaje(p);
+    html += '<div class="tarjeta kpi"><div class="valor" style="color:' + cat.hex + '">' + (p === null ? "—" : p) + '</div><div class="etiqueta">Mi puntaje</div></div>' +
+      '<div class="tarjeta kpi"><div class="valor" style="font-size:1.1rem;color:' + cat.hex + '">' + cat.nombre + '</div><div class="etiqueta">Mi calificación</div></div>';
+  }
+  html += "</div>";
+
+  html += '<div class="tarjeta"><h2>Consulta rápida</h2><form id="rapida" class="fila" style="align-items:end">' +
+    '<div><label for="cc">Número de cédula</label><input id="cc" inputmode="numeric" placeholder="Ej: 9990000104" required></div>' +
+    '<div><button class="boton" type="submit">Buscar</button></div></form></div>';
+
+  if (u.tipo === "inmobiliaria") {
+    html += '<div class="tarjeta"><h2>Mis inquilinos reportados</h2><p class="tenue">Contratos que su inmobiliaria ha reportado a la central.</p>' +
+      '<div class="tabla-envoltura"><table><tr><th>Inquilino</th><th>Cédula</th><th>Inmueble</th><th>Inicio</th><th>Estado</th><th>Cumplimiento</th><th></th></tr>';
+    misContratos.forEach(function (c) {
+      var i = BD.inquilino(c.cedula), r = resumenContrato(c);
+      html += "<tr><td>" + esc(i ? i.nombres + " " + i.apellidos : "?") + "</td><td>" + c.cedula + "</td><td>" + esc(c.direccion) + ", " + esc(c.ciudad) +
+        "</td><td>" + fechaCorta(c.fechaInicio) + "</td><td>" + (c.fechaFin ? '<span class="chip gris">Terminado</span>' : '<span class="chip azul">Vigente</span>') +
+        '</td><td><span class="chip ' + r.resultado.chip + '">' + r.porcentaje + "% a tiempo</span></td>" +
+        '<td><a href="ingreso-datos.html?contrato=' + c.id + '">Registrar pago</a></td></tr>';
+    });
+    if (!misContratos.length) html += '<tr><td colspan="7" class="tenue">Aún no ha reportado contratos. Use <a href="ingreso-datos.html">Ingresar datos</a>.</td></tr>';
+    html += "</table></div></div>";
+  } else {
+    html += '<div class="tarjeta"><h2>Mi historial de arriendo</h2><p>Como titular puede ver gratis su reporte completo, saber quién lo ha consultado y pedir correcciones.</p>' +
+      '<a class="boton verde" href="mi-historial.html">Ver mi historial</a></div>';
+  }
+
+  html += '<div class="tarjeta"><h2>Mis últimas consultas</h2><div class="tabla-envoltura"><table><tr><th>Fecha</th><th>Cédula</th><th>Nombre</th><th>Motivo</th><th></th></tr>';
+  misConsultas.slice(0, 10).forEach(function (c) {
+    var i = BD.inquilino(c.cedula);
+    html += "<tr><td>" + new Date(c.fecha).toLocaleString("es-CO") + "</td><td>" + c.cedula + "</td><td>" + esc(i ? i.nombres + " " + i.apellidos : "No registrada") +
+      "</td><td>" + esc(c.motivo) + '</td><td><a href="reporte.html?cc=' + c.cedula + '">Ver</a></td></tr>';
+  });
+  if (!misConsultas.length) html += '<tr><td colspan="5" class="tenue">Todavía no ha hecho consultas.</td></tr>';
+  html += "</table></div></div>";
+
+  document.getElementById("contenido").innerHTML = html;
+  document.getElementById("rapida").onsubmit = function (e) {
+    e.preventDefault();
+    ir("consulta.html?cc=" + encodeURIComponent(document.getElementById("cc").value.trim()));
+  };
+},
+"consulta.html": function () {
+  var u = Sesion.exigir();
+  document.getElementById("saldo").innerHTML = "Consultas disponibles: <b>" + u.creditos + "</b> · <a href='comprar.html'>Comprar más</a>";
+  if (parametro("cc")) document.getElementById("cc").value = parametro("cc");
+
+  document.getElementById("formConsulta").onsubmit = function (e) {
+    e.preventDefault();
+    var cc = document.getElementById("cc").value.replace(/\D/g, "");
+    if (cc.length < 6) return mensaje("msg", "error", "Escriba una cédula válida (solo números).");
+
+    // 1. ¿Ya pagó esta cédula en las últimas 24 h, o es su propia cédula? No se cobra de nuevo.
+    if (tieneAcceso(u, cc)) { ir("reporte.html?cc=" + cc); return; }
+
+    // 2. ¿Existe la persona en la central? Si no existe, no se cobra.
+    if (!BD.inquilino(cc)) {
+      return mensaje("msg", "aviso", "La cédula <b>" + cc + "</b> no está registrada en Data Inmobiliario. No se descontó ninguna consulta.");
+    }
+
+    // 3. ¿Tiene saldo? Si no, se envía a comprar.
+    if (u.creditos < 1) {
+      return mensaje("msg", "error", "No tiene consultas disponibles. <a href='comprar.html?cc=" + cc + "'>Pagar esta consulta ahora (" + pesos(PRECIO_CONSULTA) + ")</a>");
+    }
+
+    // 4. Descontar crédito, registrar la consulta (bitácora) y dar acceso.
+    u.creditos -= 1;
+    var ahora = Date.now();
+    BD.datos.consultas.push({ id: BD.nuevoId("Q"), usuarioId: u.id, usuarioNombre: u.nombre, cedula: cc, motivo: document.getElementById("motivo").value, fecha: ahora });
+    BD.datos.accesos.push({ usuarioId: u.id, cedula: cc, fecha: ahora });
+    BD.guardar();
+    ir("reporte.html?cc=" + cc);
+  };
+},
+"comprar.html": function () {
+  var u = Sesion.exigir();
+  var PLANES = [
+    { id: "p1", nombre: "Consulta individual", creditos: 1, valor: 15000 },
+    { id: "p10", nombre: "Paquete inmobiliaria (10)", creditos: 10, valor: 120000 },
+    { id: "p50", nombre: "Paquete empresarial (50)", creditos: 50, valor: 500000 }
+  ];
+  var plan = PLANES[parametro("cc") ? 0 : 1];
+  var medio = "tarjeta";
+
+  function pintarPlanes() {
+    document.getElementById("planes").innerHTML = PLANES.map(function (p) {
+      return '<label class="check" style="border:1px solid var(--borde);border-radius:8px;padding:.6rem;margin:.4rem 0">' +
+        '<input type="radio" name="plan" value="' + p.id + '"' + (p.id === plan.id ? " checked" : "") + '>' +
+        "<span><b>" + p.nombre + "</b><br><span class='tenue'>" + pesos(p.valor) + " · " + pesos(p.valor / p.creditos) + " por consulta</span></span></label>";
+    }).join("");
+    document.querySelectorAll("input[name=plan]").forEach(function (r) {
+      r.onchange = function () { plan = PLANES.find(function (p) { return p.id === r.value; }); pintarResumen(); };
+    });
+  }
+  function pintarResumen() {
+    var iva = Math.round(plan.valor - plan.valor / 1.19);
+    document.getElementById("resumen").innerHTML =
+      "<tr><td>Plan</td><td>" + plan.nombre + "</td></tr><tr><td>Consultas</td><td>" + plan.creditos + "</td></tr>" +
+      "<tr><td>Subtotal</td><td>" + pesos(plan.valor - iva) + "</td></tr><tr><td>IVA (19 %)</td><td>" + pesos(iva) + "</td></tr>" +
+      "<tr><th>Total</th><th>" + pesos(plan.valor) + "</th></tr>";
+    document.getElementById("btnPagar").textContent = "Pagar " + pesos(plan.valor);
+  }
+  pintarPlanes(); pintarResumen();
+
+  // Cambiar entre tarjeta y PSE
+  document.querySelectorAll("[data-medio]").forEach(function (b) {
+    b.onclick = function () {
+      medio = b.dataset.medio;
+      document.querySelectorAll("[data-medio]").forEach(function (x) { x.classList.toggle("activa", x === b); });
+      document.getElementById("formTarjeta").classList.toggle("oculto", medio !== "tarjeta");
+      document.getElementById("formPse").classList.toggle("oculto", medio !== "pse");
+    };
+  });
+
+  // Vista previa de la tarjeta
+  var num = document.getElementById("numTarjeta");
+  num.oninput = function () {
+    var d = num.value.replace(/\D/g, "").slice(0, 16);
+    num.value = d.replace(/(\d{4})(?=\d)/g, "$1 ");
+    document.getElementById("vistaNum").textContent = (d + "••••••••••••••••").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+  };
+  document.getElementById("nomTarjeta").oninput = function (e) {
+    document.getElementById("vistaNombre").textContent = e.target.value.toUpperCase() || "NOMBRE DEL TITULAR";
+  };
+
+  /* Algoritmo de Luhn: valida que el número de tarjeta sea coherente */
+  function luhn(numero) {
+    var suma = 0, doble = false;
+    for (var i = numero.length - 1; i >= 0; i--) {
+      var n = +numero[i];
+      if (doble) { n *= 2; if (n > 9) n -= 9; }
+      suma += n; doble = !doble;
+    }
+    return numero.length >= 13 && suma % 10 === 0;
+  }
+
+  function procesar(aprobado, motivo, detalleMedio) {
+    mensaje("msg", "info", "⏳ Procesando pago simulado…");
+    document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = true; });
+    setTimeout(function () {
+      document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = false; });
+      if (!aprobado) return mensaje("msg", "error", "❌ Transacción rechazada: " + motivo);
+      var compra = {
+        id: "DI-" + Date.now().toString().slice(-8), usuarioId: u.id, plan: plan.nombre, creditos: plan.creditos,
+        valor: plan.valor, medio: detalleMedio, fecha: Date.now(), estado: "APROBADA"
+      };
+      u.creditos += plan.creditos;
+      BD.datos.compras.push(compra);
+      BD.guardar();
+      document.getElementById("zonaCompra").classList.add("oculto");
+      var c = document.getElementById("comprobante");
+      c.classList.remove("oculto");
+      c.innerHTML = '<h2>✅ Pago aprobado (simulado)</h2><table>' +
+        "<tr><td>Referencia</td><td><b>" + compra.id + "</b></td></tr><tr><td>Fecha</td><td>" + new Date(compra.fecha).toLocaleString("es-CO") + "</td></tr>" +
+        "<tr><td>Cliente</td><td>" + esc(u.nombre) + " · " + esc(u.documento) + "</td></tr><tr><td>Plan</td><td>" + compra.plan + "</td></tr>" +
+        "<tr><td>Medio</td><td>" + esc(compra.medio) + "</td></tr><tr><td>Valor</td><td>" + pesos(compra.valor) + "</td></tr>" +
+        "<tr><td>Saldo de consultas</td><td><b>" + u.creditos + "</b></td></tr></table>" +
+        (parametro("cc") ? '<a class="boton" href="consulta.html?cc=' + encodeURIComponent(parametro("cc")) + '">Continuar con la consulta</a>' : '<a class="boton" href="consulta.html">Hacer una consulta</a>') +
+        ' <button class="boton secundario no-imprimir" onclick="print()">Imprimir comprobante</button>';
+    }, 1800);
+  }
+
+  document.getElementById("formTarjeta").onsubmit = function (e) {
+    e.preventDefault();
+    var n = num.value.replace(/\D/g, "");
+    var venc = document.getElementById("venc").value;
+    if (!luhn(n)) return mensaje("msg", "error", "El número de tarjeta no es válido (falla la verificación de Luhn).");
+    var m = venc.match(/^(\d{2})\/(\d{2})$/);
+    if (!m || +m[1] < 1 || +m[1] > 12 || new Date(2000 + +m[2], +m[1], 0) < new Date()) return mensaje("msg", "error", "Fecha de vencimiento inválida o tarjeta vencida.");
+    if (!/^\d{3,4}$/.test(document.getElementById("cvv").value)) return mensaje("msg", "error", "CVV inválido.");
+    var rechazada = n === "4000000000000002";
+    procesar(!rechazada, "fondos insuficientes", "Tarjeta terminada en " + n.slice(-4) + " · " + document.getElementById("cuotas").value + " cuota(s)");
+  };
+  document.getElementById("formPse").onsubmit = function (e) {
+    e.preventDefault();
+    procesar(true, "", "PSE · " + document.getElementById("banco").value);
+  };
+},
+"reporte.html": function () {
+  var u = Sesion.exigir();
+  var cc = parametro("cc") || "";
+  var cont = document.getElementById("contenido");
+  if (!tieneAcceso(u, cc)) {
+    cont.innerHTML = '<div class="tarjeta"><h2>Reporte no disponible</h2><p>Para ver el reporte de la cédula <b>' + esc(cc) +
+      '</b> primero debe realizar (y pagar) la consulta. El acceso dura 24 horas.</p><a class="boton" href="consulta.html?cc=' + encodeURIComponent(cc) + '">Ir a consultar</a></div>';
+  } else {
+    cont.innerHTML = '<p class="no-imprimir"><a href="panel.html">← Volver al panel</a> · <a href="#" onclick="print();return false">Imprimir / guardar PDF</a></p>' +
+      construirReporte(cc, u);
+  }
+},
+"mi-historial.html": function () {
+  var u = Sesion.exigir(["persona"]);
+  var persona = BD.inquilino(u.documento);
+  if (!persona) {
+    document.getElementById("reporte").innerHTML = '<div class="tarjeta"><h2>No encontramos información</h2><p>Su cédula <b>' + esc(u.documento) +
+      "</b> no tiene registros en la central. Esto significa que ninguna inmobiliaria ha reportado contratos a su nombre.</p></div>";
+    document.getElementById("zonaReclamo").classList.add("oculto");
+  } else {
+    document.getElementById("reporte").innerHTML = construirReporte(u.documento, u);
+    document.getElementById("selContrato").innerHTML = '<option value="">General</option>' + BD.contratosDe(u.documento).map(function (c) {
+      return '<option value="' + c.id + '">' + esc(c.direccion + " (" + c.fechaInicio.slice(0, 4) + ")") + "</option>";
+    }).join("");
+  }
+
+  function pintarReclamos() {
+    var mios = BD.datos.reclamos.filter(function (r) { return r.cedula === u.documento; }).reverse();
+    document.getElementById("listaReclamos").innerHTML = mios.length ? '<table><tr><th>Radicado</th><th>Fecha</th><th>Tipo</th><th>Estado</th></tr>' + mios.map(function (r) {
+      return "<tr><td>" + r.id + "</td><td>" + new Date(r.fecha).toLocaleDateString("es-CO") + "</td><td>" + esc(r.tipo) + '</td><td><span class="chip amarillo">' + r.estado + "</span></td></tr>";
+    }).join("") + "</table>" : "<p class='tenue'>No ha presentado reclamos.</p>";
+  }
+  pintarReclamos();
+
+  document.getElementById("formReclamo").onsubmit = function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(e.target).entries());
+    var r = { id: "RAD-" + Date.now().toString().slice(-6), cedula: u.documento, tipo: d.tipo, contrato: d.contrato, detalle: d.detalle, fecha: Date.now(), estado: "En trámite" };
+    BD.datos.reclamos.push(r); BD.guardar(); e.target.reset(); pintarReclamos();
+    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles (simulado).");
+  };
+},
+"ingreso-datos.html": function () {
+  var u = Sesion.exigir(["inmobiliaria"]);
+  var datos = function (form) { return Object.fromEntries(new FormData(form).entries()); };
+  function ok(t) { mensaje("msg", "exito", t); scrollTo(0, 0); }
+  function error(t) { mensaje("msg", "error", t); scrollTo(0, 0); }
+
+  // ----- Pestañas -----
+  function abrir(id) {
+    document.querySelectorAll(".pestanas button").forEach(function (b) { b.classList.toggle("activa", b.dataset.p === id); });
+    document.querySelectorAll(".panel-pestana").forEach(function (p) { p.classList.toggle("activa", p.id === id); });
+  }
+  document.querySelectorAll(".pestanas button").forEach(function (b) { b.onclick = function () { abrir(b.dataset.p); }; });
+
+  // ----- Listas desplegables -----
+  function misContratos() { return BD.datos.contratos.filter(function (c) { return c.inmobiliaria === u.nombre; }); }
+  function nombreDe(cc) { var i = BD.inquilino(cc); return i ? i.nombres + " " + i.apellidos : cc; }
+  function refrescarListas() {
+    document.getElementById("listaCedulas").innerHTML = BD.datos.inquilinos.map(function (i) {
+      return '<option value="' + i.cedula + '">' + esc(i.nombres + " " + i.apellidos) + "</option>";
+    }).join("");
+    document.getElementById("selAseg").innerHTML = '<option value="">Sin póliza</option>' + BD.datos.aseguradoras.map(function (a) {
+      return '<option value="' + a.id + '">' + esc(a.nombre) + "</option>";
+    }).join("");
+    var opc = function (c) { return '<option value="' + c.id + '">' + esc(nombreDe(c.cedula)) + " · " + esc(c.direccion) + " (" + (c.fechaFin ? "terminado" : "vigente") + ")</option>"; };
+    var mios = misContratos();
+    document.getElementById("selContratoPago").innerHTML = mios.length ? mios.map(opc).join("") : '<option value="">No tiene contratos registrados</option>';
+    var vig = mios.filter(function (c) { return !c.fechaFin; });
+    document.getElementById("selContratoFin").innerHTML = vig.length ? vig.map(opc).join("") : '<option value="">No tiene contratos vigentes</option>';
+  }
+  refrescarListas();
+  document.getElementById("arrendador").value = u.nombre;
+  document.getElementById("chkGenerar").onchange = function (e) { document.getElementById("zonaPerfil").classList.toggle("oculto", !e.target.checked); };
+
+  // ----- 1. Guardar inquilino -----
+  document.getElementById("pInquilino").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    if (BD.inquilino(d.cedula)) return error("Ya existe un inquilino con la cédula " + esc(d.cedula) + ".");
+    BD.datos.inquilinos.push({ cedula: d.cedula, nombres: d.nombres, apellidos: d.apellidos, nacimiento: d.nacimiento, ciudad: d.ciudad,
+      telefono: d.telefono, email: d.email, ocupacion: d.ocupacion || "No informada", autorizacion: d.autorizacion });
+    BD.guardar(); e.target.reset(); refrescarListas();
+    ok("Inquilino <b>" + esc(d.nombres + " " + d.apellidos) + "</b> registrado. Ahora registre su contrato en la pestaña 2.");
+    abrir("pContrato");
+    document.querySelector("#pContrato [name=cedula]").value = d.cedula;
+  };
+
+  // ----- 2. Guardar contrato -----
+  document.getElementById("pContrato").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    if (!BD.inquilino(d.cedula)) return error("La cédula " + esc(d.cedula) + " no está registrada. Regístrela primero en la pestaña 1.");
+    if (d.fechaFin && d.fechaFin <= d.fechaInicio) return error("La fecha de fin debe ser posterior a la de inicio.");
+    if (d.fechaInicio > aTexto(new Date())) return error("La fecha de inicio no puede ser futura.");
+    var c = { id: BD.nuevoId("C"), cedula: d.cedula, inmobiliaria: u.nombre, arrendador: d.arrendador, tipoArrendador: d.tipoArrendador,
+      direccion: d.direccion, barrio: d.barrio, ciudad: d.ciudad, estrato: +d.estrato, tipoInmueble: d.tipoInmueble,
+      fechaInicio: d.fechaInicio, fechaFin: d.fechaFin || null, canon: +d.canon, aseguradora: d.aseguradora || null,
+      perfil: d.perfil || "", motivoTerminacion: d.fechaFin ? "Entrega al vencimiento" : "", calificacion: 0, observacion: "" };
+    BD.datos.contratos.push(c);
+    var n = 0;
+    if (d.generar) {
+      var nuevos = generarPagos(c, d.perfil, crearAleatorio(Date.now() % 100000));
+      BD.datos.pagos = BD.datos.pagos.concat(nuevos);
+      n = nuevos.length;
+    }
+    BD.guardar(); e.target.reset(); refrescarListas();
+    document.getElementById("arrendador").value = u.nombre;
+    ok("Contrato guardado" + (n ? " con " + n + " pagos simulados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
+    // La inmobiliaria que reporta puede ver el resultado de su propio reporte sin pagar
+    BD.datos.accesos.push({ usuarioId: u.id, cedula: c.cedula, fecha: Date.now() }); BD.guardar();
+    fPago.contratoId.value = c.id; sugerirPago();
+  };
+
+  // ----- 3. Pagos -----
+  var fPago = document.getElementById("pPago");
+  function contratoSel() { return BD.datos.contratos.find(function (c) { return c.id === fPago.contratoId.value; }); }
+  function sugerirPago() {
+    var c = contratoSel(); if (!c) return;
+    var pagos = BD.pagosDe(c.id);
+    var ult = pagos[pagos.length - 1];
+    var sig;
+    if (ult) { var f = aFecha(ult.periodo + "-01"); f.setMonth(f.getMonth() + 1); sig = f; } else { sig = aFecha(c.fechaInicio); }
+    fPago.periodo.value = sig.getFullYear() + "-" + dos(sig.getMonth() + 1);
+    fPago.fechaLimite.value = fPago.periodo.value + "-05";
+    fPago.valor.value = ult ? ult.valor : c.canon;
+    fPago.fechaPago.value = "";
+    calcMora();
+    document.getElementById("ultimosPagos").innerHTML = pagos.length ? tablaPagos({ pagos: pagos.slice(-6) }) : "<p class='tenue'>Sin pagos registrados.</p>";
+  }
+  function calcMora() {
+    if (!fPago.fechaLimite.value) return;
+    var d = diasMora({ fechaLimite: fPago.fechaLimite.value, fechaPago: fPago.fechaPago.value || null });
+    document.getElementById("moraCalc").value = d + (fPago.fechaPago.value ? " días" : " días (a hoy, sin pagar)");
+  }
+  fPago.contratoId.onchange = sugerirPago;
+  fPago.periodo.onchange = function () { fPago.fechaLimite.value = fPago.periodo.value + "-05"; calcMora(); };
+  fPago.fechaLimite.onchange = calcMora;
+  fPago.fechaPago.onchange = calcMora;
+  fPago.onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target), c = contratoSel();
+    if (!c) return error("Seleccione un contrato.");
+    var id = "P" + c.id + "-" + d.periodo;
+    var existente = BD.datos.pagos.find(function (p) { return p.id === id; });
+    var pago = { id: id, contratoId: c.id, periodo: d.periodo, fechaLimite: d.fechaLimite, fechaPago: d.fechaPago || null, valor: +d.valor, pagadoPor: d.fechaPago ? d.pagadoPor : null };
+    if (existente) Object.assign(existente, pago); else BD.datos.pagos.push(pago);
+    BD.guardar();
+    ok("Pago de " + periodoTexto(d.periodo) + (existente ? " actualizado" : " registrado") + " para " + esc(nombreDe(c.cedula)) + ". Días de mora: <b>" + diasMora(pago) + "</b>.");
+    sugerirPago();
+  };
+
+  // ----- 4. Terminar contrato -----
+  document.getElementById("pTerminar").onsubmit = function (e) {
+    e.preventDefault();
+    var d = datos(e.target);
+    var c = BD.datos.contratos.find(function (x) { return x.id === d.contratoId; });
+    if (!c) return error("Seleccione un contrato vigente.");
+    if (d.fechaFin < c.fechaInicio) return error("La fecha de terminación es anterior al inicio del contrato.");
+    c.fechaFin = d.fechaFin; c.motivoTerminacion = d.motivo; c.calificacion = +d.calificacion;
+    c.observacion = d.observacion; c.siniestro = !!d.siniestro;
+    BD.guardar(); e.target.reset(); refrescarListas();
+    ok("Contrato terminado. El reporte de " + esc(nombreDe(c.cedula)) + " ya refleja el cambio.");
+  };
+
+  // Si llega desde el panel con ?contrato=ID, abrir directamente la pestaña de pagos
+  var pre = parametro("contrato");
+  if (pre) { abrir("pPago"); fPago.contratoId.value = pre; }
+  sugerirPago();
+},
+"aseguradoras.html": function () {
+  var sel = document.getElementById("aseg");
+  sel.innerHTML = BD.datos.aseguradoras.map(function (a) {
+    return '<option value="' + a.id + '">' + esc(a.nombre) + " (" + (a.tarifa * 100).toFixed(1).replace(".", ",") + " %)</option>";
+  }).join("");
+  document.getElementById("tablaAseg").innerHTML = "<tr><th>Aseguradora</th><th>Tarifa mensual</th><th>Días de mora para avisar siniestro</th><th>Contratos asegurados</th><th>Siniestros</th></tr>" +
+    BD.datos.aseguradoras.map(function (a) {
+      var cs = BD.datos.contratos.filter(function (c) { return c.aseguradora === a.id; });
+      return "<tr><td>" + esc(a.nombre) + "</td><td>" + (a.tarifa * 100).toFixed(1).replace(".", ",") + " %</td><td>" + a.diasSiniestro + "</td><td>" + cs.length +
+        "</td><td>" + cs.filter(function (c) { return c.siniestro; }).length + "</td></tr>";
+    }).join("");
+
+  function calcular() {
+    var canon = +document.getElementById("canon").value || 0;
+    var admin = +document.getElementById("admin").value || 0;
+    var a = BD.aseguradora(sel.value);
+    var tasa = a.tarifa + (+document.getElementById("integral").value);
+    var prima = (canon + admin) * tasa, iva = prima * 0.19;
+    var caja = function (v, t) { return '<div class="kpi"><div class="valor">' + v + '</div><div class="etiqueta">' + t + "</div></div>"; };
+    document.getElementById("resultado").innerHTML =
+      caja(pesos(prima), "Prima mensual") + caja(pesos(iva), "IVA de la prima") +
+      caja(pesos(prima + iva), "Total mensual a la aseguradora") + caja(pesos(canon - prima - iva), "Le queda al propietario (antes de la comisión de la inmobiliaria)");
+  }
+  document.querySelectorAll("#canon,#admin,#aseg,#integral").forEach(function (el) { el.oninput = calcular; el.onchange = calcular; });
+  calcular();
+},
+"legal.html": function () {}};
+var TITULOS = {"index": "Data Inmobiliario · Central de información de arrendatarios", "login": "Ingresar · Data Inmobiliario", "registro": "Registro · Data Inmobiliario", "panel": "Mi panel · Data Inmobiliario", "consulta": "Consultar cédula · Data Inmobiliario", "comprar": "Comprar consultas · Data Inmobiliario", "reporte": "Reporte de arrendatario · Data Inmobiliario", "mi-historial": "Mi historial · Data Inmobiliario", "ingreso-datos": "Ingresar datos · Data Inmobiliario", "aseguradoras": "Cómo funcionan las aseguradoras de arriendo · Data Inmobiliario", "legal": "Marco legal y tratamiento de datos · Data Inmobiliario"};
+function paginaActual() { return ACTUAL; }
+function busquedaActual() { return PARAMS ? "?" + PARAMS : ""; }
+function ir(url) {
+  var ancla = url.split("#")[1]; url = url.split("#")[0];
+  var partes = url.split("?");
+  ACTUAL = VISTAS[partes[0]] ? partes[0] : "index.html";
+  PARAMS = partes[1] || "";
+  var main = document.getElementById("vista");
+  main.innerHTML = document.getElementById("v-" + ACTUAL.replace(".html", "")).innerHTML;
+  document.title = TITULOS[ACTUAL.replace(".html", "")];
+  dibujarPlantilla();
+  window.scrollTo(0, 0);
+  if (ancla) setTimeout(function () { var el = document.getElementById(ancla); if (el) el.scrollIntoView(); }, 0);
+  try { VISTAS[ACTUAL](); } catch (e) { if (!/Sin sesión|Tipo no permitido/.test(e.message)) console.error(e); }
+}
+window.print = function () { alertaPantalla("La impresión no está disponible dentro de Claude. Use la versión descargable para imprimir o guardar en PDF."); };
+function alertaPantalla(t) { var m = document.createElement("div"); m.className = "alerta aviso"; m.textContent = t; document.querySelector("#vista .contenedor").prepend(m); }
+document.addEventListener("click", function (e) {
+  var a = e.target.closest("a[href]");
+  if (!a) return;
+  var href = a.getAttribute("href");
+  if (/^[a-z-]+\.html/.test(href)) { e.preventDefault(); ir(href); }
+});
+ir("index.html");
+</script>
+</body>
+</html>

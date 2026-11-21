@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+    <div class="acceso">
+      <div class="lado-imagen">
+        <div><div class="etiqueta-oro">Data Inmobiliario</div><h2>Únase a la central</h2><p>Inmobiliarias, propietarios y personas en un mismo lugar de confianza.</p></div>
+        <div data-ilustracion="edificio"></div>
+      </div>
+      <div class="lado-form">
+    <div class="tarjeta">
+      <h1>Crear cuenta</h1>
+      <div id="msg"></div>
+      <form id="formRegistro">
+        <label>Tipo de cuenta</label>
+        <div class="selector-tipo">
+          <label><input type="radio" name="tipo" value="inmobiliaria" checked><span>Inmobiliaria</span></label>
+          <label><input type="radio" name="tipo" value="persona"><span>Persona / propietario</span></label>
+        </div>
+        <label for="nombre" id="lblNombre">Razón social</label>
+        <input id="nombre" required>
+        <div class="fila">
+          <div><label for="documento" id="lblDoc">NIT</label><input id="documento" required></div>
+          <div><label for="ciudad">Ciudad</label><input id="ciudad" required value="Medellín"></div>
+        </div>
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" required>
+        <div class="fila">
+          <div><label for="clave">Contraseña</label><input id="clave" type="password" minlength="6" required></div>
+          <div><label for="clave2">Repetir contraseña</label><input id="clave2" type="password" minlength="6" required></div>
+        </div>
+        <label class="check"><input type="checkbox" id="terminos" required>
+          <span>Acepto los términos de uso y la <a href="legal.html" target="_blank">política de tratamiento de datos personales</a>, y me comprometo a consultar solo personas que me hayan dado autorización previa, expresa e informada.</span></label>
+        <button class="boton verde" type="submit">Crear cuenta</button>
+      </form>
+      <p class="ayuda">Prototipo: la contraseña se guarda en el navegador sin cifrar. En un sistema real se guardaría con hash (bcrypt/argon2) en un servidor.</p>
+    </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var radios = document.querySelectorAll("input[name=tipo]");
+  radios.forEach(function (r) {
+    r.onchange = function () {
+      var inmo = r.value === "inmobiliaria";
+      document.getElementById("lblNombre").textContent = inmo ? "Razón social" : "Nombre completo";
+      document.getElementById("lblDoc").textContent = inmo ? "NIT" : "Cédula";
+    };
+  });
+
+  document.getElementById("formRegistro").onsubmit = function (e) {
+    e.preventDefault();
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+    var tipo = document.querySelector("input[name=tipo]:checked").value;
+    if (v("clave") !== v("clave2")) return mensaje("msg", "error", "Las contraseñas no coinciden.");
+    if (BD.usuarioPorEmail(v("email"))) return mensaje("msg", "error", "Ya existe una cuenta con ese correo.");
+    if (tipo === "persona" && !/^\d{6,10}$/.test(v("documento"))) return mensaje("msg", "error", "La cédula debe tener entre 6 y 10 dígitos, sin puntos.");
+
+    var u = {
+      id: BD.nuevoId("u"), tipo: tipo, nombre: v("nombre"), documento: v("documento"),
+      email: v("email").toLowerCase(), clave: v("clave"), ciudad: v("ciudad"),
+      creditos: 1 // regalo de bienvenida: 1 consulta
+    };
+    BD.datos.usuarios.push(u);
+    BD.guardar();
+    Sesion.iniciar(u.email, u.clave);
+    ir("panel.html?nuevo=1");
+  };
+</script>
+</body>
+</html>

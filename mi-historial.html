@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi historial · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+    <h1>Mi historial de arriendo</h1>
+    <div class="alerta info">Como titular de la información usted puede consultar su reporte <b>gratis</b>, conocer quién lo ha consultado y pedir que se corrija un dato que considere inexacto.</div>
+    <div id="reporte"></div>
+
+    <div class="tarjeta" id="zonaReclamo">
+      <h2>Presentar un reclamo o solicitud de corrección</h2>
+      <div id="msg"></div>
+      <form id="formReclamo">
+        <div class="fila">
+          <div><label>Tipo de solicitud</label>
+            <select name="tipo"><option>Rectificación de un pago mal reportado</option><option>Actualización (ya pagué la deuda)</option><option>No reconozco este contrato</option><option>Supresión del dato (cumplió su tiempo de permanencia)</option><option>Revocar autorización</option></select></div>
+          <div><label>Contrato relacionado</label><select name="contrato" id="selContrato"></select></div>
+        </div>
+        <label>Describa su solicitud</label>
+        <textarea name="detalle" rows="3" required></textarea>
+        <button class="boton" type="submit">Enviar reclamo</button>
+        <p class="ayuda">Plazo legal de respuesta para reclamos: 15 días hábiles (Ley 1266 de 2008, art. 16). Mientras se resuelve, el reporte muestra la leyenda "reclamo en trámite".</p>
+      </form>
+      <h3>Mis reclamos</h3>
+      <div id="listaReclamos"></div>
+    </div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script src="js/reporte.js"></script>
+<script>
+  var u = Sesion.exigir(["persona"]);
+  var persona = BD.inquilino(u.documento);
+  if (!persona) {
+    document.getElementById("reporte").innerHTML = '<div class="tarjeta"><h2>No encontramos información</h2><p>Su cédula <b>' + esc(u.documento) +
+      "</b> no tiene registros en la central. Esto significa que ninguna inmobiliaria ha reportado contratos a su nombre.</p></div>";
+    document.getElementById("zonaReclamo").classList.add("oculto");
+  } else {
+    document.getElementById("reporte").innerHTML = construirReporte(u.documento, u);
+    document.getElementById("selContrato").innerHTML = '<option value="">General</option>' + BD.contratosDe(u.documento).map(function (c) {
+      return '<option value="' + c.id + '">' + esc(c.direccion + " (" + c.fechaInicio.slice(0, 4) + ")") + "</option>";
+    }).join("");
+  }
+
+  function pintarReclamos() {
+    var mios = BD.datos.reclamos.filter(function (r) { return r.cedula === u.documento; }).reverse();
+    document.getElementById("listaReclamos").innerHTML = mios.length ? '<table><tr><th>Radicado</th><th>Fecha</th><th>Tipo</th><th>Estado</th></tr>' + mios.map(function (r) {
+      return "<tr><td>" + r.id + "</td><td>" + new Date(r.fecha).toLocaleDateString("es-CO") + "</td><td>" + esc(r.tipo) + '</td><td><span class="chip amarillo">' + r.estado + "</span></td></tr>";
+    }).join("") + "</table>" : "<p class='tenue'>No ha presentado reclamos.</p>";
+  }
+  pintarReclamos();
+
+  document.getElementById("formReclamo").onsubmit = function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(e.target).entries());
+    var r = { id: "RAD-" + Date.now().toString().slice(-6), cedula: u.documento, tipo: d.tipo, contrato: d.contrato, detalle: d.detalle, fecha: Date.now(), estado: "En trámite" };
+    BD.datos.reclamos.push(r); BD.guardar(); e.target.reset(); pintarReclamos();
+    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles (simulado).");
+  };
+</script>
+</body>
+</html>

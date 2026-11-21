@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo funcionan las aseguradoras de arriendo · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+    <h1>¿Cómo funcionan y cómo se pagan las aseguradoras de arriendo?</h1>
+    <p class="tenue">Guía didáctica. Los porcentajes y plazos son <b>valores de referencia</b> para el prototipo; cada póliza real define los suyos.</p>
+
+    <div class="tarjeta">
+      <h2>¿Qué es un seguro de arrendamiento?</h2>
+      <p>Es una póliza que protege al <b>propietario</b> si el <b>inquilino</b> deja de pagar el canon. Cuando hay incumplimiento,
+        la aseguradora le paga al propietario los cánones adeudados y después le cobra al inquilino y a sus codeudores.
+        Por eso muchas inmobiliarias, en lugar de pedir codeudores con finca raíz, piden que el inquilino sea aprobado por una aseguradora.</p>
+      <div class="grid grid-4">
+        <div><span data-icono="casa"></span><br><b>Propietario</b><br><span class="tenue">Asegurado y beneficiario: recibe el pago si el inquilino incumple.</span></div>
+        <div><span data-icono="edificio"></span><br><b>Inmobiliaria</b><br><span class="tenue">Tomadora de la póliza: la contrata, paga la prima y reporta los siniestros.</span></div>
+        <div><span data-icono="documento"></span><br><b>Inquilino</b><br><span class="tenue">Afianzado: su comportamiento de pago es lo que se asegura.</span></div>
+        <div><span data-icono="escudo"></span><br><b>Aseguradora</b><br><span class="tenue">Estudia el riesgo, cobra la prima, paga el siniestro y hace el recobro.</span></div>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>El proceso paso a paso</h2>
+      <div class="flujo">
+        <div class="etapa"><b>1. Estudio</b>El aspirante entrega documentos (cédula, ingresos, extractos). La aseguradora consulta centrales de información como Data Inmobiliario.</div>
+        <div class="etapa"><b>2. Aprobación</b>Aprueba, aprueba con codeudor o niega según ingresos (el canon no suele superar ~1/3 de los ingresos) e historial.</div>
+        <div class="etapa"><b>3. Contrato y póliza</b>Se firma el contrato y el inmueble queda incluido en la póliza colectiva de la inmobiliaria.</div>
+        <div class="etapa"><b>4. Prima mensual</b>Cada mes la inmobiliaria paga un porcentaje del canon (y de la administración) a la aseguradora.</div>
+        <div class="etapa"><b>5. Mora</b>Si el inquilino no paga, la inmobiliaria hace gestión de cobro y, pasado el plazo de la póliza, avisa el siniestro.</div>
+        <div class="etapa"><b>6. Indemnización</b>La aseguradora le paga al propietario los cánones adeudados, mes a mes, hasta la restitución del inmueble o el límite de la póliza.</div>
+        <div class="etapa"><b>7. Recobro</b>La aseguradora queda con el derecho de cobrar (subrogación) al inquilino y codeudores, incluso por vía judicial.</div>
+        <div class="etapa"><b>8. Reporte</b>El incumplimiento queda registrado en centrales de información, previa notificación al titular.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="tarjeta">
+        <h2>¿Qué cubre?</h2>
+        <table>
+          <tr><th>Amparo</th><th>Qué paga</th></tr>
+          <tr><td>Básico</td><td>Cánones de arrendamiento no pagados.</td></tr>
+          <tr><td>Administración</td><td>Cuotas de administración de propiedad horizontal.</td></tr>
+          <tr><td>Servicios públicos</td><td>Facturas de agua, luz y gas que deje el inquilino (según póliza).</td></tr>
+          <tr><td>Integral / daños</td><td>Daños al inmueble y faltantes de inventario al entregarlo.</td></tr>
+          <tr><td>Jurídico</td><td>Honorarios del abogado para el proceso de restitución.</td></tr>
+        </table>
+      </div>
+      <div class="tarjeta">
+        <h2>¿Quién paga y cuánto?</h2>
+        <ul>
+          <li><b>La prima</b> normalmente la paga el <b>propietario</b>: la inmobiliaria la descuenta del canon antes de girarle el dinero.</li>
+          <li>Tarifa de referencia: entre <b>1,8 % y 3 % mensual</b> del canon + administración, más IVA (19 %) sobre la prima.</li>
+          <li>El <b>inquilino</b> suele pagar solo el <b>estudio</b> de su solicitud (pago único).</li>
+          <li>Si hay siniestro, el inquilino termina debiendo a la aseguradora el canon, intereses de mora y gastos de cobro.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Calculadora de prima (simulada)</h2>
+      <div class="fila">
+        <div><label for="canon">Canon mensual</label><input id="canon" type="number" value="1500000" step="10000"></div>
+        <div><label for="admin">Administración mensual</label><input id="admin" type="number" value="250000" step="10000"></div>
+        <div><label for="aseg">Aseguradora (ficticia)</label><select id="aseg"></select></div>
+        <div><label for="integral">Amparo integral (+0,5 %)</label><select id="integral"><option value="0">No</option><option value="0.005">Sí</option></select></div>
+      </div>
+      <div id="resultado" class="grid grid-4" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Aseguradoras registradas en el prototipo</h2>
+      <p class="tenue">Nombres inventados. En Colombia existen aseguradoras reales que ofrecen este producto; para el documento de grado puede citarlas como referencia de mercado, pero no se usan aquí.</p>
+      <div class="tabla-envoltura"><table id="tablaAseg"></table></div>
+    </div>
+
+    <div class="tarjeta">
+      <h2>Ejemplo de siniestro en Data Inmobiliario</h2>
+      <p>En los datos de demostración, el inquilino ficticio con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
+        y el reporte muestra esos meses con el código <b style="color:#6d1a20">S</b> y la alerta “siniestro pagado por la aseguradora”, lo que baja fuertemente su puntaje.</p>
+      <h3>Consejos para el inquilino</h3>
+      <ul>
+        <li>Si va a atrasarse, avise a la inmobiliaria antes de la fecha límite y acuerde una fecha de pago.</li>
+        <li>Guarde los comprobantes de pago: le sirven para pedir correcciones.</li>
+        <li>Al terminar el contrato, entregue el inmueble con paz y salvo de servicios y administración.</li>
+      </ul>
+    </div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var sel = document.getElementById("aseg");
+  sel.innerHTML = BD.datos.aseguradoras.map(function (a) {
+    return '<option value="' + a.id + '">' + esc(a.nombre) + " (" + (a.tarifa * 100).toFixed(1).replace(".", ",") + " %)</option>";
+  }).join("");
+  document.getElementById("tablaAseg").innerHTML = "<tr><th>Aseguradora</th><th>Tarifa mensual</th><th>Días de mora para avisar siniestro</th><th>Contratos asegurados</th><th>Siniestros</th></tr>" +
+    BD.datos.aseguradoras.map(function (a) {
+      var cs = BD.datos.contratos.filter(function (c) { return c.aseguradora === a.id; });
+      return "<tr><td>" + esc(a.nombre) + "</td><td>" + (a.tarifa * 100).toFixed(1).replace(".", ",") + " %</td><td>" + a.diasSiniestro + "</td><td>" + cs.length +
+        "</td><td>" + cs.filter(function (c) { return c.siniestro; }).length + "</td></tr>";
+    }).join("");
+
+  function calcular() {
+    var canon = +document.getElementById("canon").value || 0;
+    var admin = +document.getElementById("admin").value || 0;
+    var a = BD.aseguradora(sel.value);
+    var tasa = a.tarifa + (+document.getElementById("integral").value);
+    var prima = (canon + admin) * tasa, iva = prima * 0.19;
+    var caja = function (v, t) { return '<div class="kpi"><div class="valor">' + v + '</div><div class="etiqueta">' + t + "</div></div>"; };
+    document.getElementById("resultado").innerHTML =
+      caja(pesos(prima), "Prima mensual") + caja(pesos(iva), "IVA de la prima") +
+      caja(pesos(prima + iva), "Total mensual a la aseguradora") + caja(pesos(canon - prima - iva), "Le queda al propietario (antes de la comisión de la inmobiliaria)");
+  }
+  document.querySelectorAll("#canon,#admin,#aseg,#integral").forEach(function (el) { el.oninput = calcular; el.onchange = calcular; });
+  calcular();
+</script>
+</body>
+</html>

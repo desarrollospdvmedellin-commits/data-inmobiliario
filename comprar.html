@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprar consultas · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+    <h1>Comprar consultas</h1>
+    <div class="alerta aviso"><b>Pasarela de pago SIMULADA.</b> No se realiza ningún cobro ni se envían datos a ningún banco. No escriba datos de una tarjeta real.</div>
+
+    <div class="grid grid-2" id="zonaCompra">
+      <div class="tarjeta">
+        <h2>1. Elija un plan</h2>
+        <div id="planes"></div>
+        <h2>2. Medio de pago</h2>
+        <div class="pestanas">
+          <button type="button" class="activa" data-medio="tarjeta">Tarjeta</button>
+          <button type="button" data-medio="pse">PSE</button>
+        </div>
+        <div id="msg"></div>
+        <form id="formTarjeta">
+          <div class="tarjeta-credito"><div>DATA INMOBILIARIO PAY</div><div class="num" id="vistaNum">•••• •••• •••• ••••</div><div id="vistaNombre">NOMBRE DEL TITULAR</div></div>
+          <label for="numTarjeta">Número de tarjeta</label>
+          <input id="numTarjeta" inputmode="numeric" maxlength="19" placeholder="4111 1111 1111 1111" required>
+          <label for="nomTarjeta">Nombre como aparece en la tarjeta</label>
+          <input id="nomTarjeta" required>
+          <div class="fila">
+            <div><label for="venc">Vencimiento (MM/AA)</label><input id="venc" placeholder="12/29" maxlength="5" required></div>
+            <div><label for="cvv">CVV</label><input id="cvv" inputmode="numeric" maxlength="4" placeholder="123" required></div>
+            <div><label for="cuotas">Cuotas</label><select id="cuotas"><option>1</option><option>3</option><option>6</option><option>12</option></select></div>
+          </div>
+          <button class="boton verde" type="submit" id="btnPagar">Pagar</button>
+          <p class="ayuda">Tarjetas de prueba: <b>4111 1111 1111 1111</b> (aprobada) · <b>4000 0000 0000 0002</b> (rechazada por fondos insuficientes).</p>
+        </form>
+        <form id="formPse" class="oculto">
+          <label for="banco">Banco</label>
+          <select id="banco"><option>Banco Ficticio de Colombia</option><option>Banco Demo Popular</option><option>Cooperativa Simulada</option></select>
+          <label for="tipoPersona">Tipo de persona</label>
+          <select id="tipoPersona"><option>Natural</option><option>Jurídica</option></select>
+          <button class="boton verde" type="submit">Continuar al banco (simulado)</button>
+        </form>
+      </div>
+      <div class="tarjeta">
+        <h2>Resumen</h2>
+        <table id="resumen"></table>
+        <p class="ayuda">Valores simulados con IVA incluido. En un sistema real se integraría una pasarela certificada (por ejemplo Wompi, PayU o Mercado Pago) y nunca se guardarían los datos de la tarjeta en el propio servidor.</p>
+      </div>
+    </div>
+
+    <div id="comprobante" class="tarjeta oculto"></div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var u = Sesion.exigir();
+  var PLANES = [
+    { id: "p1", nombre: "Consulta individual", creditos: 1, valor: 15000 },
+    { id: "p10", nombre: "Paquete inmobiliaria (10)", creditos: 10, valor: 120000 },
+    { id: "p50", nombre: "Paquete empresarial (50)", creditos: 50, valor: 500000 }
+  ];
+  var plan = PLANES[parametro("cc") ? 0 : 1];
+  var medio = "tarjeta";
+
+  function pintarPlanes() {
+    document.getElementById("planes").innerHTML = PLANES.map(function (p) {
+      return '<label class="check" style="border:1px solid var(--borde);border-radius:8px;padding:.6rem;margin:.4rem 0">' +
+        '<input type="radio" name="plan" value="' + p.id + '"' + (p.id === plan.id ? " checked" : "") + '>' +
+        "<span><b>" + p.nombre + "</b><br><span class='tenue'>" + pesos(p.valor) + " · " + pesos(p.valor / p.creditos) + " por consulta</span></span></label>";
+    }).join("");
+    document.querySelectorAll("input[name=plan]").forEach(function (r) {
+      r.onchange = function () { plan = PLANES.find(function (p) { return p.id === r.value; }); pintarResumen(); };
+    });
+  }
+  function pintarResumen() {
+    var iva = Math.round(plan.valor - plan.valor / 1.19);
+    document.getElementById("resumen").innerHTML =
+      "<tr><td>Plan</td><td>" + plan.nombre + "</td></tr><tr><td>Consultas</td><td>" + plan.creditos + "</td></tr>" +
+      "<tr><td>Subtotal</td><td>" + pesos(plan.valor - iva) + "</td></tr><tr><td>IVA (19 %)</td><td>" + pesos(iva) + "</td></tr>" +
+      "<tr><th>Total</th><th>" + pesos(plan.valor) + "</th></tr>";
+    document.getElementById("btnPagar").textContent = "Pagar " + pesos(plan.valor);
+  }
+  pintarPlanes(); pintarResumen();
+
+  // Cambiar entre tarjeta y PSE
+  document.querySelectorAll("[data-medio]").forEach(function (b) {
+    b.onclick = function () {
+      medio = b.dataset.medio;
+      document.querySelectorAll("[data-medio]").forEach(function (x) { x.classList.toggle("activa", x === b); });
+      document.getElementById("formTarjeta").classList.toggle("oculto", medio !== "tarjeta");
+      document.getElementById("formPse").classList.toggle("oculto", medio !== "pse");
+    };
+  });
+
+  // Vista previa de la tarjeta
+  var num = document.getElementById("numTarjeta");
+  num.oninput = function () {
+    var d = num.value.replace(/\D/g, "").slice(0, 16);
+    num.value = d.replace(/(\d{4})(?=\d)/g, "$1 ");
+    document.getElementById("vistaNum").textContent = (d + "••••••••••••••••").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+  };
+  document.getElementById("nomTarjeta").oninput = function (e) {
+    document.getElementById("vistaNombre").textContent = e.target.value.toUpperCase() || "NOMBRE DEL TITULAR";
+  };
+
+  /* Algoritmo de Luhn: valida que el número de tarjeta sea coherente */
+  function luhn(numero) {
+    var suma = 0, doble = false;
+    for (var i = numero.length - 1; i >= 0; i--) {
+      var n = +numero[i];
+      if (doble) { n *= 2; if (n > 9) n -= 9; }
+      suma += n; doble = !doble;
+    }
+    return numero.length >= 13 && suma % 10 === 0;
+  }
+
+  function procesar(aprobado, motivo, detalleMedio) {
+    mensaje("msg", "info", "⏳ Procesando pago simulado…");
+    document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = true; });
+    setTimeout(function () {
+      document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = false; });
+      if (!aprobado) return mensaje("msg", "error", "❌ Transacción rechazada: " + motivo);
+      var compra = {
+        id: "DI-" + Date.now().toString().slice(-8), usuarioId: u.id, plan: plan.nombre, creditos: plan.creditos,
+        valor: plan.valor, medio: detalleMedio, fecha: Date.now(), estado: "APROBADA"
+      };
+      u.creditos += plan.creditos;
+      BD.datos.compras.push(compra);
+      BD.guardar();
+      document.getElementById("zonaCompra").classList.add("oculto");
+      var c = document.getElementById("comprobante");
+      c.classList.remove("oculto");
+      c.innerHTML = '<h2>✅ Pago aprobado (simulado)</h2><table>' +
+        "<tr><td>Referencia</td><td><b>" + compra.id + "</b></td></tr><tr><td>Fecha</td><td>" + new Date(compra.fecha).toLocaleString("es-CO") + "</td></tr>" +
+        "<tr><td>Cliente</td><td>" + esc(u.nombre) + " · " + esc(u.documento) + "</td></tr><tr><td>Plan</td><td>" + compra.plan + "</td></tr>" +
+        "<tr><td>Medio</td><td>" + esc(compra.medio) + "</td></tr><tr><td>Valor</td><td>" + pesos(compra.valor) + "</td></tr>" +
+        "<tr><td>Saldo de consultas</td><td><b>" + u.creditos + "</b></td></tr></table>" +
+        (parametro("cc") ? '<a class="boton" href="consulta.html?cc=' + encodeURIComponent(parametro("cc")) + '">Continuar con la consulta</a>' : '<a class="boton" href="consulta.html">Hacer una consulta</a>') +
+        ' <button class="boton secundario no-imprimir" onclick="print()">Imprimir comprobante</button>';
+    }, 1800);
+  }
+
+  document.getElementById("formTarjeta").onsubmit = function (e) {
+    e.preventDefault();
+    var n = num.value.replace(/\D/g, "");
+    var venc = document.getElementById("venc").value;
+    if (!luhn(n)) return mensaje("msg", "error", "El número de tarjeta no es válido (falla la verificación de Luhn).");
+    var m = venc.match(/^(\d{2})\/(\d{2})$/);
+    if (!m || +m[1] < 1 || +m[1] > 12 || new Date(2000 + +m[2], +m[1], 0) < new Date()) return mensaje("msg", "error", "Fecha de vencimiento inválida o tarjeta vencida.");
+    if (!/^\d{3,4}$/.test(document.getElementById("cvv").value)) return mensaje("msg", "error", "CVV inválido.");
+    var rechazada = n === "4000000000000002";
+    procesar(!rechazada, "fondos insuficientes", "Tarjeta terminada en " + n.slice(-4) + " · " + document.getElementById("cuotas").value + " cuota(s)");
+  };
+  document.getElementById("formPse").onsubmit = function (e) {
+    e.preventDefault();
+    procesar(true, "", "PSE · " + document.getElementById("banco").value);
+  };
+</script>
+</body>
+</html>

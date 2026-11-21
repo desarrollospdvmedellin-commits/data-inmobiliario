@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultar cédula · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor" style="max-width:640px">
+    <div class="tarjeta">
+      <h1>Consultar historial de arrendatario</h1>
+      <p class="tenue">Cada consulta descuenta 1 crédito y le da acceso al reporte durante 24 horas.</p>
+      <div id="saldo" class="alerta info"></div>
+      <div id="msg"></div>
+      <form id="formConsulta">
+        <label for="cc">Cédula de ciudadanía del aspirante</label>
+        <input id="cc" inputmode="numeric" required placeholder="Ej: 9990000103">
+        <label for="motivo">Motivo de la consulta</label>
+        <select id="motivo">
+          <option>Estudio para nuevo contrato de arrendamiento</option>
+          <option>Renovación de contrato vigente</option>
+          <option>Verificación de codeudor</option>
+          <option>Solicitud del propio titular</option>
+        </select>
+        <label class="check"><input type="checkbox" id="autoriza" required>
+          <span>Declaro que cuento con la <b>autorización previa, expresa e informada</b> del titular para consultar su información (Ley 1266 de 2008 y Ley 1581 de 2012).</span></label>
+        <button class="boton" type="submit">Consultar</button>
+      </form>
+    </div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var u = Sesion.exigir();
+  document.getElementById("saldo").innerHTML = "Consultas disponibles: <b>" + u.creditos + "</b> · <a href='comprar.html'>Comprar más</a>";
+  if (parametro("cc")) document.getElementById("cc").value = parametro("cc");
+
+  document.getElementById("formConsulta").onsubmit = function (e) {
+    e.preventDefault();
+    var cc = document.getElementById("cc").value.replace(/\D/g, "");
+    if (cc.length < 6) return mensaje("msg", "error", "Escriba una cédula válida (solo números).");
+
+    // 1. ¿Ya pagó esta cédula en las últimas 24 h, o es su propia cédula? No se cobra de nuevo.
+    if (tieneAcceso(u, cc)) { ir("reporte.html?cc=" + cc); return; }
+
+    // 2. ¿Existe la persona en la central? Si no existe, no se cobra.
+    if (!BD.inquilino(cc)) {
+      return mensaje("msg", "aviso", "La cédula <b>" + cc + "</b> no está registrada en Data Inmobiliario. No se descontó ninguna consulta.");
+    }
+
+    // 3. ¿Tiene saldo? Si no, se envía a comprar.
+    if (u.creditos < 1) {
+      return mensaje("msg", "error", "No tiene consultas disponibles. <a href='comprar.html?cc=" + cc + "'>Pagar esta consulta ahora (" + pesos(PRECIO_CONSULTA) + ")</a>");
+    }
+
+    // 4. Descontar crédito, registrar la consulta (bitácora) y dar acceso.
+    u.creditos -= 1;
+    var ahora = Date.now();
+    BD.datos.consultas.push({ id: BD.nuevoId("Q"), usuarioId: u.id, usuarioNombre: u.nombre, cedula: cc, motivo: document.getElementById("motivo").value, fecha: ahora });
+    BD.datos.accesos.push({ usuarioId: u.id, cedula: cc, fecha: ahora });
+    BD.guardar();
+    ir("reporte.html?cc=" + cc);
+  };
+</script>
+</body>
+</html>

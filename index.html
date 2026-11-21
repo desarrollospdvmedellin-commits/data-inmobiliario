@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Inmobiliario · Central de información de arrendatarios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor">
+
+    <section class="portada">
+      <div class="texto">
+        <div class="etiqueta-oro">Central de información de arrendatarios</div>
+        <h1>Arriende con <em>certeza</em>.<br>Decida con información.</h1>
+        <p>Data Inmobiliario reúne el historial de arrendamiento de las personas para que inmobiliarias y propietarios sepan,
+           con autorización del titular, si un aspirante ha sido buen o mal pagador: dónde ha vivido, cómo pagó y cómo terminó cada contrato.</p>
+        <a class="boton verde" href="registro.html">Crear cuenta</a>
+        <a class="boton secundario" href="login.html">Ingresar</a>
+      </div>
+      <div class="ilustracion" data-ilustracion="edificio"></div>
+    </section>
+
+    <div class="franja-confianza">
+      <div><b>Habeas data</b>Operación alineada con la Ley 1266 de 2008 y la Ley 1581 de 2012.</div>
+      <div><b>Autorización previa</b>Solo se consulta a quien autoriza de forma expresa.</div>
+      <div><b>Fuentes verificadas</b>Información reportada por inmobiliarias y arrendadores.</div>
+      <div><b>Derecho del titular</b>Consulta gratuita del propio historial y reclamos.</div>
+    </div>
+
+    <div class="cifras" id="cifras"></div>
+
+    <h2 class="seccion-titulo">Cómo funciona</h2>
+    <p class="seccion-sub">Cuatro pasos para tomar una decisión de arriendo informada.</p>
+    <div class="grid grid-4">
+      <div class="tarjeta paso"><div class="num"><span>1</span></div><h3>Regístrese</h3><p class="tenue">Como inmobiliaria, propietario o persona que quiere ver su propio historial.</p></div>
+      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta o PSE (en este prototipo el pago es simulado).</p></div>
+      <div class="tarjeta paso"><div class="num"><span>3</span></div><h3>Busque por cédula</h3><p class="tenue">Con la autorización firmada por el aspirante a arrendatario.</p></div>
+      <div class="tarjeta paso"><div class="num"><span>4</span></div><h3>Analice el reporte</h3><p class="tenue">Puntaje, calificación, viviendas, pagos, días de mora y último canon.</p></div>
+    </div>
+
+    <h2 class="seccion-titulo">El reporte</h2>
+    <p class="seccion-sub">Una visión completa y objetiva del comportamiento del arrendatario.</p>
+    <div class="grid grid-3 grid-3-fijo">
+      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación: excelente, buen, regular o mal pagador.</p></div>
+      <div class="tarjeta"><span data-icono="casa"></span><h3>Historial de viviendas</h3><p>Direcciones, ciudades y fechas de inicio y fin de cada contrato, y con quién arrendó.</p></div>
+      <div class="tarjeta"><span data-icono="tarjeta"></span><h3>Comportamiento de pago</h3><p>Pago mes a mes, días de mora, deudas abiertas y siniestros con aseguradoras.</p></div>
+      <div class="tarjeta"><span data-icono="documento"></span><h3>Último canon</h3><p>Valor del último arriendo pagado y arrendador del contrato más reciente.</p></div>
+      <div class="tarjeta"><span data-icono="escudo"></span><h3>Aseguradoras</h3><p>Si el contrato tuvo póliza y si la aseguradora tuvo que pagar por el inquilino.</p></div>
+      <div class="tarjeta"><span data-icono="balanza"></span><h3>Derechos del titular</h3><p>La persona puede ver gratis su historial, saber quién la consultó y pedir correcciones.</p></div>
+    </div>
+
+    <h2 class="seccion-titulo">Planes</h2>
+    <p class="seccion-sub">Valores simulados con fines académicos.</p>
+    <div class="grid grid-3">
+      <div class="tarjeta plan"><h3>Consulta individual</h3><div class="precio">$15.000</div><p class="tenue">1 reporte completo</p></div>
+      <div class="tarjeta plan destacado"><h3>Paquete inmobiliaria</h3><div class="precio">$120.000</div><p class="tenue">10 reportes · ahorra 20 %</p></div>
+      <div class="tarjeta plan"><h3>Paquete empresarial</h3><div class="precio">$500.000</div><p class="tenue">50 reportes · ahorra 33 %</p></div>
+    </div>
+    <div class="alerta info">La persona titular <b>siempre puede consultar gratis</b> su propio historial (derecho de acceso del habeas data).</div>
+
+    <h2 class="seccion-titulo" id="contacto">Quiénes somos</h2>
+    <p class="seccion-sub">Somos una central de información especializada en arrendamiento de vivienda, con sede en Sabaneta, Antioquia.
+      Nuestra misión es que propietarios e inmobiliarias arrienden con seguridad y que los buenos inquilinos sean reconocidos por su cumplimiento.</p>
+
+    <div class="grid grid-2">
+      <div class="tarjeta">
+        <h2>Nuestra sede</h2>
+        <div class="dato-contacto"><span data-icono="ubicacion"></span><div><b>Dirección</b><span id="eDireccion"></span></div></div>
+        <div class="dato-contacto"><span data-icono="telefono"></span><div><b>Teléfonos</b><span id="eTelefonos"></span></div></div>
+        <div class="dato-contacto"><span data-icono="correo"></span><div><b>Correo</b><span id="eCorreo"></span></div></div>
+        <div class="dato-contacto"><span data-icono="reloj"></span><div><b>Horario</b><span id="eHorario"></span></div></div>
+        <div class="dato-contacto"><span data-icono="edificio"></span><div><b>Razón social</b><span id="eRazon"></span></div></div>
+      </div>
+      <div class="tarjeta">
+        <h2>PQRS · Escríbanos</h2>
+        <div id="msgPqrs"></div>
+        <form id="formPqrs">
+          <div class="fila">
+            <div><label>Nombre</label><input name="nombre" required></div>
+            <div><label>Correo</label><input name="correo" type="email" required></div>
+          </div>
+          <label>Tipo</label>
+          <select name="tipo"><option>Petición</option><option>Queja</option><option>Reclamo</option><option>Sugerencia</option><option>Quiero afiliar mi inmobiliaria</option></select>
+          <label>Mensaje</label>
+          <textarea name="mensaje" rows="3" required></textarea>
+          <label class="check"><input type="checkbox" required><span>Autorizo el tratamiento de mis datos para responder esta solicitud.</span></label>
+          <button class="boton verde" type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Cifras de la central, calculadas a partir de los datos
+  var d = BD.datos;
+  var fuentes = {};
+  d.contratos.forEach(function (c) { fuentes[c.arrendador] = 1; });
+  document.getElementById("cifras").innerHTML =
+    "<div><b>" + d.inquilinos.length + "</b>Personas registradas</div>" +
+    "<div><b>" + d.contratos.length + "</b>Contratos reportados</div>" +
+    "<div><b>" + d.pagos.length.toLocaleString("es-CO") + "</b>Pagos mensuales</div>" +
+    "<div><b>" + Object.keys(fuentes).length + "</b>Fuentes de información</div>";
+
+  // Datos de contacto de la empresa (ficticios, definidos en app.js)
+  document.getElementById("eDireccion").innerHTML = EMPRESA.direccion + "<br>" + EMPRESA.edificio + "<br>" + EMPRESA.ciudad;
+  document.getElementById("eTelefonos").innerHTML = "PBX " + EMPRESA.pbx + "<br>WhatsApp " + EMPRESA.whatsapp;
+  document.getElementById("eCorreo").innerHTML = EMPRESA.correo;
+  document.getElementById("eHorario").innerHTML = EMPRESA.horario.join("<br>");
+  document.getElementById("eRazon").innerHTML = EMPRESA.razonSocial + " · NIT " + EMPRESA.nit;
+
+  // Formulario PQRS (simulado: se guarda en el navegador)
+  document.getElementById("formPqrs").onsubmit = function (e) {
+    e.preventDefault();
+    var datos = Object.fromEntries(new FormData(e.target).entries());
+    var radicado = "PQRS-" + Date.now().toString().slice(-6);
+    BD.datos.mensajes = BD.datos.mensajes || [];
+    BD.datos.mensajes.push({ id: radicado, nombre: datos.nombre, correo: datos.correo, tipo: datos.tipo, mensaje: datos.mensaje, fecha: Date.now() });
+    BD.guardar(); e.target.reset();
+    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles (simulado).");
+  };
+</script>
+</body>
+</html>

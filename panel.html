@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi panel · Data Inmobiliario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main>
+  <div class="contenedor" id="contenido"></div>
+</main>
+<script src="js/datos-semilla.js"></script>
+<script src="js/almacen.js"></script>
+<script src="js/ilustraciones.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var u = Sesion.exigir();
+  var html = "";
+  if (parametro("nuevo")) html += '<div class="alerta exito">¡Cuenta creada! Le regalamos 1 consulta para que pruebe la plataforma.</div>';
+
+  html += '<h1>Hola, ' + esc(u.nombre) + '</h1><p class="tenue">' +
+    (u.tipo === "inmobiliaria" ? "Cuenta de inmobiliaria · NIT " : "Cuenta de persona · Cédula ") + esc(u.documento) + "</p>";
+
+  var misConsultas = BD.datos.consultas.filter(function (c) { return c.usuarioId === u.id; }).reverse();
+  html += '<div class="grid grid-4">' +
+    '<div class="tarjeta kpi"><div class="valor">' + u.creditos + '</div><div class="etiqueta">Consultas disponibles</div><a class="boton pequeno" style="margin-top:.6rem" href="comprar.html">Comprar más</a></div>' +
+    '<div class="tarjeta kpi"><div class="valor">' + misConsultas.length + '</div><div class="etiqueta">Consultas realizadas</div></div>';
+
+  if (u.tipo === "inmobiliaria") {
+    var misContratos = BD.datos.contratos.filter(function (c) { return c.inmobiliaria === u.nombre; });
+    var vigentes = misContratos.filter(function (c) { return !c.fechaFin; });
+    html += '<div class="tarjeta kpi"><div class="valor">' + vigentes.length + '</div><div class="etiqueta">Contratos vigentes reportados</div></div>' +
+      '<div class="tarjeta kpi"><div class="valor">' + misContratos.length + '</div><div class="etiqueta">Contratos totales reportados</div></div>';
+  } else {
+    var p = calcularPuntaje(u.documento);
+    var cat = categoriaPuntaje(p);
+    html += '<div class="tarjeta kpi"><div class="valor" style="color:' + cat.hex + '">' + (p === null ? "—" : p) + '</div><div class="etiqueta">Mi puntaje</div></div>' +
+      '<div class="tarjeta kpi"><div class="valor" style="font-size:1.1rem;color:' + cat.hex + '">' + cat.nombre + '</div><div class="etiqueta">Mi calificación</div></div>';
+  }
+  html += "</div>";
+
+  html += '<div class="tarjeta"><h2>Consulta rápida</h2><form id="rapida" class="fila" style="align-items:end">' +
+    '<div><label for="cc">Número de cédula</label><input id="cc" inputmode="numeric" placeholder="Ej: 9990000104" required></div>' +
+    '<div><button class="boton" type="submit">Buscar</button></div></form></div>';
+
+  if (u.tipo === "inmobiliaria") {
+    html += '<div class="tarjeta"><h2>Mis inquilinos reportados</h2><p class="tenue">Contratos que su inmobiliaria ha reportado a la central.</p>' +
+      '<div class="tabla-envoltura"><table><tr><th>Inquilino</th><th>Cédula</th><th>Inmueble</th><th>Inicio</th><th>Estado</th><th>Cumplimiento</th><th></th></tr>';
+    misContratos.forEach(function (c) {
+      var i = BD.inquilino(c.cedula), r = resumenContrato(c);
+      html += "<tr><td>" + esc(i ? i.nombres + " " + i.apellidos : "?") + "</td><td>" + c.cedula + "</td><td>" + esc(c.direccion) + ", " + esc(c.ciudad) +
+        "</td><td>" + fechaCorta(c.fechaInicio) + "</td><td>" + (c.fechaFin ? '<span class="chip gris">Terminado</span>' : '<span class="chip azul">Vigente</span>') +
+        '</td><td><span class="chip ' + r.resultado.chip + '">' + r.porcentaje + "% a tiempo</span></td>" +
+        '<td><a href="ingreso-datos.html?contrato=' + c.id + '">Registrar pago</a></td></tr>';
+    });
+    if (!misContratos.length) html += '<tr><td colspan="7" class="tenue">Aún no ha reportado contratos. Use <a href="ingreso-datos.html">Ingresar datos</a>.</td></tr>';
+    html += "</table></div></div>";
+  } else {
+    html += '<div class="tarjeta"><h2>Mi historial de arriendo</h2><p>Como titular puede ver gratis su reporte completo, saber quién lo ha consultado y pedir correcciones.</p>' +
+      '<a class="boton verde" href="mi-historial.html">Ver mi historial</a></div>';
+  }
+
+  html += '<div class="tarjeta"><h2>Mis últimas consultas</h2><div class="tabla-envoltura"><table><tr><th>Fecha</th><th>Cédula</th><th>Nombre</th><th>Motivo</th><th></th></tr>';
+  misConsultas.slice(0, 10).forEach(function (c) {
+    var i = BD.inquilino(c.cedula);
+    html += "<tr><td>" + new Date(c.fecha).toLocaleString("es-CO") + "</td><td>" + c.cedula + "</td><td>" + esc(i ? i.nombres + " " + i.apellidos : "No registrada") +
+      "</td><td>" + esc(c.motivo) + '</td><td><a href="reporte.html?cc=' + c.cedula + '">Ver</a></td></tr>';
+  });
+  if (!misConsultas.length) html += '<tr><td colspan="5" class="tenue">Todavía no ha hecho consultas.</td></tr>';
+  html += "</table></div></div>";
+
+  document.getElementById("contenido").innerHTML = html;
+  document.getElementById("rapida").onsubmit = function (e) {
+    e.preventDefault();
+    ir("consulta.html?cc=" + encodeURIComponent(document.getElementById("cc").value.trim()));
+  };
+</script>
+</body>
+</html>
