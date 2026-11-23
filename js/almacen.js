@@ -252,10 +252,8 @@ function calcularPuntaje(cedula) {
 
 function categoriaPuntaje(puntaje) {
   if (puntaje === null) return { nombre: "Sin historial", color: "gris", hex: "#6b7785", texto: "No hay información de arrendamientos para esta persona." };
-  if (puntaje >= 940) return { nombre: "Excelente pagador", color: "verde", hex: "#1e9e5a", texto: "Paga sus cánones a tiempo de forma consistente." };
-  if (puntaje >= 800) return { nombre: "Buen pagador", color: "verde", hex: "#5aa83a", texto: "Mayormente cumplido, con retrasos ocasionales y cortos." };
-  if (puntaje >= 600) return { nombre: "Pagador regular", color: "amarillo", hex: "#d89b00", texto: "Presenta moras frecuentes. Se recomienda pedir garantías adicionales." };
-  return { nombre: "Mal pagador", color: "rojo", hex: "#c8313a", texto: "Tiene moras altas, deudas abiertas o siniestros con aseguradoras." };
+  if (puntaje >= 700) return { nombre: "Buen pagador", color: "verde", hex: "#2e7d55", texto: "Cumple con el pago de sus cánones de arrendamiento." };
+  return { nombre: "Mal pagador", color: "rojo", hex: "#a8323a", texto: "Presenta moras altas, deudas abiertas o siniestros con aseguradoras." };
 }
 
 /* Resumen de un contrato: cuántos meses, puntualidad, mora... */
@@ -272,9 +270,8 @@ function resumenContrato(contrato) {
   var pct = pagos.length ? Math.round(aTiempo * 100 / pagos.length) : 0;
   var ultimo = pagos.length ? pagos[pagos.length - 1] : null;
   var resultado;
-  if (contrato.siniestro || maxMora > 90 || deuda > 0 && maxMora > 30) resultado = { texto: "Le fue mal", clase: "mala", chip: "rojo" };
-  else if (pct >= 85 && maxMora <= 10) resultado = { texto: "Le fue bien", clase: "buena", chip: "verde" };
-  else resultado = { texto: "Cumplimiento regular", clase: "regular", chip: "amarillo" };
+  if (contrato.siniestro || maxMora > 60 || (deuda > 0 && maxMora > 30) || (pagos.length && pct < 60)) resultado = { texto: "Le fue mal", clase: "mala", chip: "rojo" };
+  else resultado = { texto: "Le fue bien", clase: "buena", chip: "verde" };
   return {
     pagos: pagos, total: pagos.length, aTiempo: aTiempo, porcentaje: pct,
     promedioMora: conMora ? Math.round(sumaMora / conMora) : 0, maxMora: maxMora,

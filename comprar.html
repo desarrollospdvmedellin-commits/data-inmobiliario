@@ -12,7 +12,6 @@
 <main>
   <div class="contenedor">
     <h1>Comprar consultas</h1>
-    <div class="alerta aviso"><b>Pasarela de pago SIMULADA.</b> No se realiza ningún cobro ni se envían datos a ningún banco. No escriba datos de una tarjeta real.</div>
 
     <div class="grid grid-2" id="zonaCompra">
       <div class="tarjeta">
@@ -36,20 +35,19 @@
             <div><label for="cuotas">Cuotas</label><select id="cuotas"><option>1</option><option>3</option><option>6</option><option>12</option></select></div>
           </div>
           <button class="boton verde" type="submit" id="btnPagar">Pagar</button>
-          <p class="ayuda">Tarjetas de prueba: <b>4111 1111 1111 1111</b> (aprobada) · <b>4000 0000 0000 0002</b> (rechazada por fondos insuficientes).</p>
         </form>
         <form id="formPse" class="oculto">
           <label for="banco">Banco</label>
-          <select id="banco"><option>Banco Ficticio de Colombia</option><option>Banco Demo Popular</option><option>Cooperativa Simulada</option></select>
+          <select id="banco"><option>Banco Montaña</option><option>Banco Cafetero Digital</option><option>Cooperativa Horizonte</option></select>
           <label for="tipoPersona">Tipo de persona</label>
           <select id="tipoPersona"><option>Natural</option><option>Jurídica</option></select>
-          <button class="boton verde" type="submit">Continuar al banco (simulado)</button>
+          <button class="boton verde" type="submit">Continuar al banco</button>
         </form>
       </div>
       <div class="tarjeta">
         <h2>Resumen</h2>
         <table id="resumen"></table>
-        <p class="ayuda">Valores simulados con IVA incluido. En un sistema real se integraría una pasarela certificada (por ejemplo Wompi, PayU o Mercado Pago) y nunca se guardarían los datos de la tarjeta en el propio servidor.</p>
+        <p class="ayuda">Valores con IVA incluido. Pago seguro con tarjeta de crédito, débito o PSE.</p>
       </div>
     </div>
 
@@ -123,7 +121,7 @@
   }
 
   function procesar(aprobado, motivo, detalleMedio) {
-    mensaje("msg", "info", "⏳ Procesando pago simulado…");
+    mensaje("msg", "info", "⏳ Procesando pago…");
     document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = true; });
     setTimeout(function () {
       document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = false; });
@@ -138,7 +136,7 @@
       document.getElementById("zonaCompra").classList.add("oculto");
       var c = document.getElementById("comprobante");
       c.classList.remove("oculto");
-      c.innerHTML = '<h2>✅ Pago aprobado (simulado)</h2><table>' +
+      c.innerHTML = '<h2>✅ Pago aprobado</h2><table>' +
         "<tr><td>Referencia</td><td><b>" + compra.id + "</b></td></tr><tr><td>Fecha</td><td>" + new Date(compra.fecha).toLocaleString("es-CO") + "</td></tr>" +
         "<tr><td>Cliente</td><td>" + esc(u.nombre) + " · " + esc(u.documento) + "</td></tr><tr><td>Plan</td><td>" + compra.plan + "</td></tr>" +
         "<tr><td>Medio</td><td>" + esc(compra.medio) + "</td></tr><tr><td>Valor</td><td>" + pesos(compra.valor) + "</td></tr>" +

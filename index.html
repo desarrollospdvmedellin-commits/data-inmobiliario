@@ -37,7 +37,7 @@
     <p class="seccion-sub">Cuatro pasos para tomar una decisión de arriendo informada.</p>
     <div class="grid grid-4">
       <div class="tarjeta paso"><div class="num"><span>1</span></div><h3>Regístrese</h3><p class="tenue">Como inmobiliaria, propietario o persona que quiere ver su propio historial.</p></div>
-      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta o PSE (en este prototipo el pago es simulado).</p></div>
+      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta de crédito, débito o PSE.</p></div>
       <div class="tarjeta paso"><div class="num"><span>3</span></div><h3>Busque por cédula</h3><p class="tenue">Con la autorización firmada por el aspirante a arrendatario.</p></div>
       <div class="tarjeta paso"><div class="num"><span>4</span></div><h3>Analice el reporte</h3><p class="tenue">Puntaje, calificación, viviendas, pagos, días de mora y último canon.</p></div>
     </div>
@@ -45,7 +45,7 @@
     <h2 class="seccion-titulo">El reporte</h2>
     <p class="seccion-sub">Una visión completa y objetiva del comportamiento del arrendatario.</p>
     <div class="grid grid-3 grid-3-fijo">
-      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación: excelente, buen, regular o mal pagador.</p></div>
+      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación como buen o mal pagador.</p></div>
       <div class="tarjeta"><span data-icono="casa"></span><h3>Historial de viviendas</h3><p>Direcciones, ciudades y fechas de inicio y fin de cada contrato, y con quién arrendó.</p></div>
       <div class="tarjeta"><span data-icono="tarjeta"></span><h3>Comportamiento de pago</h3><p>Pago mes a mes, días de mora, deudas abiertas y siniestros con aseguradoras.</p></div>
       <div class="tarjeta"><span data-icono="documento"></span><h3>Último canon</h3><p>Valor del último arriendo pagado y arrendador del contrato más reciente.</p></div>
@@ -54,7 +54,7 @@
     </div>
 
     <h2 class="seccion-titulo">Planes</h2>
-    <p class="seccion-sub">Valores simulados con fines académicos.</p>
+    <p class="seccion-sub">Elija el paquete que mejor se ajuste a su operación.</p>
     <div class="grid grid-3">
       <div class="tarjeta plan"><h3>Consulta individual</h3><div class="precio">$15.000</div><p class="tenue">1 reporte completo</p></div>
       <div class="tarjeta plan destacado"><h3>Paquete inmobiliaria</h3><div class="precio">$120.000</div><p class="tenue">10 reportes · ahorra 20 %</p></div>
@@ -109,14 +109,14 @@
     "<div><b>" + d.pagos.length.toLocaleString("es-CO") + "</b>Pagos mensuales</div>" +
     "<div><b>" + Object.keys(fuentes).length + "</b>Fuentes de información</div>";
 
-  // Datos de contacto de la empresa (ficticios, definidos en app.js)
+  // Datos de contacto de la empresa (definidos en app.js)
   document.getElementById("eDireccion").innerHTML = EMPRESA.direccion + "<br>" + EMPRESA.edificio + "<br>" + EMPRESA.ciudad;
   document.getElementById("eTelefonos").innerHTML = "PBX " + EMPRESA.pbx + "<br>WhatsApp " + EMPRESA.whatsapp;
   document.getElementById("eCorreo").innerHTML = EMPRESA.correo;
   document.getElementById("eHorario").innerHTML = EMPRESA.horario.join("<br>");
   document.getElementById("eRazon").innerHTML = EMPRESA.razonSocial + " · NIT " + EMPRESA.nit;
 
-  // Formulario PQRS (simulado: se guarda en el navegador)
+  // Formulario PQRS (se guarda en el navegador)
   document.getElementById("formPqrs").onsubmit = function (e) {
     e.preventDefault();
     var datos = Object.fromEntries(new FormData(e.target).entries());
@@ -124,7 +124,7 @@
     BD.datos.mensajes = BD.datos.mensajes || [];
     BD.datos.mensajes.push({ id: radicado, nombre: datos.nombre, correo: datos.correo, tipo: datos.tipo, mensaje: datos.mensaje, fecha: Date.now() });
     BD.guardar(); e.target.reset();
-    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles (simulado).");
+    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles.");
   };
 </script>
 </body>

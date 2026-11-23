@@ -71,7 +71,7 @@
         </div>
         <div class="alerta info">
           <label class="check" style="margin:0"><input type="checkbox" name="generar" id="chkGenerar">
-            <span><b>Generar historial de pagos simulado</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
+            <span><b>Generar historial de pagos automáticamente</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
           <div id="zonaPerfil" class="oculto">
             <label>Perfil de comportamiento del inquilino</label>
             <select name="perfil"><option value="puntual">Puntual (casi siempre a tiempo)</option><option value="bueno">Bueno (retrasos cortos ocasionales)</option><option value="regular">Regular (moras frecuentes)</option><option value="moroso">Moroso (moras altas, meses sin pagar)</option></select>
@@ -191,7 +191,7 @@
     }
     BD.guardar(); e.target.reset(); refrescarListas();
     document.getElementById("arrendador").value = u.nombre;
-    ok("Contrato guardado" + (n ? " con " + n + " pagos simulados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
+    ok("Contrato guardado" + (n ? " con " + n + " pagos generados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
     // La inmobiliaria que reporta puede ver el resultado de su propio reporte sin pagar
     BD.datos.accesos.push({ usuarioId: u.id, cedula: c.cedula, fecha: Date.now() }); BD.guardar();
     fPago.contratoId.value = c.id; sugerirPago();

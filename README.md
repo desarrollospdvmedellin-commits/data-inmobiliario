@@ -25,16 +25,16 @@ No necesita instalar nada.
 
 | Cédula | Caso |
 |---|---|
-| 9990000101 | Excelente pagadora (Laura) |
+| 9990000101 | Buena pagadora (Laura) |
 | 9990000102 | Buen pagador con retrasos cortos |
-| 9990000103 | Pagadora regular |
+| 9990000103 | Buena pagadora con moras frecuentes |
 | 9990000104 | **Mal pagador**: deuda abierta y siniestro con aseguradora |
 | 9990000106 | Tuvo siniestro, luego mejoró |
 | 9990000108 | Empezó regular y mejoró |
 | 9990000110 | Moroso reincidente |
 | 9990000114 | Registrado pero **sin historial** |
 
-**Tarjeta de prueba para el pago simulado:** `4111 1111 1111 1111` (aprobada), `4000 0000 0000 0002` (rechazada). Cualquier fecha futura y CVV de 3 dígitos.
+**Tarjeta de prueba para el pago simulado** (ya no se muestra en el sitio): `4111 1111 1111 1111` (aprobada), `4000 0000 0000 0002` (rechazada). Cualquier fecha futura y CVV de 3 dígitos.
 
 Para volver a los datos iniciales: enlace **"Restablecer datos de demostración"** en el pie de cualquier página.
 
@@ -45,7 +45,7 @@ Para volver a los datos iniciales: enlace **"Restablecer datos de demostración"
 1. **Inicio** (`index.html`): explicar qué es y cómo funciona.
 2. Entrar como **inmobiliaria**, ir a **Consultar cédula**, buscar `9990000104`. Se descuenta 1 consulta.
 3. Mostrar el **reporte**: puntaje, calificación, alertas, último canon y arrendador, vector de 24 meses, historial de viviendas con fechas y pagos mes a mes.
-4. Comparar con `9990000101` (excelente).
+4. Comparar con `9990000101` (buena pagadora).
 5. Quedarse sin saldo y mostrar **Comprar consultas** (pasarela simulada con validación de tarjeta).
 6. **Ingresar datos**: registrar un inquilino nuevo, su contrato con "generar historial simulado", registrar un pago con mora y ver cómo cambia el reporte.
 7. **Aseguradoras**: cómo funciona y se paga la póliza, con calculadora de prima.
@@ -92,7 +92,7 @@ Relaciones: un Inquilino tiene muchos Contratos; un Contrato tiene muchos Pagos;
 
 ### ¿Cómo se generan los datos?
 
-Los pagos no están escritos a mano. `almacen.js` los genera mes a mes según el **perfil** de cada contrato (puntual, bueno, regular, moroso) usando un generador aleatorio con semilla fija, así todos los equipos ven los mismos datos. El módulo **Ingresar datos** puede hacer lo mismo para contratos nuevos (casilla "Generar historial de pagos simulado").
+Los pagos no están escritos a mano. `almacen.js` los genera mes a mes según el **perfil** de cada contrato (puntual, bueno, regular, moroso) usando un generador aleatorio con semilla fija, así todos los equipos ven los mismos datos. El módulo **Ingresar datos** puede hacer lo mismo para contratos nuevos (casilla "Generar historial de pagos automáticamente").
 
 ### ¿Cómo se calcula el puntaje? (modelo académico simplificado)
 
@@ -102,10 +102,8 @@ Los pagos no están escritos a mano. `almacen.js` los genera mes a mes según el
 
 | Puntaje | Calificación |
 |---|---|
-| 940 a 1000 | Excelente pagador |
-| 800 a 939 | Buen pagador |
-| 600 a 799 | Pagador regular |
-| 0 a 599 | Mal pagador |
+| 700 a 1000 | Buen pagador |
+| 0 a 699 | Mal pagador |
 
 Estas reglas son una propuesta para el prototipo. En el documento puede justificarlas o proponer otro modelo (por ejemplo, regresión logística entrenada con datos históricos).
 

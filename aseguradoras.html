@@ -12,7 +12,7 @@
 <main>
   <div class="contenedor">
     <h1>¿Cómo funcionan y cómo se pagan las aseguradoras de arriendo?</h1>
-    <p class="tenue">Guía didáctica. Los porcentajes y plazos son <b>valores de referencia</b> para el prototipo; cada póliza real define los suyos.</p>
+    <p class="tenue">Los porcentajes y plazos son <b>valores de referencia</b>; cada póliza define los suyos.</p>
 
     <div class="tarjeta">
       <h2>¿Qué es un seguro de arrendamiento?</h2>
@@ -65,25 +65,24 @@
     </div>
 
     <div class="tarjeta">
-      <h2>Calculadora de prima (simulada)</h2>
+      <h2>Calculadora de prima</h2>
       <div class="fila">
         <div><label for="canon">Canon mensual</label><input id="canon" type="number" value="1500000" step="10000"></div>
         <div><label for="admin">Administración mensual</label><input id="admin" type="number" value="250000" step="10000"></div>
-        <div><label for="aseg">Aseguradora (ficticia)</label><select id="aseg"></select></div>
+        <div><label for="aseg">Aseguradora</label><select id="aseg"></select></div>
         <div><label for="integral">Amparo integral (+0,5 %)</label><select id="integral"><option value="0">No</option><option value="0.005">Sí</option></select></div>
       </div>
       <div id="resultado" class="grid grid-4" style="margin-top:1rem"></div>
     </div>
 
     <div class="tarjeta">
-      <h2>Aseguradoras registradas en el prototipo</h2>
-      <p class="tenue">Nombres inventados. En Colombia existen aseguradoras reales que ofrecen este producto; para el documento de grado puede citarlas como referencia de mercado, pero no se usan aquí.</p>
+      <h2>Aseguradoras aliadas</h2>
       <div class="tabla-envoltura"><table id="tablaAseg"></table></div>
     </div>
 
     <div class="tarjeta">
       <h2>Ejemplo de siniestro en Data Inmobiliario</h2>
-      <p>En los datos de demostración, el inquilino ficticio con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
+      <p>Por ejemplo, el inquilino con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
         y el reporte muestra esos meses con el código <b style="color:#6d1a20">S</b> y la alerta “siniestro pagado por la aseguradora”, lo que baja fuertemente su puntaje.</p>
       <h3>Consejos para el inquilino</h3>
       <ul>

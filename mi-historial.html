@@ -66,7 +66,7 @@
     var d = Object.fromEntries(new FormData(e.target).entries());
     var r = { id: "RAD-" + Date.now().toString().slice(-6), cedula: u.documento, tipo: d.tipo, contrato: d.contrato, detalle: d.detalle, fecha: Date.now(), estado: "En trámite" };
     BD.datos.reclamos.push(r); BD.guardar(); e.target.reset(); pintarReclamos();
-    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles (simulado).");
+    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles.");
   };
 </script>
 </body>

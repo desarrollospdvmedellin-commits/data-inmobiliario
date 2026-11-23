@@ -145,7 +145,7 @@ function construirReporte(cc, usuario) {
   html += "</div>";
 
   html += '<p class="ayuda">Este reporte es informativo y no constituye por sí solo una decisión de aprobar o negar un arriendo. El titular puede solicitar la corrección de datos inexactos en la sección "Mi historial". ' +
-    'Modelo de puntaje académico simplificado. Datos 100 % ficticios.</p>';
+    '</p>';
   return html;
 }
 

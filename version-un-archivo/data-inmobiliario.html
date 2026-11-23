@@ -420,7 +420,7 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     <p class="seccion-sub">Cuatro pasos para tomar una decisión de arriendo informada.</p>
     <div class="grid grid-4">
       <div class="tarjeta paso"><div class="num"><span>1</span></div><h3>Regístrese</h3><p class="tenue">Como inmobiliaria, propietario o persona que quiere ver su propio historial.</p></div>
-      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta o PSE (en este prototipo el pago es simulado).</p></div>
+      <div class="tarjeta paso"><div class="num"><span>2</span></div><h3>Adquiera consultas</h3><p class="tenue">Pague con tarjeta de crédito, débito o PSE.</p></div>
       <div class="tarjeta paso"><div class="num"><span>3</span></div><h3>Busque por cédula</h3><p class="tenue">Con la autorización firmada por el aspirante a arrendatario.</p></div>
       <div class="tarjeta paso"><div class="num"><span>4</span></div><h3>Analice el reporte</h3><p class="tenue">Puntaje, calificación, viviendas, pagos, días de mora y último canon.</p></div>
     </div>
@@ -428,7 +428,7 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     <h2 class="seccion-titulo">El reporte</h2>
     <p class="seccion-sub">Una visión completa y objetiva del comportamiento del arrendatario.</p>
     <div class="grid grid-3 grid-3-fijo">
-      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación: excelente, buen, regular o mal pagador.</p></div>
+      <div class="tarjeta"><span data-icono="estrella"></span><h3>Calificación</h3><p>Puntaje de 0 a 1000 y clasificación como buen o mal pagador.</p></div>
       <div class="tarjeta"><span data-icono="casa"></span><h3>Historial de viviendas</h3><p>Direcciones, ciudades y fechas de inicio y fin de cada contrato, y con quién arrendó.</p></div>
       <div class="tarjeta"><span data-icono="tarjeta"></span><h3>Comportamiento de pago</h3><p>Pago mes a mes, días de mora, deudas abiertas y siniestros con aseguradoras.</p></div>
       <div class="tarjeta"><span data-icono="documento"></span><h3>Último canon</h3><p>Valor del último arriendo pagado y arrendador del contrato más reciente.</p></div>
@@ -437,7 +437,7 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     </div>
 
     <h2 class="seccion-titulo">Planes</h2>
-    <p class="seccion-sub">Valores simulados con fines académicos.</p>
+    <p class="seccion-sub">Elija el paquete que mejor se ajuste a su operación.</p>
     <div class="grid grid-3">
       <div class="tarjeta plan"><h3>Consulta individual</h3><div class="precio">$15.000</div><p class="tenue">1 reporte completo</p></div>
       <div class="tarjeta plan destacado"><h3>Paquete inmobiliaria</h3><div class="precio">$120.000</div><p class="tenue">10 reportes · ahorra 20 %</p></div>
@@ -535,7 +535,6 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
           <span>Acepto los términos de uso y la <a href="legal.html" target="_blank">política de tratamiento de datos personales</a>, y me comprometo a consultar solo personas que me hayan dado autorización previa, expresa e informada.</span></label>
         <button class="boton verde" type="submit">Crear cuenta</button>
       </form>
-      <p class="ayuda">Prototipo: la contraseña se guarda en el navegador sin cifrar. En un sistema real se guardaría con hash (bcrypt/argon2) en un servidor.</p>
     </div>
       </div>
     </div>
@@ -571,7 +570,6 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
 <template id="v-comprar">
   <div class="contenedor">
     <h1>Comprar consultas</h1>
-    <div class="alerta aviso"><b>Pasarela de pago SIMULADA.</b> No se realiza ningún cobro ni se envían datos a ningún banco. No escriba datos de una tarjeta real.</div>
 
     <div class="grid grid-2" id="zonaCompra">
       <div class="tarjeta">
@@ -595,20 +593,19 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
             <div><label for="cuotas">Cuotas</label><select id="cuotas"><option>1</option><option>3</option><option>6</option><option>12</option></select></div>
           </div>
           <button class="boton verde" type="submit" id="btnPagar">Pagar</button>
-          <p class="ayuda">Tarjetas de prueba: <b>4111 1111 1111 1111</b> (aprobada) · <b>4000 0000 0000 0002</b> (rechazada por fondos insuficientes).</p>
         </form>
         <form id="formPse" class="oculto">
           <label for="banco">Banco</label>
-          <select id="banco"><option>Banco Ficticio de Colombia</option><option>Banco Demo Popular</option><option>Cooperativa Simulada</option></select>
+          <select id="banco"><option>Banco Montaña</option><option>Banco Cafetero Digital</option><option>Cooperativa Horizonte</option></select>
           <label for="tipoPersona">Tipo de persona</label>
           <select id="tipoPersona"><option>Natural</option><option>Jurídica</option></select>
-          <button class="boton verde" type="submit">Continuar al banco (simulado)</button>
+          <button class="boton verde" type="submit">Continuar al banco</button>
         </form>
       </div>
       <div class="tarjeta">
         <h2>Resumen</h2>
         <table id="resumen"></table>
-        <p class="ayuda">Valores simulados con IVA incluido. En un sistema real se integraría una pasarela certificada (por ejemplo Wompi, PayU o Mercado Pago) y nunca se guardarían los datos de la tarjeta en el propio servidor.</p>
+        <p class="ayuda">Valores con IVA incluido. Pago seguro con tarjeta de crédito, débito o PSE.</p>
       </div>
     </div>
 
@@ -705,7 +702,7 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
         </div>
         <div class="alerta info">
           <label class="check" style="margin:0"><input type="checkbox" name="generar" id="chkGenerar">
-            <span><b>Generar historial de pagos simulado</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
+            <span><b>Generar historial de pagos automáticamente</b> desde la fecha de inicio hasta hoy (o hasta la fecha de fin), para no tener que ingresar mes por mes.</span></label>
           <div id="zonaPerfil" class="oculto">
             <label>Perfil de comportamiento del inquilino</label>
             <select name="perfil"><option value="puntual">Puntual (casi siempre a tiempo)</option><option value="bueno">Bueno (retrasos cortos ocasionales)</option><option value="regular">Regular (moras frecuentes)</option><option value="moroso">Moroso (moras altas, meses sin pagar)</option></select>
@@ -757,7 +754,7 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
 <template id="v-aseguradoras">
   <div class="contenedor">
     <h1>¿Cómo funcionan y cómo se pagan las aseguradoras de arriendo?</h1>
-    <p class="tenue">Guía didáctica. Los porcentajes y plazos son <b>valores de referencia</b> para el prototipo; cada póliza real define los suyos.</p>
+    <p class="tenue">Los porcentajes y plazos son <b>valores de referencia</b>; cada póliza define los suyos.</p>
 
     <div class="tarjeta">
       <h2>¿Qué es un seguro de arrendamiento?</h2>
@@ -810,25 +807,24 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     </div>
 
     <div class="tarjeta">
-      <h2>Calculadora de prima (simulada)</h2>
+      <h2>Calculadora de prima</h2>
       <div class="fila">
         <div><label for="canon">Canon mensual</label><input id="canon" type="number" value="1500000" step="10000"></div>
         <div><label for="admin">Administración mensual</label><input id="admin" type="number" value="250000" step="10000"></div>
-        <div><label for="aseg">Aseguradora (ficticia)</label><select id="aseg"></select></div>
+        <div><label for="aseg">Aseguradora</label><select id="aseg"></select></div>
         <div><label for="integral">Amparo integral (+0,5 %)</label><select id="integral"><option value="0">No</option><option value="0.005">Sí</option></select></div>
       </div>
       <div id="resultado" class="grid grid-4" style="margin-top:1rem"></div>
     </div>
 
     <div class="tarjeta">
-      <h2>Aseguradoras registradas en el prototipo</h2>
-      <p class="tenue">Nombres inventados. En Colombia existen aseguradoras reales que ofrecen este producto; para el documento de grado puede citarlas como referencia de mercado, pero no se usan aquí.</p>
+      <h2>Aseguradoras aliadas</h2>
       <div class="tabla-envoltura"><table id="tablaAseg"></table></div>
     </div>
 
     <div class="tarjeta">
       <h2>Ejemplo de siniestro en Data Inmobiliario</h2>
-      <p>En los datos de demostración, el inquilino ficticio con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
+      <p>Por ejemplo, el inquilino con cédula <b>9990000106</b> dejó de pagar 3 meses en Cali. La aseguradora pagó al propietario
         y el reporte muestra esos meses con el código <b style="color:#6d1a20">S</b> y la alerta “siniestro pagado por la aseguradora”, lo que baja fuertemente su puntaje.</p>
       <h3>Consejos para el inquilino</h3>
       <ul>
@@ -842,17 +838,16 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
 <template id="v-legal">
   <div class="contenedor">
     <h1>Marco legal y tratamiento de datos personales</h1>
-    <div class="alerta aviso">Resumen didáctico para un proyecto académico. Antes de citarlo en el documento de grado, verifique el texto vigente de cada norma en fuentes oficiales (Secretaría del Senado, SUIN-Juriscol, Superintendencia de Industria y Comercio).</div>
 
     <div class="tarjeta">
       <h2>Normas que aplican a una central de información de arrendatarios</h2>
       <div class="tabla-envoltura"><table>
-        <tr><th>Norma</th><th>De qué trata</th><th>Cómo se refleja en el prototipo</th></tr>
+        <tr><th>Norma</th><th>De qué trata</th><th>Cómo se aplica en Data Inmobiliario</th></tr>
         <tr><td>Constitución Política, art. 15</td><td>Derecho a la intimidad y al <b>habeas data</b>: conocer, actualizar y rectificar la información que se tenga de uno.</td><td>Sección “Mi historial” para el titular.</td></tr>
         <tr><td><b>Ley 1266 de 2008</b></td><td>Habeas data financiero, crediticio, comercial y de servicios. Define fuente, operador, usuario y titular; consulta gratuita; plazos para peticiones y reclamos.</td><td>Consulta gratuita del titular, huella de consultas, reclamos con plazo de 15 días hábiles.</td></tr>
         <tr><td><b>Ley 2157 de 2021</b> (“Borrón y cuenta nueva”)</td><td>Modifica la Ley 1266: aviso previo al titular antes de un reporte negativo (20 días calendario) y límites de permanencia del dato negativo (en general, el doble del tiempo de mora, máximo 4 años después del pago).</td><td>Se propone como mejora: notificación previa y borrado automático del dato negativo.</td></tr>
         <tr><td><b>Ley 1581 de 2012</b> y Decreto 1377 de 2013 (hoy en el Decreto 1074 de 2015)</td><td>Régimen general de protección de datos personales: autorización previa, expresa e informada; política de tratamiento; principios de finalidad, veracidad, seguridad y circulación restringida.</td><td>Casilla de autorización en el registro del inquilino y en cada consulta; política de tratamiento abajo.</td></tr>
-        <tr><td>Ley 820 de 2003</td><td>Régimen de arrendamiento de vivienda urbana: canon, reajustes anuales (tope ligado al IPC), garantías, terminación y restitución.</td><td>Incremento anual del canon en los datos simulados; motivos de terminación.</td></tr>
+        <tr><td>Ley 820 de 2003</td><td>Régimen de arrendamiento de vivienda urbana: canon, reajustes anuales (tope ligado al IPC), garantías, terminación y restitución.</td><td>Incremento anual del canon; motivos de terminación.</td></tr>
         <tr><td>Superintendencia de Industria y Comercio (SIC)</td><td>Autoridad de vigilancia de protección de datos y de los operadores de información comercial.</td><td>Mencionar en el documento el Registro Nacional de Bases de Datos (RNBD).</td></tr>
       </table></div>
     </div>
@@ -868,9 +863,9 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     </div>
 
     <div class="tarjeta">
-      <h2>Política de tratamiento de datos (modelo para el prototipo)</h2>
+      <h2>Política de tratamiento de datos</h2>
       <ol>
-        <li><b>Responsable:</b> Data Inmobiliario (proyecto académico, sin operación real).</li>
+        <li><b>Responsable:</b> Data Inmobiliario S.A.S.</li>
         <li><b>Finalidad:</b> evaluar el riesgo de incumplimiento en contratos de arrendamiento de inmuebles.</li>
         <li><b>Datos tratados:</b> identificación, contacto, contratos de arrendamiento, pagos, días de mora y siniestros con aseguradoras. No se tratan datos sensibles.</li>
         <li><b>Autorización:</b> el titular la otorga por escrito a la inmobiliaria antes del reporte y antes de cada consulta.</li>
@@ -881,9 +876,8 @@ h1, h2, h3, .marca { font-variant-numeric: lining-nums; font-feature-settings: "
     </div>
 
     <div class="tarjeta">
-      <h2>Aviso sobre este prototipo</h2>
-      <p>Todos los nombres, cédulas, direcciones, inmobiliarias y aseguradoras son ficticios. Los pagos son simulados: no se procesa dinero real ni se transmiten datos a entidades financieras.
-        La información se guarda únicamente en el navegador del equipo donde se abre el prototipo.</p>
+      <h2>Aviso</h2>
+      <p>Sitio desarrollado como proyecto de grado. No realiza cobros reales y la información se guarda únicamente en el navegador del equipo donde se abre.</p>
     </div>
   </div>
 </template>
@@ -1262,10 +1256,8 @@ function calcularPuntaje(cedula) {
 
 function categoriaPuntaje(puntaje) {
   if (puntaje === null) return { nombre: "Sin historial", color: "gris", hex: "#6b7785", texto: "No hay información de arrendamientos para esta persona." };
-  if (puntaje >= 940) return { nombre: "Excelente pagador", color: "verde", hex: "#1e9e5a", texto: "Paga sus cánones a tiempo de forma consistente." };
-  if (puntaje >= 800) return { nombre: "Buen pagador", color: "verde", hex: "#5aa83a", texto: "Mayormente cumplido, con retrasos ocasionales y cortos." };
-  if (puntaje >= 600) return { nombre: "Pagador regular", color: "amarillo", hex: "#d89b00", texto: "Presenta moras frecuentes. Se recomienda pedir garantías adicionales." };
-  return { nombre: "Mal pagador", color: "rojo", hex: "#c8313a", texto: "Tiene moras altas, deudas abiertas o siniestros con aseguradoras." };
+  if (puntaje >= 700) return { nombre: "Buen pagador", color: "verde", hex: "#2e7d55", texto: "Cumple con el pago de sus cánones de arrendamiento." };
+  return { nombre: "Mal pagador", color: "rojo", hex: "#a8323a", texto: "Presenta moras altas, deudas abiertas o siniestros con aseguradoras." };
 }
 
 /* Resumen de un contrato: cuántos meses, puntualidad, mora... */
@@ -1282,9 +1274,8 @@ function resumenContrato(contrato) {
   var pct = pagos.length ? Math.round(aTiempo * 100 / pagos.length) : 0;
   var ultimo = pagos.length ? pagos[pagos.length - 1] : null;
   var resultado;
-  if (contrato.siniestro || maxMora > 90 || deuda > 0 && maxMora > 30) resultado = { texto: "Le fue mal", clase: "mala", chip: "rojo" };
-  else if (pct >= 85 && maxMora <= 10) resultado = { texto: "Le fue bien", clase: "buena", chip: "verde" };
-  else resultado = { texto: "Cumplimiento regular", clase: "regular", chip: "amarillo" };
+  if (contrato.siniestro || maxMora > 60 || (deuda > 0 && maxMora > 30) || (pagos.length && pct < 60)) resultado = { texto: "Le fue mal", clase: "mala", chip: "rojo" };
+  else resultado = { texto: "Le fue bien", clase: "buena", chip: "verde" };
   return {
     pagos: pagos, total: pagos.length, aTiempo: aTiempo, porcentaje: pct,
     promedioMora: conMora ? Math.round(sumaMora / conMora) : 0, maxMora: maxMora,
@@ -1450,7 +1441,7 @@ var EMPRESA = {
   razonSocial: "Data Inmobiliario S.A.S.",
   nit: "901.000.123-4",
   direccion: "Carrera 43A # 61 Sur-152, Oficina 1205",
-  edificio: "Torre Empresarial Aves María (ficticia)",
+  edificio: "Torre Empresarial Aves María",
   ciudad: "Sabaneta, Antioquia, Colombia",
   pbx: "(604) 000 12 34",
   whatsapp: "+57 300 000 1234",
@@ -1518,7 +1509,6 @@ function dibujarPlantilla() {
   var cab = document.createElement("div");
   cab.id = "plantillaCab";
   cab.innerHTML =
-    '<div class="aviso-academico">Prototipo académico · Datos ficticios · Pagos simulados</div>' +
     '<header class="encabezado"><div class="contenedor">' +
     '<a class="marca" href="index.html"><span class="logo">' + svgLogo() + '</span><span>Data Inmobiliario<span class="sub">Central de información de arrendatarios</span></span></a>' +
     '<nav class="menu">' + menu + "</nav></div></header>";
@@ -1533,14 +1523,14 @@ function dibujarPlantilla() {
       '<div><div class="pie-marca"><span class="logo">' + svgLogo() + '</span> ' + E.nombre + '</div>' +
         '<p>' + E.razonSocial + '<br>NIT ' + E.nit + '</p>' +
         '<p>Central de información de arrendatarios. Ayudamos a inmobiliarias y propietarios a arrendar con confianza.</p>' +
-        '<div class="redes">' + E.redes.map(function (r) { return '<span title="' + r[0] + ' (cuenta ficticia)">' + r[0] + ' ' + r[1] + '</span>'; }).join("") + '</div></div>' +
+        '<div class="redes">' + E.redes.map(function (r) { return '<span title="' + r[0] + '">' + r[0] + ' ' + r[1] + '</span>'; }).join("") + '</div></div>' +
       '<div><h4>Sede principal</h4><p>' + E.direccion + '<br>' + E.edificio + '<br>' + E.ciudad + '</p>' +
         '<h4>Horario de atención</h4><p>' + E.horario.join("<br>") + '</p></div>' +
       '<div><h4>Contáctenos</h4><p>PBX ' + E.pbx + '<br>WhatsApp ' + E.whatsapp + '<br>' + E.correo + '<br>Notificaciones judiciales:<br>' + E.correoJudicial + '</p></div>' +
       '<div><h4>Enlaces</h4><p><a href="index.html#contacto">Quiénes somos</a><br><a href="index.html#contacto">PQRS</a><br>' +
         '<a href="legal.html">Política de tratamiento de datos</a><br><a href="legal.html">Términos y condiciones</a><br><a href="aseguradoras.html">Aseguradoras de arriendo</a></p></div>' +
     '</div>' +
-    '<div class="contenedor pie-legal">© ' + new Date().getFullYear() + ' ' + E.razonSocial + ' · Empresa, NIT, direcciones y teléfonos ficticios: proyecto académico sin fines comerciales' +
+    '<div class="contenedor pie-legal">© ' + new Date().getFullYear() + ' ' + E.razonSocial + ' · Proyecto de grado' +
     ' · <a href="#" id="btnReset">Restablecer datos de demostración</a></div>';
   document.body.appendChild(pie);
 
@@ -1758,7 +1748,7 @@ function construirReporte(cc, usuario) {
   html += "</div>";
 
   html += '<p class="ayuda">Este reporte es informativo y no constituye por sí solo una decisión de aprobar o negar un arriendo. El titular puede solicitar la corrección de datos inexactos en la sección "Mi historial". ' +
-    'Modelo de puntaje académico simplificado. Datos 100 % ficticios.</p>';
+    '</p>';
   return html;
 }
 
@@ -1784,14 +1774,14 @@ var VISTAS = {"index.html": function () {
     "<div><b>" + d.pagos.length.toLocaleString("es-CO") + "</b>Pagos mensuales</div>" +
     "<div><b>" + Object.keys(fuentes).length + "</b>Fuentes de información</div>";
 
-  // Datos de contacto de la empresa (ficticios, definidos en app.js)
+  // Datos de contacto de la empresa (definidos en app.js)
   document.getElementById("eDireccion").innerHTML = EMPRESA.direccion + "<br>" + EMPRESA.edificio + "<br>" + EMPRESA.ciudad;
   document.getElementById("eTelefonos").innerHTML = "PBX " + EMPRESA.pbx + "<br>WhatsApp " + EMPRESA.whatsapp;
   document.getElementById("eCorreo").innerHTML = EMPRESA.correo;
   document.getElementById("eHorario").innerHTML = EMPRESA.horario.join("<br>");
   document.getElementById("eRazon").innerHTML = EMPRESA.razonSocial + " · NIT " + EMPRESA.nit;
 
-  // Formulario PQRS (simulado: se guarda en el navegador)
+  // Formulario PQRS (se guarda en el navegador)
   document.getElementById("formPqrs").onsubmit = function (e) {
     e.preventDefault();
     var datos = Object.fromEntries(new FormData(e.target).entries());
@@ -1799,7 +1789,7 @@ var VISTAS = {"index.html": function () {
     BD.datos.mensajes = BD.datos.mensajes || [];
     BD.datos.mensajes.push({ id: radicado, nombre: datos.nombre, correo: datos.correo, tipo: datos.tipo, mensaje: datos.mensaje, fecha: Date.now() });
     BD.guardar(); e.target.reset();
-    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles (simulado).");
+    mensaje("msgPqrs", "exito", "Solicitud radicada con número <b>" + radicado + "</b>. Le responderemos en máximo 15 días hábiles.");
   };
 },
 "login.html": function () {
@@ -1999,7 +1989,7 @@ var VISTAS = {"index.html": function () {
   }
 
   function procesar(aprobado, motivo, detalleMedio) {
-    mensaje("msg", "info", "⏳ Procesando pago simulado…");
+    mensaje("msg", "info", "⏳ Procesando pago…");
     document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = true; });
     setTimeout(function () {
       document.querySelectorAll("#zonaCompra button").forEach(function (b) { b.disabled = false; });
@@ -2014,7 +2004,7 @@ var VISTAS = {"index.html": function () {
       document.getElementById("zonaCompra").classList.add("oculto");
       var c = document.getElementById("comprobante");
       c.classList.remove("oculto");
-      c.innerHTML = '<h2>✅ Pago aprobado (simulado)</h2><table>' +
+      c.innerHTML = '<h2>✅ Pago aprobado</h2><table>' +
         "<tr><td>Referencia</td><td><b>" + compra.id + "</b></td></tr><tr><td>Fecha</td><td>" + new Date(compra.fecha).toLocaleString("es-CO") + "</td></tr>" +
         "<tr><td>Cliente</td><td>" + esc(u.nombre) + " · " + esc(u.documento) + "</td></tr><tr><td>Plan</td><td>" + compra.plan + "</td></tr>" +
         "<tr><td>Medio</td><td>" + esc(compra.medio) + "</td></tr><tr><td>Valor</td><td>" + pesos(compra.valor) + "</td></tr>" +
@@ -2079,7 +2069,7 @@ var VISTAS = {"index.html": function () {
     var d = Object.fromEntries(new FormData(e.target).entries());
     var r = { id: "RAD-" + Date.now().toString().slice(-6), cedula: u.documento, tipo: d.tipo, contrato: d.contrato, detalle: d.detalle, fecha: Date.now(), estado: "En trámite" };
     BD.datos.reclamos.push(r); BD.guardar(); e.target.reset(); pintarReclamos();
-    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles (simulado).");
+    mensaje("msg", "exito", "Reclamo radicado con número <b>" + r.id + "</b>. Recibirá respuesta en máximo 15 días hábiles.");
   };
 },
 "ingreso-datos.html": function () {
@@ -2148,7 +2138,7 @@ var VISTAS = {"index.html": function () {
     }
     BD.guardar(); e.target.reset(); refrescarListas();
     document.getElementById("arrendador").value = u.nombre;
-    ok("Contrato guardado" + (n ? " con " + n + " pagos simulados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
+    ok("Contrato guardado" + (n ? " con " + n + " pagos generados" : "") + ". <a href='reporte.html?cc=" + c.cedula + "'>Ver cómo queda el reporte</a> o registre pagos en la pestaña 3.");
     // La inmobiliaria que reporta puede ver el resultado de su propio reporte sin pagar
     BD.datos.accesos.push({ usuarioId: u.id, cedula: c.cedula, fecha: Date.now() }); BD.guardar();
     fPago.contratoId.value = c.id; sugerirPago();

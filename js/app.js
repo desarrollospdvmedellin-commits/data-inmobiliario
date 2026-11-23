@@ -15,7 +15,7 @@ var EMPRESA = {
   razonSocial: "Data Inmobiliario S.A.S.",
   nit: "901.000.123-4",
   direccion: "Carrera 43A # 61 Sur-152, Oficina 1205",
-  edificio: "Torre Empresarial Aves María (ficticia)",
+  edificio: "Torre Empresarial Aves María",
   ciudad: "Sabaneta, Antioquia, Colombia",
   pbx: "(604) 000 12 34",
   whatsapp: "+57 300 000 1234",
@@ -83,7 +83,6 @@ function dibujarPlantilla() {
   var cab = document.createElement("div");
   cab.id = "plantillaCab";
   cab.innerHTML =
-    '<div class="aviso-academico">Prototipo académico · Datos ficticios · Pagos simulados</div>' +
     '<header class="encabezado"><div class="contenedor">' +
     '<a class="marca" href="index.html"><span class="logo">' + svgLogo() + '</span><span>Data Inmobiliario<span class="sub">Central de información de arrendatarios</span></span></a>' +
     '<nav class="menu">' + menu + "</nav></div></header>";
@@ -98,14 +97,14 @@ function dibujarPlantilla() {
       '<div><div class="pie-marca"><span class="logo">' + svgLogo() + '</span> ' + E.nombre + '</div>' +
         '<p>' + E.razonSocial + '<br>NIT ' + E.nit + '</p>' +
         '<p>Central de información de arrendatarios. Ayudamos a inmobiliarias y propietarios a arrendar con confianza.</p>' +
-        '<div class="redes">' + E.redes.map(function (r) { return '<span title="' + r[0] + ' (cuenta ficticia)">' + r[0] + ' ' + r[1] + '</span>'; }).join("") + '</div></div>' +
+        '<div class="redes">' + E.redes.map(function (r) { return '<span title="' + r[0] + '">' + r[0] + ' ' + r[1] + '</span>'; }).join("") + '</div></div>' +
       '<div><h4>Sede principal</h4><p>' + E.direccion + '<br>' + E.edificio + '<br>' + E.ciudad + '</p>' +
         '<h4>Horario de atención</h4><p>' + E.horario.join("<br>") + '</p></div>' +
       '<div><h4>Contáctenos</h4><p>PBX ' + E.pbx + '<br>WhatsApp ' + E.whatsapp + '<br>' + E.correo + '<br>Notificaciones judiciales:<br>' + E.correoJudicial + '</p></div>' +
       '<div><h4>Enlaces</h4><p><a href="index.html#contacto">Quiénes somos</a><br><a href="index.html#contacto">PQRS</a><br>' +
         '<a href="legal.html">Política de tratamiento de datos</a><br><a href="legal.html">Términos y condiciones</a><br><a href="aseguradoras.html">Aseguradoras de arriendo</a></p></div>' +
     '</div>' +
-    '<div class="contenedor pie-legal">© ' + new Date().getFullYear() + ' ' + E.razonSocial + ' · Empresa, NIT, direcciones y teléfonos ficticios: proyecto académico sin fines comerciales' +
+    '<div class="contenedor pie-legal">© ' + new Date().getFullYear() + ' ' + E.razonSocial + ' · Proyecto de grado' +
     ' · <a href="#" id="btnReset">Restablecer datos de demostración</a></div>';
   document.body.appendChild(pie);
 
